@@ -1,7 +1,7 @@
 <template>
-  <div class="comparts-homepage">
+  <div class="homepage">
     <v-app id="inspire">
-      <v-toolbar dense dark>
+      <v-toolbar dense dark class="homepage__navbar">
         <v-app-bar-nav-icon @click.stop="drawer = !drawer"></v-app-bar-nav-icon>
         <v-toolbar-title>ComParts</v-toolbar-title>
         <v-spacer></v-spacer>
@@ -15,9 +15,7 @@
           <v-icon>mdi-dots-vertical</v-icon>
         </v-btn>
       </v-toolbar>
-      <v-card
-        color="grey lighten-4"
-      >
+      <v-card color="grey lighten-4">
         <v-sheet style="display: flex" color="grey lighten-4">
           <cpu-search-filter />
           <cpu-list />
@@ -50,6 +48,14 @@
           </v-list>
         </v-navigation-drawer>
       </v-card>
+      <v-footer class="homepage__footer" color="grey darken-4" padless>
+        <v-row justify="center" no-gutters>
+          <v-btn color="white" text rounded class="my-2">Home</v-btn>
+          <v-btn color="white" text rounded class="my-2">About Us</v-btn>
+          <v-btn color="white" text rounded class="my-2">Contacts</v-btn>
+          <v-btn color="white" text rounded class="my-2">FAQs</v-btn>
+        </v-row>
+      </v-footer>
     </v-app>
   </div>
 </template>
@@ -67,14 +73,6 @@ export default {
         { title: "Processor", icon: "mdi-cpu-64-bit", value: "cpu" },
         { title: "Motherboard", icon: "mdi-forum", value: "mb" },
       ],
-      links: [
-      'Home',
-      'About Us',
-      'Team',
-      'Services',
-      'Blog',
-      'Contact Us',
-    ],
     };
   },
   methods: {
