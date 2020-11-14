@@ -2,7 +2,7 @@
   <v-card class="ma-6 cpu-search-filter" width="300" height="fit-content" tile>
     <v-list-item>
       <v-list-item-content>
-        <v-btn @click="onClickSearchButton">Search</v-btn>
+        <v-btn text @click="onClickSearchButton">Search</v-btn>
       </v-list-item-content>
     </v-list-item>
     <v-list-item>
