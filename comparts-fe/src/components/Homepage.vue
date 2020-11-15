@@ -50,14 +50,17 @@
           <v-divider></v-divider>
           <v-list dense>
             <v-list-item
-              class="homepage__navdrawer__item--active"
+              :class="{
+                'homepage__navdrawer__item--active':
+                  $router.currentRoute.path === '/' + item.value,
+              }"
               v-for="item in menuItems"
               :key="item.title"
               @click="onClickItemTitle(item.value)"
               link
             >
               <v-list-item-icon>
-                <v-icon></v-icon>
+                <v-icon>{{ item.icon }}</v-icon>
               </v-list-item-icon>
 
               <v-list-item-content>
@@ -98,8 +101,8 @@
             text
             rounded
             class="my-2"
-            >{{ item.title }}</v-btn
-          >
+            >{{ item.title }}
+          </v-btn>
         </v-row>
       </v-footer>
     </v-app>
@@ -173,7 +176,8 @@ export default {
   position: fixed;
   top: 48px;
 }
-.homepage__navdrawer__item {
+.homepage__navdrawer__item--active {
+  background-color: grey;
 }
 .homepage__navbar {
   position: sticky;
