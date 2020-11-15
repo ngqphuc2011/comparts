@@ -9,18 +9,39 @@ export default new Router({
   routes: [
     {
       path: '/',
-      name: 'Homepage',
       component: Homepage
     },
     {
       path: '/cpu',
-      name: 'Cpu',
       component: Homepage
     },
     {
       path: '/mb',
-      name: 'Mainboard',
       component: Homepage
-    }
+    },
+    {
+      path: '/ram',
+      component: Homepage
+    },
+    {
+      path: '/hdd',
+      component: Homepage
+    },
+    {
+      path: '/ssd',
+      component: Homepage
+    },
+    {
+      path: '/gpu',
+      component: Homepage
+    },
+    {
+      path: '/psu',
+      component: Homepage
+    },
+    {
+      path: '/case',
+      component: Homepage
+    },
   ]
 })
