@@ -1,6 +1,6 @@
 <template>
   <v-container fluid class="cpu-list">
-    <v-card class="ma-3 cpu-list__search-filter" tile>
+    <v-card class="ma-3 cpu-list__search-filter">
       <v-list-item>
         <v-list-item-content>
           <v-btn @click="onClickSearchButton">Search</v-btn>
@@ -52,7 +52,7 @@
         </v-list-item-content>
       </v-list-item>
     </v-card>
-    <v-row>
+    <v-row class="ml-3">
       <v-col v-for="(cpu, index) in cpuList" :key="index" cols="2">
         <v-card
           class="cpu-list__card"

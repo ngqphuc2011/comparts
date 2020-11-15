@@ -6,8 +6,8 @@
           class="mr-4 getting-started__card"
           @click="onClickGettingStartedItems(item.path)"
         >
-          <v-img height="200" contain :src="item.img"></v-img>
-          <v-card-title>{{ item.title }}</v-card-title>
+          <v-img height="150" contain :src="item.img"></v-img>
+          <v-card-title class="text-center getting-started__card__title">{{ item.title }}</v-card-title>
           <v-card-text>
             <div>
               {{ item.desc }}
@@ -101,6 +101,9 @@ export default {
   cursor: pointer;
   max-width: 250;
   height: 100%;
-  padding-top: 25px;
+  padding-top: 50px
+}
+.getting-started__card__title {
+    display: block;
 }
 </style>
