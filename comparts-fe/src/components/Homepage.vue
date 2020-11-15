@@ -50,6 +50,7 @@
           <v-divider></v-divider>
           <v-list dense>
             <v-list-item
+              class="homepage__navdrawer__item--active"
               v-for="item in menuItems"
               :key="item.title"
               @click="onClickItemTitle(item.value)"
@@ -65,6 +66,27 @@
             </v-list-item>
           </v-list>
         </v-navigation-drawer>
+        <v-speed-dial
+          v-model="fab"
+          class="homepage__floating-button"
+          transition="slide-y-reverse-transition"
+        >
+          <template v-slot:activator>
+            <v-btn v-model="fab" color="grey darken-3" dark fab large>
+              <v-icon v-if="fab">mdi-close</v-icon>
+              <v-icon v-else>mdi-menu</v-icon>
+            </v-btn>
+          </template>
+          <v-btn fab dark color="grey">
+            <v-icon>mdi-wrench</v-icon>
+          </v-btn>
+          <v-btn fab dark color="grey">
+            <v-icon>mdi-database-cog</v-icon>
+          </v-btn>
+          <v-btn @click="onClickToTopPage" fab dark color="grey">
+            <v-icon>mdi-arrow-up-bold</v-icon>
+          </v-btn>
+        </v-speed-dial>
       </v-card>
       <v-footer class="homepage__footer" color="grey darken-4" padless>
         <v-row justify="center" no-gutters>
@@ -93,6 +115,7 @@ export default {
   data() {
     return {
       drawer: null,
+      fab: false,
       menuItems: [
         { title: "Processor", icon: "mdi-cpu-64-bit", value: "cpu" },
         { title: "Motherboard", icon: "mdi-cpu-64-bit", value: "mb" },
@@ -104,13 +127,7 @@ export default {
         { title: "Case", icon: "mdi-cpu-64-bit", value: "case" },
       ],
       rightMenuItems: [
-        { title: "Search", icon: "mdi-magnify", value: "search" },
-        {
-          title: "PC Builder",
-          icon: "mdi-hammer-wrench",
-          value: "pcbuilder",
-        },
-        { title: "Dashboard", icon: "mdi-database-cog-outline", value: "dashboard" },
+        { title: "More Options", icon: "mdi-dots-vertical", value: "more" },
       ],
       footerItems: [
         { title: "About Us", value: "aboutus" },
@@ -120,6 +137,10 @@ export default {
     };
   },
   methods: {
+    onClickToTopPage() {
+      document.body.scrollTop = 0;
+      document.documentElement.scrollTop = 0;
+    },
     onClickGoToHomepage() {
       this.$router
         .push({ path: "/" })
@@ -154,6 +175,8 @@ export default {
   position: fixed;
   top: 48px;
 }
+.homepage__navdrawer__item {
+}
 .homepage__navbar {
   position: sticky;
   top: 0;
@@ -162,5 +185,10 @@ export default {
 .homepage__main-page {
   display: flex;
   height: 100%;
+}
+.homepage__floating-button {
+  position: fixed;
+  bottom: 64px;
+  right: 16px;
 }
 </style>
