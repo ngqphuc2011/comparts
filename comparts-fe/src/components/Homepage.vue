@@ -106,11 +106,11 @@ export default {
       rightMenuItems: [
         { title: "Search", icon: "mdi-magnify", value: "search" },
         {
-          title: "Management",
-          icon: "mdi-file-edit-outline",
-          value: "management",
+          title: "PC Builder",
+          icon: "mdi-hammer-wrench",
+          value: "pcbuilder",
         },
-        { title: "More Options", icon: "mdi-dots-vertical", value: "more" },
+        { title: "Dashboard", icon: "mdi-database-cog-outline", value: "dashboard" },
       ],
       footerItems: [
         { title: "About Us", value: "aboutus" },
