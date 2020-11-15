@@ -9,8 +9,8 @@
           >ComParts</v-toolbar-title
         >
         <v-spacer></v-spacer>
-        <v-btn icon v-for="(item, index) in rightMenuItems" :key="index">
-          <v-icon>{{ item.icon }}</v-icon>
+        <v-btn icon>
+          <v-icon>mdi-help-circle</v-icon>
         </v-btn>
       </v-toolbar>
       <v-card class="homepage__main-page" color="grey lighten-4">
@@ -70,6 +70,7 @@
           v-model="fab"
           class="homepage__floating-button"
           transition="slide-y-reverse-transition"
+          open-on-hover
         >
           <template v-slot:activator>
             <v-btn v-model="fab" color="grey darken-3" dark fab large>
@@ -84,7 +85,7 @@
             <v-icon>mdi-database-cog</v-icon>
           </v-btn>
           <v-btn @click="onClickToTopPage" fab dark color="grey">
-            <v-icon>mdi-arrow-up-bold</v-icon>
+            <v-icon>mdi-gesture-swipe-up</v-icon>
           </v-btn>
         </v-speed-dial>
       </v-card>
@@ -125,9 +126,6 @@ export default {
         { title: "Video Card", icon: "mdi-cpu-64-bit", value: "gpu" },
         { title: "Power Supply", icon: "mdi-cpu-64-bit", value: "psu" },
         { title: "Case", icon: "mdi-cpu-64-bit", value: "case" },
-      ],
-      rightMenuItems: [
-        { title: "More Options", icon: "mdi-dots-vertical", value: "more" },
       ],
       footerItems: [
         { title: "About Us", value: "aboutus" },
