@@ -139,6 +139,9 @@ export default {
       url: {
         cpu: "http://localhost:3000/cpu",
       },
+      header: 
+      'Access-Control-Allow-Origin: *'
+      ,
       cpuList: [],
       cpuManufacturerList: [],
       cpuSocketList: [],
