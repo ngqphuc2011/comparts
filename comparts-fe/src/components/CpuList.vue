@@ -3,7 +3,7 @@
     <v-card class="ma-3 cpu-list__search-filter">
       <v-list-item>
         <v-list-item-content>
-          <v-btn @click="onClickSearchButton">Search</v-btn>
+          <v-btn text @click="onClickSearchButton">Search</v-btn>
         </v-list-item-content>
       </v-list-item>
       <v-list-item>
@@ -56,23 +56,16 @@
       <v-col v-for="(cpu, index) in cpuList" :key="index" cols="2">
         <v-card
           class="cpu-list__card"
-          @click="onToggleRevealCard(cpu)"
-          @focusout="onClickOutsideCard(cpu)"
-          tabindex="0"
+          @mouseover="onMouseOverCard(cpu)"
+          @mouseleave="onMouseLeaveCard(cpu)"
         >
-          <v-img height="200" contain :src="cpu.img"></v-img>
-          <v-tooltip bottom>
-            <template v-slot:activator="{ on, attrs }">
-              <v-card-title v-bind="attrs" v-on="on" class="ellipsis">{{
-                cpu.manufacturer + " " + cpu.name
-              }}</v-card-title>
-            </template>
-
-            <span>{{ cpu.manufacturer + " " + cpu.name }}</span>
-          </v-tooltip>
+          <v-img height="200" contain :src="url.cpuImg + cpu.img"></v-img>
+          <v-card-title class="ellipsis">{{
+            cpu.manufacturer + " " + cpu.name
+          }}</v-card-title>
           <v-card-text class="cpu-list__card__description">
             <div class="subtitle-1 red--text ellipsis">
-              VND • {{ formatNumber(cpu.price) }}
+              ₫ • {{ formatNumber(cpu.price) }}
             </div>
             <div class="subtitle-2 ellipsis">
               • Base Frequency: {{ cpu.base_frequency }} MHz
@@ -112,8 +105,8 @@
                   <div class="subtitle-2">• Socket: {{ cpu.socket }}</div>
                   <div class="subtitle-2">• TDP: {{ cpu.tdp }} W</div>
                   <div class="subtitle-2">
-                    • Supported Memory: {{ cpu.supported_memory_type }}-{{
-                      cpu.supported_memory_frequency
+                    • Supported Memory: {{ cpu.memory_type }}-{{
+                      cpu.memory_frequency
                     }}
                     MHz
                   </div>
@@ -137,11 +130,9 @@ export default {
   data() {
     return {
       url: {
-        cpu: "http://localhost:3000/cpu",
+        cpu: "http://localhost:3000/cpu/",
+        cpuImg: "http://localhost:3000/public/cpu/",
       },
-      header: 
-      'Access-Control-Allow-Origin: *'
-      ,
       cpuList: [],
       cpuManufacturerList: [],
       cpuSocketList: [],
@@ -180,10 +171,10 @@ export default {
         });
       });
     },
-    onToggleRevealCard(cpu) {
-      cpu.reveal = !cpu.reveal;
+    onMouseOverCard(cpu) {
+      cpu.reveal = true;
     },
-    onClickOutsideCard(cpu) {
+    onMouseLeaveCard(cpu) {
       cpu.reveal = false;
     },
     searchCpuList() {
@@ -222,6 +213,7 @@ export default {
 .cpu-list__card {
   height: 100%;
   max-height: 400px;
+  max-width: 250px;
   cursor: pointer;
 }
 .cpu-list__card--reveal {

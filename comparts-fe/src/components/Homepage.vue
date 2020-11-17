@@ -1,6 +1,6 @@
 <template>
   <div class="homepage">
-    <v-app id="inspire">
+    <v-app>
       <v-toolbar dense dark class="homepage__navbar">
         <v-app-bar-nav-icon @click.stop="onToggleDrawer"></v-app-bar-nav-icon>
         <v-toolbar-title
@@ -27,7 +27,7 @@
           v-if="$router.currentRoute.path === '/cpu'"
           color="grey lighten-4"
         >
-          <cpu-list />
+          <cpu-list v-if="cpuListFlag" />
         </v-container>
         <v-navigation-drawer
           class="homepage__navdrawer"
@@ -82,13 +82,13 @@
             </v-btn>
           </template>
           <v-btn fab dark color="grey">
-            <v-icon>mdi-wrench</v-icon>
+            <v-icon>mdi-progress-wrench</v-icon>
           </v-btn>
-          <v-btn fab dark color="grey">
-            <v-icon>mdi-database-cog</v-icon>
+          <v-btn @click="showCpuCuForm = true" fab dark color="grey">
+            <v-icon>mdi-plus</v-icon>
           </v-btn>
           <v-btn @click="onClickToTopPage" fab dark color="grey">
-            <v-icon>mdi-gesture-swipe-up</v-icon>
+            <v-icon>mdi-chevron-up</v-icon>
           </v-btn>
         </v-speed-dial>
       </v-card>
@@ -105,6 +105,13 @@
           </v-btn>
         </v-row>
       </v-footer>
+      <cpu-cu
+        v-if="showCpuCuForm"
+        :visible="showCpuCuForm"
+        mode="C"
+        @close="showCpuCuForm = false"
+        @search="rerenderCpuList"
+      />
     </v-app>
   </div>
 </template>
@@ -112,14 +119,16 @@
 <script>
 import GettingStarted from "./GettingStarted";
 import CpuList from "./CpuList";
+import CpuCu from "./CpuCu";
 
 export default {
-  components: { CpuList, GettingStarted },
+  components: { CpuList, CpuCu, GettingStarted },
   name: "Homepage",
   data() {
     return {
       drawer: null,
       fab: false,
+      cpuListFlag: true,
       menuItems: [
         { title: "Processor", icon: "mdi-cpu-64-bit", value: "cpu" },
         { title: "Motherboard", icon: "mdi-cpu-64-bit", value: "mb" },
@@ -135,9 +144,17 @@ export default {
         { title: "Contact", value: "contact" },
         { title: "FAQ", value: "faq" },
       ],
+      showCpuCuForm: false,
     };
   },
   methods: {
+    rerenderCpuList() {
+      this.cpuListFlag = false;
+
+      this.$nextTick(() => {
+        this.cpuListFlag = true;
+      });
+    },
     onClickToTopPage() {
       document.body.scrollTop = 0;
       document.documentElement.scrollTop = 0;

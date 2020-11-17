@@ -1,5 +1,20 @@
-const { response } = require("express");
-let db = require("./db");
+let db = require("../src/db");
+let fs = require("fs");
+let path = require("path");
+let multer = require("multer");
+let publicFilePath = "./public/cpu/";
+let storage = multer.diskStorage({
+	destination: function (req, file, callback) {
+		callback(null, publicFilePath);
+	},
+	filename: function (req, file, callback) {
+		callback(
+			null,
+			file.fieldname + "-" + Date.now() + path.extname(file.originalname),
+		);
+	},
+});
+let upload = multer({ storage: storage }).single("img");
 
 module.exports = {
 	search: (req, res) => {
@@ -8,8 +23,9 @@ module.exports = {
 			db.query(sql, (err, response) => {
 				if (err) {
 					res.status(500);
+				} else {
+					res.json(response);
 				}
-				res.json(response);
 			});
 		} else {
 			let query = " WHERE ";
@@ -25,8 +41,9 @@ module.exports = {
 			db.query(sql + query + "1", (err, response) => {
 				if (err) {
 					res.status(500);
+				} else {
+					res.json(response);
 				}
-				res.json(response);
 			});
 		}
 	},
@@ -35,8 +52,9 @@ module.exports = {
 		db.query(sql, [req.params.id], (err, response) => {
 			if (err) {
 				res.status(500);
+			} else {
+				res.json(response);
 			}
-			res.json(response);
 		});
 	},
 	delete: (req, res) => {
@@ -44,8 +62,9 @@ module.exports = {
 		db.query(sql, [req.params.id], (err, response) => {
 			if (err) {
 				res.status(500);
+			} else {
+				res.json("Deleted");
 			}
-			res.json("Deleted");
 		});
 	},
 	insert: (req, res) => {
@@ -53,8 +72,9 @@ module.exports = {
 		db.query(sql, [req.body], (err, response) => {
 			if (err) {
 				res.status(500);
+			} else {
+				res.json("Inserted");
 			}
-			res.json("Inserted");
 		});
 	},
 	update: (req, res) => {
@@ -62,8 +82,17 @@ module.exports = {
 		db.query(sql, [req.body, req.params.id], (err, response) => {
 			if (err) {
 				res.status(500);
+			} else {
+				res.json("Updated");
 			}
-			res.json("Updated");
 		});
+	},
+	saveImage: (req, res) => {
+		upload(req, res, (err) => {
+			res.json(req.file);
+		});
+	},
+	deleteImage: (req, res) => {
+		console.log(req);
 	},
 };
