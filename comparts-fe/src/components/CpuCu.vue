@@ -139,15 +139,6 @@
             </v-col>
           </v-row>
           <v-row>
-            <v-col>
-              <v-file-input
-                prepend-icon="mdi-camera"
-                accept="image/*"
-                label="Image"
-                @change="onImageChange"
-                @click:clear="onImageClear"
-              ></v-file-input>
-            </v-col>
             <v-col cols="6">
               <v-card class="cpu-cu-dialog__image-preview">
                 <v-list-item>
@@ -157,10 +148,20 @@
                       height="150"
                       class="cpu-cu-dialog__image-preview"
                       :src="urlImg"
-                    ></v-img>
+                    >
+                    </v-img>
                   </v-list-item-content>
                 </v-list-item>
               </v-card>
+            </v-col>
+            <v-col>
+              <v-file-input
+                prepend-icon="mdi-camera"
+                accept="image/*"
+                label="Image"
+                @change="onImageChange"
+                @click:clear="onImageClear"
+              ></v-file-input>
             </v-col>
           </v-row>
         </v-container>
