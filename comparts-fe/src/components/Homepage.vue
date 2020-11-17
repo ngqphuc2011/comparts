@@ -186,14 +186,6 @@ export default {
     onClickItemTitle(val) {
       this.$router.push({ path: val }).catch(() => {});
     },
-    onClickCpuManufacturer(item) {
-      axios.get(`${this.url.cpu}?manufacturer=${item}`).then((res) => {
-        this.cpuList.length = 0;
-        res.data.forEach((item) => {
-          this.cpuList.push(item);
-        });
-      });
-    },
   },
 };
 </script>
