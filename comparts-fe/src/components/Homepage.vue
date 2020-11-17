@@ -84,7 +84,7 @@
           <v-btn fab dark color="grey">
             <v-icon>mdi-progress-wrench</v-icon>
           </v-btn>
-          <v-btn @click="showCpuCuForm = true" fab dark color="grey">
+          <v-btn @click="onClickAddButton" fab dark color="grey">
             <v-icon>mdi-plus</v-icon>
           </v-btn>
           <v-btn @click="onClickToTopPage" fab dark color="grey">
@@ -105,6 +105,9 @@
           </v-btn>
         </v-row>
       </v-footer>
+      <v-snackbar v-model="snackbar" :timeout="1000">
+        Please choose one of these categories to use this feature
+      </v-snackbar>
       <cpu-cu
         v-if="showCpuCuForm"
         :visible="showCpuCuForm"
@@ -128,6 +131,7 @@ export default {
     return {
       drawer: null,
       fab: false,
+      snackbar: false,
       cpuListFlag: true,
       menuItems: [
         { title: "Processor", icon: "mdi-cpu-64-bit", value: "cpu" },
@@ -166,6 +170,15 @@ export default {
           this.$router.go(0);
         })
         .catch(() => {});
+    },
+    onClickAddButton() {
+      switch (this.$router.currentRoute.path) {
+        case "/cpu":
+          this.showCpuCuForm = true;
+          break;
+        default:
+          this.snackbar = true;
+      }
     },
     onToggleDrawer() {
       this.drawer = !this.drawer;
