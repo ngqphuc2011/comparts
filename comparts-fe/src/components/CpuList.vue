@@ -14,6 +14,7 @@
             dense
             v-model="selectedManufacturer"
             :items="cpuManufacturerList"
+            @keyup.enter="onClickSearchButton"
             label="Manufacturer"
             multiple
             chips
@@ -26,6 +27,7 @@
             dense
             v-model="selectedSocket"
             :items="cpuSocketList"
+            @keyup.enter="onClickSearchButton"
             label="Socket"
             multiple
             chips
@@ -38,6 +40,7 @@
             dense
             v-model="selectedCoreNum"
             :items="cpuCoreNumList"
+            @keyup.enter="onClickSearchButton"
             label="Number of Cores"
             multiple
             chips
@@ -50,6 +53,7 @@
             dense
             v-model="selectedThreadNum"
             :items="cpuThreadNumList"
+            @keyup.enter="onClickSearchButton"
             label="Number of Threads"
             multiple
             chips
@@ -184,7 +188,6 @@ export default {
     this.searchCpuList();
   },
   methods: {
-    rerenderCpuList() {},
     onClickSearchButton() {
       let url = this.url.cpu + "?";
       this.selectedManufacturer.forEach((manufacturer) => {
@@ -234,9 +237,16 @@ export default {
         img: cpu.img,
       };
     },
+    clearList() {
+      this.cpuList = [];
+      this.cpuManufacturerList = [];
+      this.cpuSocketList = [];
+      this.cpuCoreNumList = [];
+      this.cpuThreadNumList = [];
+    },
     searchCpuList() {
       this.$http.get(this.url.cpu).then((res) => {
-        this.cpuList = [];
+        this.clearList();
         res.data.forEach((cpu) => {
           cpu.reveal = false;
           this.cpuList.push(cpu);
