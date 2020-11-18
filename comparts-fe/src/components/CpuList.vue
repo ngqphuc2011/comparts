@@ -3,7 +3,7 @@
     <v-card class="ma-3 cpu-list__search-filter">
       <v-list-item>
         <v-list-item-content>
-          <v-btn text @click="onClickSearchButton">Search</v-btn>
+          <v-btn color="primary" text @click="onClickSearchButton">Search</v-btn>
         </v-list-item-content>
       </v-list-item>
       <v-list-item>
@@ -17,16 +17,9 @@
           ></v-combobox>
         </v-list-item-content>
       </v-list-item>
-
       <v-list-item>
         <v-list-item-content>
-          <v-combobox
-            v-model="selectedSocket"
-            :items="cpuSocketList"
-            label="Socket"
-            multiple
-            chips
-          ></v-combobox>
+          <v-combobox v-model="selectedSocket" :items="cpuSocketList" label="Socket" multiple chips></v-combobox>
         </v-list-item-content>
       </v-list-item>
       <v-list-item>
@@ -56,64 +49,55 @@
       <v-col v-for="(cpu, index) in cpuList" :key="index" cols="2">
         <v-card
           class="cpu-list__card"
+          @click="onClickCard(cpu)"
           @mouseover="onMouseOverCard(cpu)"
           @mouseleave="onMouseLeaveCard(cpu)"
         >
           <v-img height="200" contain :src="url.cpuImg + cpu.img"></v-img>
-          <v-card-title class="ellipsis">{{
+          <v-card-title class="ellipsis">
+            {{
             cpu.manufacturer + " " + cpu.name
-          }}</v-card-title>
+            }}
+          </v-card-title>
           <v-card-text class="cpu-list__card__description">
-            <div class="subtitle-1 red--text ellipsis">
-              ₫ • {{ formatNumber(cpu.price) }}
-            </div>
-            <div class="subtitle-2 ellipsis">
-              • Base Frequency: {{ cpu.base_frequency }} MHz
-            </div>
-            <div v-if="cpu.turbo_frequency" class="subtitle-2 ellipsis">
-              • Turbo Frequency: {{ cpu.turbo_frequency }} MHz
-            </div>
-            <div class="subtitle-2 ellipsis">
-              • Number of Cores: {{ cpu.core_num }}
-            </div>
-            <div class="subtitle-2 ellipsis">
-              • Number of Threads: {{ cpu.thread_num }}
-            </div>
+            <div class="subtitle-1 red--text ellipsis">₫ • {{ formatNumber(cpu.price) }}</div>
+            <div class="subtitle-2 ellipsis">• Base Frequency: {{ cpu.base_frequency }} MHz</div>
+            <div
+              v-if="cpu.turbo_frequency"
+              class="subtitle-2 ellipsis"
+            >• Turbo Frequency: {{ cpu.turbo_frequency }} MHz</div>
+            <div class="subtitle-2 ellipsis">• Number of Cores: {{ cpu.core_num }}</div>
+            <div class="subtitle-2 ellipsis">• Number of Threads: {{ cpu.thread_num }}</div>
           </v-card-text>
 
           <v-expand-transition>
-            <v-card
-              v-if="cpu.reveal"
-              class="transition-fast-in-fast-out cpu-list__card--reveal"
-            >
+            <v-card v-if="cpu.reveal" class="transition-fast-in-fast-out cpu-list__card--reveal">
               <v-card-text class="pb-0">
                 <div class="title text--primary">Specification</div>
                 <v-divider class="mb-4"></v-divider>
                 <div class="subtitle-2">• CPU Name: {{ cpu.name }}</div>
-                <div class="subtitle-2">
-                  • Manufacturer: {{ cpu.manufacturer }}
-                </div>
+                <div class="subtitle-2">• Manufacturer: {{ cpu.manufacturer }}</div>
                 <div class="subtitle-2">
                   • Number of Threads: {{ cpu.thread_num }}
-                  <div class="subtitle-2">
-                    • Base Frequency: {{ cpu.base_frequency }} MHz
-                  </div>
-                  <div v-if="cpu.turbo_frequency" class="subtitle-2">
-                    • Turbo Frequency: {{ cpu.turbo_frequency }} MHz
-                  </div>
+                  <div class="subtitle-2">• Base Frequency: {{ cpu.base_frequency }} MHz</div>
+                  <div
+                    v-if="cpu.turbo_frequency"
+                    class="subtitle-2"
+                  >• Turbo Frequency: {{ cpu.turbo_frequency }} MHz</div>
                   <div class="subtitle-2">• Cache: {{ cpu.cache }} MB</div>
                   <div class="subtitle-2">• Socket: {{ cpu.socket }}</div>
                   <div class="subtitle-2">• TDP: {{ cpu.tdp }} W</div>
                   <div class="subtitle-2">
                     • Supported Memory: {{ cpu.memory_type }}-{{
-                      cpu.memory_frequency
+                    cpu.memory_frequency
                     }}
                     MHz
                   </div>
                   <div class="subtitle-2">• Process: {{ cpu.process }} nm</div>
-                  <div v-if="cpu.graphics" class="subtitle-2">
-                    • Integrated Graphics: {{ cpu.graphics }}
-                  </div>
+                  <div
+                    v-if="cpu.graphics"
+                    class="subtitle-2"
+                  >• Integrated Graphics: {{ cpu.graphics }}</div>
                 </div>
               </v-card-text>
             </v-card>
@@ -121,17 +105,27 @@
         </v-card>
       </v-col>
     </v-row>
+    <cpu-cu
+      v-if="showCpuCuForm"
+      :visible="showCpuCuForm"
+      mode="U"
+      :originalCpu="selectedCpu"
+      @close="showCpuCuForm = false"
+      @search="searchCpuList"
+    />
   </v-container>
 </template>
 
 <script>
+import CpuCu from "./CpuCu";
 export default {
   name: "CpuList",
+  components: { CpuCu },
   data() {
     return {
       url: {
         cpu: "http://localhost:3000/cpu/",
-        cpuImg: "http://localhost:3000/public/cpu/",
+        cpuImg: "http://localhost:3000/public/cpu/"
       },
       cpuList: [],
       cpuManufacturerList: [],
@@ -143,29 +137,49 @@ export default {
       selectedSocket: [],
       selectedCoreNum: [],
       selectedThreadNum: [],
+
+      showCpuCuForm: false,
+      selectedCpu: {
+        name: "",
+        manufacturer: "",
+        socket: "",
+        coreNum: 0,
+        threadNum: 0,
+        baseFrequency: 0,
+        turboFrequency: 0,
+        cache: 0,
+        tdp: 0,
+        memoryType: "",
+        memoryFrequency: 0,
+        process: 0,
+        graphics: "",
+        price: 0,
+        img: ""
+      }
     };
   },
   created() {
     this.searchCpuList();
   },
   methods: {
+    rerenderCpuList() {},
     onClickSearchButton() {
       let url = this.url.cpu + "?";
-      this.selectedManufacturer.forEach((manufacturer) => {
+      this.selectedManufacturer.forEach(manufacturer => {
         url += `manufacturer=${manufacturer}&`;
       });
-      this.selectedSocket.forEach((socket) => {
+      this.selectedSocket.forEach(socket => {
         url += `socket=${socket}&`;
       });
-      this.selectedCoreNum.forEach((core_num) => {
+      this.selectedCoreNum.forEach(core_num => {
         url += `core_num=${core_num}&`;
       });
-      this.selectedThreadNum.forEach((thread_num) => {
+      this.selectedThreadNum.forEach(thread_num => {
         url += `thread_num=${thread_num}&`;
       });
-      this.$http.get(url).then((res) => {
+      this.$http.get(url).then(res => {
         this.cpuList = [];
-        res.data.forEach((cpu) => {
+        res.data.forEach(cpu => {
           cpu.reveal = false;
           this.cpuList.push(cpu);
         });
@@ -177,10 +191,31 @@ export default {
     onMouseLeaveCard(cpu) {
       cpu.reveal = false;
     },
+    onClickCard(cpu) {
+      this.showCpuCuForm = true;
+      this.selectedCpu = {
+        id: cpu.id,
+        name: cpu.name,
+        manufacturer: cpu.manufacturer,
+        socket: cpu.socket,
+        coreNum: cpu.core_num,
+        threadNum: cpu.thread_num,
+        baseFrequency: cpu.base_frequency,
+        turboFrequency: cpu.turbo_frequency,
+        cache: cpu.cache,
+        tdp: cpu.tdp,
+        memoryType: cpu.memory_type,
+        memoryFrequency: cpu.memory_frequency,
+        process: cpu.process,
+        graphics: cpu.graphics,
+        price: cpu.price,
+        img: cpu.img
+      };
+    },
     searchCpuList() {
-      this.$http.get(this.url.cpu).then((res) => {
+      this.$http.get(this.url.cpu).then(res => {
         this.cpuList = [];
-        res.data.forEach((cpu) => {
+        res.data.forEach(cpu => {
           cpu.reveal = false;
           this.cpuList.push(cpu);
           if (this.cpuManufacturerList.indexOf(cpu.manufacturer) === -1) {
@@ -201,8 +236,8 @@ export default {
         this.cpuCoreNumList.sort((a, b) => a - b);
         this.cpuThreadNumList.sort((a, b) => a - b);
       });
-    },
-  },
+    }
+  }
 };
 </script>
 

@@ -154,7 +154,6 @@ export default {
   methods: {
     rerenderCpuList() {
       this.cpuListFlag = false;
-
       this.$nextTick(() => {
         this.cpuListFlag = true;
       });

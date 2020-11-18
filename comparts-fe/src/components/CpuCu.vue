@@ -1,7 +1,8 @@
 <template>
-  <v-dialog v-model="visible" persistent max-width="40%" class="cpu-cu-dialog">
+  <v-dialog v-model="visible" max-width="50%" persistent class="cpu-cu-dialog">
     <v-card>
-      <v-card-title class="headline"> Add CPU </v-card-title>
+      <v-card-title v-if="mode === 'C'" class="headline">Add CPU</v-card-title>
+      <v-card-title v-if="mode === 'U'" class="headline">Edit CPU</v-card-title>
       <v-form v-model="valid" ref="form">
         <v-container class="pl-8 pr-8">
           <v-row>
@@ -11,6 +12,7 @@
                 label="Name"
                 :rules="textRules"
                 :counter="50"
+                :disabled="!isEditable"
               ></v-text-field>
             </v-col>
           </v-row>
@@ -21,6 +23,7 @@
                 label="Manufacturer"
                 :rules="textRules"
                 :counter="50"
+                :disabled="!isEditable"
               ></v-text-field>
             </v-col>
             <v-col>
@@ -28,8 +31,8 @@
                 v-model="cpu.graphics"
                 label="Graphics"
                 :counter="50"
-              >
-              </v-text-field>
+                :disabled="!isEditable"
+              ></v-text-field>
             </v-col>
           </v-row>
           <v-row>
@@ -39,8 +42,8 @@
                 label="Socket"
                 :rules="textRules"
                 :counter="50"
-              >
-              </v-text-field>
+                :disabled="!isEditable"
+              ></v-text-field>
             </v-col>
             <v-col>
               <v-text-field
@@ -48,8 +51,8 @@
                 type="number"
                 suffix="nm"
                 label="Process"
-              >
-              </v-text-field>
+                :disabled="!isEditable"
+              ></v-text-field>
             </v-col>
           </v-row>
           <v-row>
@@ -59,8 +62,8 @@
                 type="number"
                 :rules="numberRules"
                 label="Number of Cores"
-              >
-              </v-text-field>
+                :disabled="!isEditable"
+              ></v-text-field>
             </v-col>
             <v-col>
               <v-text-field
@@ -68,8 +71,8 @@
                 type="number"
                 :rules="numberRules"
                 label="Number of Threads"
-              >
-              </v-text-field>
+                :disabled="!isEditable"
+              ></v-text-field>
             </v-col>
             <v-col>
               <v-text-field
@@ -78,8 +81,8 @@
                 label="Base Frequency"
                 :rules="numberRules"
                 suffix="MHz"
-              >
-              </v-text-field>
+                :disabled="!isEditable"
+              ></v-text-field>
             </v-col>
             <v-col>
               <v-text-field
@@ -87,8 +90,8 @@
                 type="number"
                 label="Turbo Frequency"
                 suffix="MHz"
-              >
-              </v-text-field>
+                :disabled="!isEditable"
+              ></v-text-field>
             </v-col>
           </v-row>
 
@@ -99,8 +102,8 @@
                 type="number"
                 label="Cache"
                 suffix="MB"
-              >
-              </v-text-field>
+                :disabled="!isEditable"
+              ></v-text-field>
             </v-col>
             <v-col>
               <v-text-field
@@ -108,14 +111,11 @@
                 type="number"
                 label="TDP"
                 suffix="W"
-              >
-              </v-text-field>
+                :disabled="!isEditable"
+              ></v-text-field>
             </v-col>
             <v-col>
-              <v-text-field
-                v-model="cpu.memoryType"
-                label="Memory Type"
-              ></v-text-field>
+              <v-text-field v-model="cpu.memoryType" label="Memory Type" :disabled="!isEditable"></v-text-field>
             </v-col>
             <v-col>
               <v-text-field
@@ -123,8 +123,8 @@
                 type="number"
                 label="Memory Frequency"
                 suffix="MHz"
-              >
-              </v-text-field>
+                :disabled="!isEditable"
+              ></v-text-field>
             </v-col>
           </v-row>
           <v-row>
@@ -134,8 +134,9 @@
                 type="number"
                 label="Price"
                 prefix="₫"
-              >
-              </v-text-field>
+                :rules="intRules"
+                :disabled="!isEditable"
+              ></v-text-field>
             </v-col>
           </v-row>
           <v-row>
@@ -143,13 +144,7 @@
               <v-card class="cpu-cu-dialog__image-preview">
                 <v-list-item>
                   <v-list-item-content>
-                    <v-img
-                      contain
-                      height="150"
-                      class="cpu-cu-dialog__image-preview"
-                      :src="urlImg"
-                    >
-                    </v-img>
+                    <v-img contain height="150" class="cpu-cu-dialog__image-preview" :src="urlImg"></v-img>
                   </v-list-item-content>
                 </v-list-item>
               </v-card>
@@ -161,16 +156,48 @@
                 label="Image"
                 @change="onImageChange"
                 @click:clear="onImageClear"
+                :disabled="!isEditable"
               ></v-file-input>
             </v-col>
           </v-row>
         </v-container>
       </v-form>
       <v-card-actions>
+        <v-btn v-if="mode === 'U'" color="error" @click="onClickDeleteButton" text>Delete</v-btn>
         <v-spacer></v-spacer>
-        <v-btn text @click="onClickCancelButton">Cancel</v-btn>
-        <v-btn text @click="onClickSaveButton">Save</v-btn>
+        <v-btn v-if="isEditable" text @click="onClickCancelButton">Cancel</v-btn>
+
+        <v-btn v-if="!isEditable" text @click="onClickCancelDetailButton">Cancel</v-btn>
+        <v-btn color="primary" v-if="!isEditable" text @click="onClickModifyButton">Modify</v-btn>
+        <v-btn
+          color="primary"
+          v-if="isEditable"
+          text
+          @click="onClickSaveButton"
+        >Save</v-btn>
       </v-card-actions>
+      <v-dialog v-model="discardConfirmDialog" persistent max-width="250">
+        <v-card>
+          <v-card-title class="headline">Confirm</v-card-title>
+          <v-card-text>Unsaved changes will be lost. Are you sure?</v-card-text>
+          <v-card-actions>
+            <v-spacer></v-spacer>
+            <v-btn text @click="onClickCancelDiscardButton">Cancel</v-btn>
+            <v-btn color="error" text @click="onClickAcceptDiscardButton">Discard</v-btn>
+          </v-card-actions>
+        </v-card>
+      </v-dialog>
+      <v-dialog v-if="mode === 'U'" v-model="deleteConfirmDialog" persistent max-width="250">
+        <v-card>
+          <v-card-title class="headline">Confirm</v-card-title>
+          <v-card-text>Are you sure to delete this item?</v-card-text>
+          <v-card-actions>
+            <v-spacer></v-spacer>
+            <v-btn text @click="onClickCancelDeleteButton">Cancel</v-btn>
+            <v-btn color="error" text @click="onClickAcceptDeleteButton(cpu.id)">Delete</v-btn>
+          </v-card-actions>
+        </v-card>
+      </v-dialog>
     </v-card>
   </v-dialog>
 </template>
@@ -181,16 +208,17 @@ export default {
   props: {
     visible: {
       type: Boolean,
-      default: false,
+      default: false
     },
     mode: {
       type: String,
-      default: "C",
+      default: "C"
     },
-    cpu: {
+    originalCpu: {
       type: Object,
       default: () => {
         return {
+          id: 0,
           name: "",
           manufacturer: "",
           socket: "",
@@ -205,82 +233,173 @@ export default {
           process: 0,
           graphics: "",
           price: 0,
-          img: "",
+          img: ""
         };
-      },
-    },
+      }
+    }
   },
   data() {
     return {
+      isEditable: false,
+      cpu: {},
       urlImg: "",
       url: {
         cpu: "http://localhost:3000/cpu/",
         cpuImg: "http://localhost:3000/public/cpu/",
-        cpuUploadImg: "http://localhost:3000/cpu/upload/",
+        cpuUploadImg: "http://localhost:3000/cpu/upload/"
       },
       valid: false,
       textRules: [
-        (v) => !!v || "This field is required",
-        (v) =>
+        v => !!v || "This field is required",
+        v =>
           v.length <= 50 ||
-          "This field must be equal or less than 50 characters",
+          "This field must be equal or less than 50 characters"
       ],
       numberRules: [
-        (v) => !!v || "This field is required",
-        (v) =>
-          (v <= 66536 && v > 0) || "This field must be between 0 and 66536",
+        v => !!v || "This field is required",
+        v => (v <= 66536 && v > 0) || "This field must be between 0 and 66,536"
       ],
+      intRules: [
+        v =>
+          v <= 2147483647 ||
+          "This field must be equal or less than 2,147,483,647"
+      ],
+      deleteConfirmDialog: false,
+      discardConfirmDialog: false
     };
   },
+  computed: {
+    isEdited() {
+      return JSON.stringify(this.originalCpu) !== JSON.stringify(this.cpu);
+    }
+  },
+  created() {
+    if (this.mode === "C") {
+      this.isEditable = true;
+    }
+    this.cpu = { ...this.originalCpu };
+    this.urlImg = this.url.cpuImg + this.cpu.img;
+  },
   methods: {
+    onClickModifyButton() {
+      this.isEditable = true;
+    },
+    onClickCancelDeleteButton() {
+      this.deleteConfirmDialog = false;
+    },
+    onClickAcceptDeleteButton(id) {
+      this.$http.delete(this.url.cpu + id).then(() => {
+        this.deleteConfirmDialog = false;
+        this.$emit("close");
+        this.$emit("search");
+      });
+    },
+    onClickDeleteButton() {
+      this.deleteConfirmDialog = true;
+    },
+    onClickCancelDiscardButton() {
+      this.discardConfirmDialog = false;
+    },
+    onClickAcceptDiscardButton() {
+      if (this.mode === "U") {
+        this.isEditable = false;
+        this.discardConfirmDialog = false;
+        this.cpu = { ...this.originalCpu };
+      } else {
+        this.$emit("close");
+      }
+    },
     onClickCancelButton() {
+      if (this.isEdited) {
+        this.discardConfirmDialog = true;
+      } else {
+        this.onClickAcceptDiscardButton();
+      }
+    },
+    onClickCancelDetailButton() {
       this.$emit("close");
     },
     onClickSaveButton() {
       if (this.$refs.form.validate()) {
-        let formData = new FormData();
-        formData.append("img", this.cpu.img);
-        this.$http.post(this.url.cpuUploadImg, formData).then((res) => {
-          let body = {
-            name: this.cpu.name,
-            manufacturer: this.cpu.manufacturer,
-            socket: this.cpu.socket,
-            core_num: this.cpu.coreNum,
-            thread_num: this.cpu.threadNum,
-            base_frequency: this.cpu.baseFrequency,
-            turbo_frequency: this.cpu.turboFrequency,
-            cache: this.cpu.cache,
-            tdp: this.cpu.tdp,
-            memory_type: this.cpu.memoryType,
-            memory_frequency: this.cpu.memoryFrequency,
-            process: this.cpu.process,
-            graphics: this.cpu.graphics,
-            price: this.cpu.price,
-            img: res.data.filename,
-          };
-          this.$http
-            .post(this.url.cpu, body)
-            .then((res) => {
-              this.$emit("close");
-              this.$emit("search");
-            })
-            .catch((err) => {
-              this.$http.delete(this.url.cpuUploadImg, res.data.filename);
-            });
-        });
+        if (this.mode === "C") {
+          let formData = new FormData();
+          formData.append("img", this.cpu.imgFile);
+          this.$http.post(this.url.cpuUploadImg, formData).then(res => {
+            let body = {
+              name: this.cpu.name,
+              manufacturer: this.cpu.manufacturer,
+              socket: this.cpu.socket,
+              core_num: this.cpu.coreNum,
+              thread_num: this.cpu.threadNum,
+              base_frequency: this.cpu.baseFrequency,
+              turbo_frequency: this.cpu.turboFrequency,
+              cache: this.cpu.cache,
+              tdp: this.cpu.tdp,
+              memory_type: this.cpu.memoryType,
+              memory_frequency: this.cpu.memoryFrequency,
+              process: this.cpu.process,
+              graphics: this.cpu.graphics,
+              price: this.cpu.price,
+              img: res.data.filename
+            };
+            this.$http
+              .post(this.url.cpu, body)
+              .then(res => {
+                this.$emit("close");
+                this.$emit("search");
+              })
+              .catch(err => {
+                this.$http.delete(this.url.cpuUploadImg, res.data.filename);
+              });
+          });
+        } else if (this.mode === "U") {
+          let formData = new FormData();
+          formData.append("img", this.cpu.imgFile);
+          this.$http.post(this.url.cpuUploadImg, formData).then(res => {
+            let body = {
+              name: this.cpu.name,
+              manufacturer: this.cpu.manufacturer,
+              socket: this.cpu.socket,
+              core_num: this.cpu.coreNum,
+              thread_num: this.cpu.threadNum,
+              base_frequency: this.cpu.baseFrequency,
+              turbo_frequency: this.cpu.turboFrequency,
+              cache: this.cpu.cache,
+              tdp: this.cpu.tdp,
+              memory_type: this.cpu.memoryType,
+              memory_frequency: this.cpu.memoryFrequency,
+              process: this.cpu.process,
+              graphics: this.cpu.graphics,
+              price: this.cpu.price,
+              img: res.data.filename
+            };
+            this.$http
+              .put(this.url.cpu + this.cpu.id, body)
+              .then(res => {
+                this.$emit("close");
+                this.$emit("search");
+              })
+              .catch(err => {
+                this.$http.delete(this.url.cpuUploadImg, res.data.filename);
+              });
+          });
+        }
       }
     },
     onImageChange(img) {
       if (img) {
-        this.cpu.img = img;
-        this.urlImg = URL.createObjectURL(img);
+        this.cpu.imgFile = img;
+        this.setUrlImg(img);
       }
     },
-    onImageClear() {
-      this.cpu.img = "";
-      this.urlImg = "";
+    setUrlImg(img) {
+      this.urlImg = URL.createObjectURL(img);
     },
-  },
+    onImageClear() {
+      this.cpu.imgFile = "";
+      this.urlImg = "";
+    }
+  }
 };
 </script>
 <style scoped>

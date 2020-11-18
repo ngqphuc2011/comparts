@@ -95,4 +95,7 @@ module.exports = {
 	deleteImage: (req, res) => {
 		console.log(req);
 	},
+	getDummyImage: (req, res) => {
+		res.end()
+	}
 };
