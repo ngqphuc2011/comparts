@@ -8,9 +8,10 @@
           <v-row>
             <v-col>
               <v-text-field
+                dense
                 v-model="cpu.name"
                 label="Name"
-                :rules="textRules"
+                :rules="validationRules.textRequiredRules"
                 :counter="50"
                 :disabled="!isEditable"
               ></v-text-field>
@@ -19,17 +20,20 @@
           <v-row>
             <v-col>
               <v-text-field
+                dense
                 v-model="cpu.manufacturer"
                 label="Manufacturer"
-                :rules="textRules"
+                :rules="validationRules.textRequiredRules"
                 :counter="50"
                 :disabled="!isEditable"
               ></v-text-field>
             </v-col>
             <v-col>
               <v-text-field
+                dense
                 v-model="cpu.graphics"
                 label="Graphics"
+                :rules="validationRules.textRules"
                 :counter="50"
                 :disabled="!isEditable"
               ></v-text-field>
@@ -38,18 +42,21 @@
           <v-row>
             <v-col>
               <v-text-field
+                dense
                 v-model="cpu.socket"
                 label="Socket"
-                :rules="textRules"
+                :rules="validationRules.textRequiredRules"
                 :counter="50"
                 :disabled="!isEditable"
               ></v-text-field>
             </v-col>
             <v-col>
               <v-text-field
+                dense
                 v-model="cpu.process"
                 type="number"
                 suffix="nm"
+                :rules="validationRules.numberRules"
                 label="Process"
                 :disabled="!isEditable"
               ></v-text-field>
@@ -58,37 +65,42 @@
           <v-row>
             <v-col>
               <v-text-field
+                dense
                 v-model="cpu.coreNum"
                 type="number"
-                :rules="numberRules"
+                :rules="validationRules.numberRequiredRules"
                 label="Number of Cores"
                 :disabled="!isEditable"
               ></v-text-field>
             </v-col>
             <v-col>
               <v-text-field
+                dense
                 v-model="cpu.threadNum"
                 type="number"
-                :rules="numberRules"
+                :rules="validationRules.numberRequiredRules"
                 label="Number of Threads"
                 :disabled="!isEditable"
               ></v-text-field>
             </v-col>
             <v-col>
               <v-text-field
+                dense
                 v-model="cpu.baseFrequency"
                 type="number"
                 label="Base Frequency"
-                :rules="numberRules"
+                :rules="validationRules.numberRequiredRules"
                 suffix="MHz"
                 :disabled="!isEditable"
               ></v-text-field>
             </v-col>
             <v-col>
               <v-text-field
+                dense
                 v-model="cpu.turboFrequency"
                 type="number"
                 label="Turbo Frequency"
+                :rules="validationRules.numberRules"
                 suffix="MHz"
                 :disabled="!isEditable"
               ></v-text-field>
@@ -98,29 +110,41 @@
           <v-row>
             <v-col>
               <v-text-field
+                dense
                 v-model="cpu.cache"
                 type="number"
                 label="Cache"
+                :rules="validationRules.numberRules"
                 suffix="MB"
                 :disabled="!isEditable"
               ></v-text-field>
             </v-col>
             <v-col>
               <v-text-field
+                dense
                 v-model="cpu.tdp"
                 type="number"
                 label="TDP"
+                :rules="validationRules.numberRules"
                 suffix="W"
                 :disabled="!isEditable"
               ></v-text-field>
             </v-col>
             <v-col>
-              <v-text-field v-model="cpu.memoryType" label="Memory Type" :disabled="!isEditable"></v-text-field>
+              <v-text-field
+                dense
+                v-model="cpu.memoryType"
+                :rules="validationRules.textRules"
+                label="Memory Type"
+                :disabled="!isEditable"
+              ></v-text-field>
             </v-col>
             <v-col>
               <v-text-field
+                dense
                 v-model="cpu.memoryFrequency"
                 type="number"
+                :rules="validationRules.numberRules"
                 label="Memory Frequency"
                 suffix="MHz"
                 :disabled="!isEditable"
@@ -130,11 +154,12 @@
           <v-row>
             <v-col>
               <v-text-field
+                dense
                 v-model="cpu.price"
                 type="number"
                 label="Price"
                 prefix="₫"
-                :rules="intRules"
+                :rules="validationRules.intRules"
                 :disabled="!isEditable"
               ></v-text-field>
             </v-col>
@@ -144,7 +169,12 @@
               <v-card class="cpu-cu-dialog__image-preview">
                 <v-list-item>
                   <v-list-item-content>
-                    <v-img contain height="150" class="cpu-cu-dialog__image-preview" :src="urlImg"></v-img>
+                    <v-img
+                      contain
+                      height="150"
+                      class="cpu-cu-dialog__image-preview"
+                      :src="urlImg"
+                    ></v-img>
                   </v-list-item-content>
                 </v-list-item>
               </v-card>
@@ -163,18 +193,31 @@
         </v-container>
       </v-form>
       <v-card-actions>
-        <v-btn v-if="mode === 'U'" color="error" @click="onClickDeleteButton" text>Delete</v-btn>
+        <v-btn
+          v-if="mode === 'U'"
+          color="error"
+          @click="onClickDeleteButton"
+          text
+          >Delete</v-btn
+        >
         <v-spacer></v-spacer>
-        <v-btn v-if="isEditable" text @click="onClickCancelButton">Cancel</v-btn>
+        <v-btn v-if="isEditable" text @click="onClickCancelButton"
+          >Cancel</v-btn
+        >
 
-        <v-btn v-if="!isEditable" text @click="onClickCancelDetailButton">Cancel</v-btn>
-        <v-btn color="primary" v-if="!isEditable" text @click="onClickModifyButton">Modify</v-btn>
+        <v-btn v-if="!isEditable" text @click="onClickCancelDetailButton"
+          >Cancel</v-btn
+        >
         <v-btn
           color="primary"
-          v-if="isEditable"
+          v-if="!isEditable"
           text
-          @click="onClickSaveButton"
-        >Save</v-btn>
+          @click="onClickModifyButton"
+          >Modify</v-btn
+        >
+        <v-btn color="primary" v-if="isEditable" text @click="onClickSaveButton"
+          >Save</v-btn
+        >
       </v-card-actions>
       <v-dialog v-model="discardConfirmDialog" persistent max-width="250">
         <v-card>
@@ -183,18 +226,27 @@
           <v-card-actions>
             <v-spacer></v-spacer>
             <v-btn text @click="onClickCancelDiscardButton">Cancel</v-btn>
-            <v-btn color="error" text @click="onClickAcceptDiscardButton">Discard</v-btn>
+            <v-btn color="error" text @click="onClickAcceptDiscardButton"
+              >Discard</v-btn
+            >
           </v-card-actions>
         </v-card>
       </v-dialog>
-      <v-dialog v-if="mode === 'U'" v-model="deleteConfirmDialog" persistent max-width="250">
+      <v-dialog
+        v-if="mode === 'U'"
+        v-model="deleteConfirmDialog"
+        persistent
+        max-width="250"
+      >
         <v-card>
           <v-card-title class="headline">Confirm</v-card-title>
           <v-card-text>Are you sure to delete this item?</v-card-text>
           <v-card-actions>
             <v-spacer></v-spacer>
             <v-btn text @click="onClickCancelDeleteButton">Cancel</v-btn>
-            <v-btn color="error" text @click="onClickAcceptDeleteButton(cpu.id)">Delete</v-btn>
+            <v-btn color="error" text @click="onClickAcceptDeleteButton(cpu.id)"
+              >Delete</v-btn
+            >
           </v-card-actions>
         </v-card>
       </v-dialog>
@@ -208,11 +260,11 @@ export default {
   props: {
     visible: {
       type: Boolean,
-      default: false
+      default: false,
     },
     mode: {
       type: String,
-      default: "C"
+      default: "C",
     },
     originalCpu: {
       type: Object,
@@ -233,10 +285,10 @@ export default {
           process: 0,
           graphics: "",
           price: 0,
-          img: ""
+          img: "",
         };
-      }
-    }
+      },
+    },
   },
   data() {
     return {
@@ -244,34 +296,46 @@ export default {
       cpu: {},
       urlImg: "",
       url: {
-        cpu: "http://localhost:3000/cpu/",
-        cpuImg: "http://localhost:3000/public/cpu/",
-        cpuUploadImg: "http://localhost:3000/cpu/upload/"
+        cpu: "http://localhost:3000/cpus/",
+        cpuImg: "http://localhost:3000/public/cpus/",
+        cpuUploadImg: "http://localhost:3000/cpus/upload/",
+      },
+      validationRules: {
+        textRequiredRules: [
+          (v) => !!v || "This field is required",
+          (v) =>
+            v.length <= 50 ||
+            "This field must be equal or less than 50 characters",
+        ],
+        textRules: [
+          (v) =>
+            v.length <= 50 ||
+            "This field must be equal or less than 50 characters",
+        ],
+        numberRequiredRules: [
+          (v) => !!v || "This field is required",
+          (v) =>
+            (v <= 66536 && v > 0) || "This field must be between 0 and 66,536",
+        ],
+        numberRules: [
+          (v) =>
+            (v <= 66536 && v > 0) || "This field must be between 0 and 66,536",
+        ],
+        intRules: [
+          (v) =>
+            v <= 2147483647 ||
+            "This field must be equal or less than 2,147,483,647",
+        ],
       },
       valid: false,
-      textRules: [
-        v => !!v || "This field is required",
-        v =>
-          v.length <= 50 ||
-          "This field must be equal or less than 50 characters"
-      ],
-      numberRules: [
-        v => !!v || "This field is required",
-        v => (v <= 66536 && v > 0) || "This field must be between 0 and 66,536"
-      ],
-      intRules: [
-        v =>
-          v <= 2147483647 ||
-          "This field must be equal or less than 2,147,483,647"
-      ],
       deleteConfirmDialog: false,
-      discardConfirmDialog: false
+      discardConfirmDialog: false,
     };
   },
   computed: {
     isEdited() {
       return JSON.stringify(this.originalCpu) !== JSON.stringify(this.cpu);
-    }
+    },
   },
   created() {
     if (this.mode === "C") {
@@ -324,7 +388,7 @@ export default {
         if (this.mode === "C") {
           let formData = new FormData();
           formData.append("img", this.cpu.imgFile);
-          this.$http.post(this.url.cpuUploadImg, formData).then(res => {
+          this.$http.post(this.url.cpuUploadImg, formData).then((res) => {
             let body = {
               name: this.cpu.name,
               manufacturer: this.cpu.manufacturer,
@@ -340,22 +404,22 @@ export default {
               process: this.cpu.process,
               graphics: this.cpu.graphics,
               price: this.cpu.price,
-              img: res.data.filename
+              img: res.data.filename,
             };
             this.$http
               .post(this.url.cpu, body)
-              .then(res => {
+              .then((res) => {
                 this.$emit("close");
                 this.$emit("search");
               })
-              .catch(err => {
+              .catch((err) => {
                 this.$http.delete(this.url.cpuUploadImg, res.data.filename);
               });
           });
         } else if (this.mode === "U") {
           let formData = new FormData();
           formData.append("img", this.cpu.imgFile);
-          this.$http.post(this.url.cpuUploadImg, formData).then(res => {
+          this.$http.post(this.url.cpuUploadImg, formData).then((res) => {
             let body = {
               name: this.cpu.name,
               manufacturer: this.cpu.manufacturer,
@@ -371,15 +435,15 @@ export default {
               process: this.cpu.process,
               graphics: this.cpu.graphics,
               price: this.cpu.price,
-              img: res.data.filename
+              img: res.data.filename,
             };
             this.$http
               .put(this.url.cpu + this.cpu.id, body)
-              .then(res => {
+              .then((res) => {
                 this.$emit("close");
                 this.$emit("search");
               })
-              .catch(err => {
+              .catch((err) => {
                 this.$http.delete(this.url.cpuUploadImg, res.data.filename);
               });
           });
@@ -398,8 +462,8 @@ export default {
     onImageClear() {
       this.cpu.imgFile = "";
       this.urlImg = "";
-    }
-  }
+    },
+  },
 };
 </script>
 <style scoped>

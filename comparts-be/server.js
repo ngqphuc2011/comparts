@@ -1,10 +1,11 @@
-let express = require("express");
-let bodyParser = require("body-parser");
-let routes = require("./src/routes");
-let path = require("path");
+require('dotenv').config();
+const express = require("express");
+const bodyParser = require("body-parser");
+const routes = require("./src/routes");
+const path = require("path");
 
-let app = express();
-let port = process.env.PORT || 3000;
+const app = express();
+const port = process.env.PORT || 3000;
 
 app.use(bodyParser.json({ limit: "50mb" }));
 app.use(bodyParser.urlencoded({ limit: "50mb", extended: true }));
