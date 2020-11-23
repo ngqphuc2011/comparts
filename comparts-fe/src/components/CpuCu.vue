@@ -406,6 +406,8 @@ export default {
               price: this.cpu.price,
               img: res.data.filename,
             };
+                this.$http.delete(this.url.cpuUploadImg, res.data.filename);
+
             this.$http
               .post(this.url.cpu, body)
               .then((res) => {

@@ -393,26 +393,60 @@ sequelize.sync({ force: true }).then(() => {
 
 module.exports = {
 	search: (req, res) => {
+		const getPagination = (page, size) => {
+			const limit = size ? +size : 6;
+			const offset = page ? page * limit : 0;
+
+			return { limit, offset };
+		};
+
+		const getPagingData = (data, page, limit) => {
+			const { count: totalItems, rows: items } = data;
+			const currentPage = page ? +page : 0;
+			const totalPages = Math.ceil(totalItems / limit);
+
+			return { totalItems, items, totalPages, currentPage };
+		};
+		const { page, size } = req.query;
+		console.log(page);
+		console.log(size);
+		const { limit, offset } = getPagination(page, size);
+
 		if (Object.keys(req.query).length !== 0) {
 			let where = [];
 			for (q in req.query) {
-				let obj = {};
-				if (req.query[q] instanceof Array) {
-					obj[q] = { [Op.in]: req.query[q] };
-				} else {
-					obj[q] = { [Op.in]: [req.query[q]] };
+				if (q !== "page" && q != "size") {
+					let obj = {};
+					if (req.query[q] instanceof Array) {
+						obj[q] = { [Op.in]: req.query[q] };
+					} else {
+						obj[q] = { [Op.in]: [req.query[q]] };
+					}
+					where.push(obj);
 				}
-				where.push(obj);
 			}
 			cpu
-				.findAll({
+				.findAndCountAll({
 					where: {
 						[Op.and]: where,
 					},
+					limit,
+					offset,
 				})
-				.then((cpus) => res.json(cpus));
+				.then((cpus) => {
+					const response = getPagingData(cpus, page, limit);
+					res.send(response);
+				});
 		} else {
-			cpu.findAll().then((cpus) => res.json(cpus));
+			cpu
+				.findAndCountAll({
+					limit,
+					offset,
+				})
+				.then((cpus) => {
+					const response = getPagingData(cpus, page, limit);
+					res.send(response);
+				});
 		}
 	},
 	detail: (req, res) => {
@@ -426,12 +460,12 @@ module.exports = {
 		});
 	},
 	create: (req, res) => {
+		console.log(req.body);
 		cpu.create(req.body).then(() => {
 			res.json("Created");
 		});
 	},
 	update: (req, res) => {
-		console.log(req.body);
 		cpu
 			.update(req.body, {
 				where: {
@@ -449,6 +483,7 @@ module.exports = {
 	},
 	deleteImage: (req, res) => {
 		console.log(req);
+		res.json("helloS");
 	},
 	getDummyImage: (req, res) => {
 		res.end();
