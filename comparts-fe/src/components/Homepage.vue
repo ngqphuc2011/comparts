@@ -118,8 +118,8 @@
 
 <script>
 import GettingStarted from "./GettingStarted";
-import CpuList from "./CpuList";
-import CpuCu from "./CpuCu";
+import CpuList from "./cpu/CpuList";
+import CpuCu from "./cpu/CpuCu";
 
 export default {
   components: { CpuList, CpuCu, GettingStarted },

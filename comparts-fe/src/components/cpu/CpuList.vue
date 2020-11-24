@@ -150,7 +150,7 @@
       mode="U"
       :originalCpu="selectedCpu"
       @close="showCpuCuForm = false"
-      @search="searchCpuList"
+      @search="buildPage"
     />
   </v-container>
 </template>
@@ -170,8 +170,9 @@ export default {
       totalPages: 1,
       pagination: {
         page: 0,
-        size: 3,
+        size: 12,
       },
+      searchQuery: {},
 
       cpuList: [],
       cpuManufacturerList: [],
@@ -207,31 +208,23 @@ export default {
   watch: {
     currentPage(page) {
       this.pagination.page = page - 1;
-      this.searchCpuList(this.url.cpu, this.pagination);
+      this.searchCpuList(this.url.cpu, this.pagination, this.searchQuery);
     },
   },
   created() {
-    this.buildSearchFilter();
-    this.searchCpuList(this.url.cpu, this.pagination);
+    this.buildPage();
   },
   methods: {
     onClickSearchButton() {
-      let url = this.url.cpu + "?";
-      this.selectedManufacturer.forEach((manufacturer) => {
-        url += `manufacturer=${manufacturer}&`;
-      });
-      this.selectedSocket.forEach((socket) => {
-        url += `socket=${socket}&`;
-      });
-      this.selectedCoreNum.forEach((core_num) => {
-        url += `core_num=${core_num}&`;
-      });
-      this.selectedThreadNum.forEach((thread_num) => {
-        url += `thread_num=${thread_num}&`;
-      });
+      this.searchQuery = {
+        manufacturer: this.selectedManufacturer,
+        socket: this.selectedSocket,
+        core_num: this.selectedCoreNum,
+        thread_num: this.selectedThreadNum,
+      };
       this.pagination.page = 0;
       this.currentPage = 1;
-      this.searchCpuList(url, this.pagination);
+      this.searchCpuList(this.url.cpu, this.pagination, this.searchQuery);
     },
     onMouseOverCard(cpu) {
       cpu.reveal = true;
@@ -261,38 +254,50 @@ export default {
       };
     },
 
-    searchCpuList(url, pagination) {
-      return this.$http.get(url, { params: { ...pagination } }).then((res) => {
-        console.log(res);
-        this.cpuList = [];
-        this.totalPages = res.data.totalPages;
-        res.data.items.forEach((cpu) => {
-          cpu.reveal = false;
-          this.cpuList.push(cpu);
+    searchCpuList(url, pagination, query) {
+      return this.$http
+        .get(url, { params: { ...pagination, ...query } })
+        .then((res) => {
+          this.cpuList = [];
+          this.totalPages = res.data.totalPages;
+          res.data.items.forEach((cpu) => {
+            cpu.reveal = false;
+            this.cpuList.push(cpu);
+          });
         });
-      });
     },
     buildSearchFilter() {
-      return this.$http.get(this.url.cpu + "?size=9999").then((res) => {
-        res.data.items.forEach((cpu) => {
-          if (this.cpuManufacturerList.indexOf(cpu.manufacturer) === -1) {
-            this.cpuManufacturerList.push(cpu.manufacturer);
-          }
-          if (this.cpuSocketList.indexOf(cpu.socket) === -1) {
-            this.cpuSocketList.push(cpu.socket);
-          }
-          if (this.cpuCoreNumList.indexOf(cpu.core_num) === -1) {
-            this.cpuCoreNumList.push(cpu.core_num);
-          }
-          if (this.cpuThreadNumList.indexOf(cpu.thread_num) === -1) {
-            this.cpuThreadNumList.push(cpu.thread_num);
-          }
+      this.cpuManufacturerList = [];
+      this.cpuSocketList = [];
+      this.cpuCoreNumList = [];
+      this.cpuThreadNumList = [];
+
+      return this.$http
+        .get(this.url.cpu, { params: { size: 9999 } })
+        .then((res) => {
+          res.data.items.forEach((cpu) => {
+            if (this.cpuManufacturerList.indexOf(cpu.manufacturer) === -1) {
+              this.cpuManufacturerList.push(cpu.manufacturer);
+            }
+            if (this.cpuSocketList.indexOf(cpu.socket) === -1) {
+              this.cpuSocketList.push(cpu.socket);
+            }
+            if (this.cpuCoreNumList.indexOf(cpu.core_num) === -1) {
+              this.cpuCoreNumList.push(cpu.core_num);
+            }
+            if (this.cpuThreadNumList.indexOf(cpu.thread_num) === -1) {
+              this.cpuThreadNumList.push(cpu.thread_num);
+            }
+          });
+          this.cpuManufacturerList.sort();
+          this.cpuSocketList.sort();
+          this.cpuCoreNumList.sort((a, b) => a - b);
+          this.cpuThreadNumList.sort((a, b) => a - b);
         });
-        this.cpuManufacturerList.sort();
-        this.cpuSocketList.sort();
-        this.cpuCoreNumList.sort((a, b) => a - b);
-        this.cpuThreadNumList.sort((a, b) => a - b);
-      });
+    },
+    buildPage() {
+      this.buildSearchFilter();
+      this.searchCpuList(this.url.cpu, this.pagination, this.searchQuery);
     },
   },
 };
