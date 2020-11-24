@@ -38,9 +38,7 @@
         >
           <v-list-item>
             <v-list-item-avatar>
-              <v-img
-                src="/static/assets/user.jpg"
-              ></v-img>
+              <v-img src="/static/assets/user.jpg"></v-img>
             </v-list-item-avatar>
 
             <v-list-item-content>
@@ -59,10 +57,15 @@
               @click="onClickItemTitle(item.value)"
               link
             >
-              <v-list-item-icon>
+              <!-- <v-list-item-icon>
                 <v-icon>{{ item.icon }}</v-icon>
-              </v-list-item-icon>
-
+              </v-list-item-icon> -->
+              <v-img
+                class="mr-4"
+                max-width="32px"
+                :src="'/static/assets/' + item.icon"
+              >
+              </v-img>
               <v-list-item-content>
                 <v-list-item-title>{{ item.title }}</v-list-item-title>
               </v-list-item-content>
@@ -84,7 +87,13 @@
           <v-btn fab dark color="grey">
             <v-icon>mdi-wrench</v-icon>
           </v-btn>
-          <v-btn v-if="$router.currentRoute.path !== '/'" @click="onClickAddButton" fab dark color="grey">
+          <v-btn
+            v-if="$router.currentRoute.path !== '/'"
+            @click="onClickAddButton"
+            fab
+            dark
+            color="grey"
+          >
             <v-icon>mdi-plus-thick</v-icon>
           </v-btn>
           <v-btn @click="onClickToTopPage" fab dark color="grey">
@@ -130,14 +139,14 @@ export default {
       fab: false,
       cpuListFlag: true,
       menuItems: [
-        { title: "Processor", icon: "mdi-cpu-64-bit", value: "cpu" },
-        { title: "Motherboard", icon: "mdi-cpu-64-bit", value: "mb" },
-        { title: "Memory", icon: "mdi-cpu-64-bit", value: "ram" },
-        { title: "Hard Disk Drive", icon: "mdi-cpu-64-bit", value: "hdd" },
-        { title: "Solid State Drive", icon: "mdi-cpu-64-bit", value: "ssd" },
-        { title: "Video Card", icon: "mdi-cpu-64-bit", value: "gpu" },
-        { title: "Power Supply", icon: "mdi-cpu-64-bit", value: "psu" },
-        { title: "Case", icon: "mdi-cpu-64-bit", value: "case" },
+        { title: "Processor", icon: "chip.svg", value: "cpu" },
+        { title: "Motherboard", icon: "motherboard.svg", value: "mb" },
+        { title: "Memory", icon: "ram-memory.svg", value: "ram" },
+        { title: "Hard Disk Drive", icon: "hard-drive.svg", value: "hdd" },
+        { title: "Solid State Drive", icon: "ssd.svg", value: "ssd" },
+        { title: "Video Card", icon: "video-card.svg", value: "gpu" },
+        { title: "Power Supply", icon: "power-supply.svg", value: "psu" },
+        { title: "Case", icon: "computer.svg", value: "case" },
       ],
       footerItems: [
         { title: "About Us", value: "aboutus" },
