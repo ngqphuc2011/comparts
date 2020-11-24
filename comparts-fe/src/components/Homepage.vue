@@ -62,7 +62,7 @@
               </v-list-item-icon> -->
               <v-img
                 class="mr-4"
-                max-width="32px"
+                max-width="24px"
                 :src="'/static/assets/' + item.icon"
               >
               </v-img>
