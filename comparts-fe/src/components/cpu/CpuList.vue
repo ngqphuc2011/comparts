@@ -62,7 +62,7 @@
       </v-list-item>
     </v-card>
     <div class="cpu-list__grid-page">
-      <v-row class="ml-3">
+      <v-row class="ml-3 cpu-list__grid-page__row">
         <v-col v-for="(cpu, index) in cpuList" :key="index" cols="2">
           <v-card
             class="cpu-list__card"
@@ -341,5 +341,8 @@ export default {
 }
 .cpu-list__grid-page {
   width: 100%;
+}
+.cpu-list__grid-page__row {
+  min-height: 840px;
 }
 </style>

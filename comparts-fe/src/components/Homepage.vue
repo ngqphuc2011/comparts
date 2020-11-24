@@ -39,7 +39,7 @@
           <v-list-item>
             <v-list-item-avatar>
               <v-img
-                src="http://www.afacebook.group/images/2018/03/23/600px-pica1.jpg"
+                src="/static/assets/user.jpg"
               ></v-img>
             </v-list-item-avatar>
 
