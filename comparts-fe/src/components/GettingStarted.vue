@@ -99,7 +99,8 @@ export default {
 <style scoped>
 .getting-started__card {
   cursor: pointer;
-  max-width: 250;
+  max-width: 250px;
+  min-height: 350px;
   height: 100%;
   padding-top: 50px
 }
