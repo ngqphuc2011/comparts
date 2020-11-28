@@ -118,6 +118,7 @@
                   <v-divider class="mb-4"></v-divider>
                   <div class="subtitle-2">• CPU Name: {{ cpu.name }}</div>
                   <div class="subtitle-2">• Manufacturer: {{ cpu.mfr }}</div>
+                  <div class="subtitle-2">• Number of Cores: {{ cpu.core_num }}</div>
                   <div class="subtitle-2">
                     • Number of Threads: {{ cpu.thread_num }}
                     <div class="subtitle-2">
