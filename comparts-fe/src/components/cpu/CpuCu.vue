@@ -83,7 +83,7 @@
                 v-model="cpu.threadNum"
                 type="number"
                 :rules="validationRules.numberRequiredRules"
-                label="Number of Threads"
+                :label="$t('cpu.thread_num')"
                 :disabled="!isEditable"
               ></v-text-field>
             </v-col>
@@ -92,7 +92,7 @@
                 dense
                 v-model="cpu.baseFrequency"
                 type="number"
-                label="Base Frequency"
+                :label="$t('cpu.base_freq')"
                 :rules="validationRules.numberRequiredRules"
                 suffix="MHz"
                 :disabled="!isEditable"
@@ -103,7 +103,7 @@
                 dense
                 v-model="cpu.turboFrequency"
                 type="number"
-                label="Turbo Frequency"
+                :label="$t('cpu.turbo_freq')"
                 suffix="MHz"
                 :disabled="!isEditable"
               ></v-text-field>
@@ -116,7 +116,7 @@
                 dense
                 v-model="cpu.cache"
                 type="number"
-                label="Cache"
+                :label="$t('cpu.cache')"
                 :rules="validationRules.numberRules"
                 suffix="MB"
                 :disabled="!isEditable"
@@ -127,7 +127,7 @@
                 dense
                 v-model="cpu.tdp"
                 type="number"
-                label="TDP"
+                :label="$t('cpu.tdp')"
                 :rules="validationRules.numberRules"
                 suffix="W"
                 :disabled="!isEditable"
@@ -139,7 +139,7 @@
                 v-model="cpu.memoryType"
                 :items="cpuMemoryTypeList"
                 :rules="validationRules.requiredRules"
-                label="Memory Type"
+                :label="$t('cpu.memory_type')"
                 :disabled="!isEditable"
               ></v-select>
             </v-col>
@@ -149,7 +149,7 @@
                 v-model="cpu.memoryFrequency"
                 type="number"
                 :rules="validationRules.numberRules"
-                label="Memory Frequency"
+                :label="$t('cpu.memory_freq')"
                 suffix="MHz"
                 :disabled="!isEditable"
               ></v-text-field>
@@ -161,7 +161,7 @@
                 dense
                 v-model="cpu.price"
                 type="number"
-                label="Price"
+                :label="$t('cpu.price')"
                 prefix="₫"
                 :rules="validationRules.intRules"
                 :disabled="!isEditable"
