@@ -1,68 +1,80 @@
 <template>
   <v-container fluid class="cpu-list">
-    <v-card class="ma-3 cpu-list__search-filter">
-      <v-list-item>
-        <v-list-item-content>
-          <v-btn color="primary" text @click="onClickSearchButton"
-            >Search
-          </v-btn>
-        </v-list-item-content>
-      </v-list-item>
-      <v-list-item>
-        <v-list-item-content>
-          <v-combobox
-            dense
-            v-model="selectedManufacturer"
-            :items="cpuManufacturerList"
-            @keyup.enter="onClickSearchButton"
-            label="Manufacturer"
-            multiple
-            chips
-          ></v-combobox>
-        </v-list-item-content>
-      </v-list-item>
-      <v-list-item>
-        <v-list-item-content>
-          <v-combobox
-            dense
-            v-model="selectedSocket"
-            :items="cpuSocketList"
-            @keyup.enter="onClickSearchButton"
-            label="Socket"
-            multiple
-            chips
-          ></v-combobox>
-        </v-list-item-content>
-      </v-list-item>
-      <v-list-item>
-        <v-list-item-content>
-          <v-combobox
-            dense
-            v-model="selectedCoreNum"
-            :items="cpuCoreNumList"
-            @keyup.enter="onClickSearchButton"
-            label="Number of Cores"
-            multiple
-            chips
-          ></v-combobox>
-        </v-list-item-content>
-      </v-list-item>
-      <v-list-item>
-        <v-list-item-content>
-          <v-combobox
-            dense
-            v-model="selectedThreadNum"
-            :items="cpuThreadNumList"
-            @keyup.enter="onClickSearchButton"
-            label="Number of Threads"
-            multiple
-            chips
-          ></v-combobox>
-        </v-list-item-content>
-      </v-list-item>
-    </v-card>
-    <div class="cpu-list__grid-page">
-      <v-row class="ml-3 cpu-list__grid-page__row">
+    <div class="mt-3 cpu-list__search-sort-area">
+      <v-expansion-panels accordion :value="0">
+        <v-expansion-panel>
+          <v-expansion-panel-header> Search </v-expansion-panel-header>
+          <v-expansion-panel-content>
+            <v-btn color="primary" block text @click="onClickSearchButton"
+              >Search
+            </v-btn>
+            <div class="mt-3">
+              <v-select
+                dense
+                v-model="selectedManufacturer"
+                :items="cpuManufacturerList"
+                label="Manufacturer"
+                multiple
+                chips
+              ></v-select>
+              <v-select
+                dense
+                v-model="selectedSocket"
+                :items="cpuSocketList"
+                label="Socket"
+                multiple
+                chips
+              ></v-select>
+              <v-select
+                dense
+                v-model="selectedCoreNum"
+                :items="cpuCoreNumList"
+                label="Number of Cores"
+                multiple
+                chips
+              ></v-select>
+              <v-select
+                dense
+                v-model="selectedThreadNum"
+                :items="cpuThreadNumList"
+                label="Number of Threads"
+                multiple
+                chips
+              ></v-select>
+            </div>
+            <v-btn color="error" block text @click="onClickClearFilterButton"
+              >Clear Filter
+            </v-btn>
+          </v-expansion-panel-content>
+        </v-expansion-panel>
+        <v-expansion-panel>
+          <v-expansion-panel-header> Sort </v-expansion-panel-header>
+          <v-expansion-panel-content>
+            <v-btn color="primary" block text @click="onClickSortButton"
+              >Sort
+            </v-btn>
+            <v-radio-group label="Sort by" v-model="sortParam">
+              <v-radio
+                v-for="(item, index) in sortByRadios"
+                :key="index"
+                :label="item.label"
+                :value="item.value"
+              ></v-radio>
+            </v-radio-group>
+            <v-radio-group label="Sort in" v-model="orderParam">
+              <v-radio
+                v-for="(item, index) in sortInRadios"
+                :key="index"
+                :label="item.label"
+                :value="item.value"
+              ></v-radio>
+            </v-radio-group>
+          </v-expansion-panel-content>
+        </v-expansion-panel>
+      </v-expansion-panels>
+    </div>
+    <div class="ml-6 cpu-list__grid-page">
+      <v-row class="cpu-list__grid-page__row">
         <v-col v-for="(cpu, index) in cpuList" :key="index" cols="2">
           <v-card
             class="cpu-list__card"
@@ -76,17 +88,17 @@
               :src="url.cpuImg + '/' + cpu.img"
             ></v-img>
             <v-card-title class="ellipsis">
-              {{ cpu.manufacturer + " " + cpu.name }}
+              {{ cpu.mfr + " " + cpu.name }}
             </v-card-title>
             <v-card-text class="cpu-list__card__description">
               <div class="subtitle-1 red--text ellipsis">
                 ₫ • {{ formatNumber(cpu.price) }}
               </div>
               <div class="subtitle-2 ellipsis">
-                • Base Frequency: {{ cpu.base_frequency }} MHz
+                • Base Frequency: {{ cpu.base_freq }} MHz
               </div>
-              <div v-if="cpu.turbo_frequency" class="subtitle-2 ellipsis">
-                • Turbo Frequency: {{ cpu.turbo_frequency }} MHz
+              <div v-if="cpu.turbo_freq" class="subtitle-2 ellipsis">
+                • Turbo Frequency: {{ cpu.turbo_freq }} MHz
               </div>
               <div class="subtitle-2 ellipsis">
                 • Number of Cores: {{ cpu.core_num }}
@@ -105,23 +117,21 @@
                   <div class="title text--primary">Specification</div>
                   <v-divider class="mb-4"></v-divider>
                   <div class="subtitle-2">• CPU Name: {{ cpu.name }}</div>
-                  <div class="subtitle-2">
-                    • Manufacturer: {{ cpu.manufacturer }}
-                  </div>
+                  <div class="subtitle-2">• Manufacturer: {{ cpu.mfr }}</div>
                   <div class="subtitle-2">
                     • Number of Threads: {{ cpu.thread_num }}
                     <div class="subtitle-2">
-                      • Base Frequency: {{ cpu.base_frequency }} MHz
+                      • Base Frequency: {{ cpu.base_freq }} MHz
                     </div>
-                    <div v-if="cpu.turbo_frequency" class="subtitle-2">
-                      • Turbo Frequency: {{ cpu.turbo_frequency }} MHz
+                    <div v-if="cpu.turbo_freq" class="subtitle-2">
+                      • Turbo Frequency: {{ cpu.turbo_freq }} MHz
                     </div>
                     <div class="subtitle-2">• Cache: {{ cpu.cache }} MB</div>
                     <div class="subtitle-2">• Socket: {{ cpu.socket }}</div>
                     <div class="subtitle-2">• TDP: {{ cpu.tdp }} W</div>
                     <div class="subtitle-2">
                       • Supported Memory: {{ cpu.memory_type }}-{{
-                        cpu.memory_frequency
+                        cpu.memory_freq
                       }}
                       MHz
                     </div>
@@ -173,6 +183,19 @@ export default {
         size: 12,
       },
       searchQuery: {},
+      sortOrder: {},
+      sortParam: "name",
+      orderParam: "ASC",
+      sortByRadios: [
+        { label: "Name", value: "name" },
+        { label: "Price", value: "price" },
+        { label: "Number of Cores", value: "core_num" },
+        { label: "Number of Threads", value: "thread_num" },
+      ],
+      sortInRadios: [
+        { label: "Ascending", value: "ASC" },
+        { label: "Descending", value: "DESC" },
+      ],
 
       cpuList: [],
       cpuManufacturerList: [],
@@ -188,7 +211,7 @@ export default {
       showCpuCuForm: false,
       selectedCpu: {
         name: "",
-        manufacturer: "",
+        mfr: "",
         socket: "",
         coreNum: 0,
         threadNum: 0,
@@ -208,23 +231,36 @@ export default {
   watch: {
     currentPage(page) {
       this.pagination.page = page - 1;
-      this.searchCpuList(this.url.cpu, this.pagination, this.searchQuery);
+      this.buildCpuList();
     },
   },
   created() {
     this.buildPage();
   },
   methods: {
+    onClickSortButton() {
+      this.sortOrder = {
+        sort: this.sortParam,
+        order: this.orderParam,
+      };
+      this.buildCpuList();
+    },
     onClickSearchButton() {
       this.searchQuery = {
-        manufacturer: this.selectedManufacturer,
+        mfr: this.selectedManufacturer,
         socket: this.selectedSocket,
         core_num: this.selectedCoreNum,
         thread_num: this.selectedThreadNum,
       };
       this.pagination.page = 0;
       this.currentPage = 1;
-      this.searchCpuList(this.url.cpu, this.pagination, this.searchQuery);
+      this.buildCpuList();
+    },
+    onClickClearFilterButton() {
+      this.selectedManufacturer = [];
+      this.selectedSocket = [];
+      this.selectedCoreNum = [];
+      this.selectedThreadNum = [];
     },
     onMouseOverCard(cpu) {
       cpu.reveal = true;
@@ -237,16 +273,16 @@ export default {
       this.selectedCpu = {
         id: cpu.id,
         name: cpu.name,
-        manufacturer: cpu.manufacturer,
+        mfr: cpu.mfr,
         socket: cpu.socket,
         coreNum: cpu.core_num,
         threadNum: cpu.thread_num,
-        baseFrequency: cpu.base_frequency,
-        turboFrequency: cpu.turbo_frequency,
+        baseFrequency: cpu.base_freq,
+        turboFrequency: cpu.turbo_freq,
         cache: cpu.cache,
         tdp: cpu.tdp,
         memoryType: cpu.memory_type,
-        memoryFrequency: cpu.memory_frequency,
+        memoryFrequency: cpu.memory_freq,
         process: cpu.process,
         graphics: cpu.graphics,
         price: cpu.price,
@@ -254,9 +290,9 @@ export default {
       };
     },
 
-    searchCpuList(url, pagination, query) {
+    searchCpuList(url, pagination, query, sortOrder) {
       return this.$http
-        .get(url, { params: { ...pagination, ...query } })
+        .get(url, { params: { ...pagination, ...query, ...sortOrder } })
         .then((res) => {
           this.cpuList = [];
           this.totalPages = res.data.totalPages;
@@ -276,8 +312,8 @@ export default {
         .get(this.url.cpu, { params: { size: 9999 } })
         .then((res) => {
           res.data.items.forEach((cpu) => {
-            if (this.cpuManufacturerList.indexOf(cpu.manufacturer) === -1) {
-              this.cpuManufacturerList.push(cpu.manufacturer);
+            if (this.cpuManufacturerList.indexOf(cpu.mfr) === -1) {
+              this.cpuManufacturerList.push(cpu.mfr);
             }
             if (this.cpuSocketList.indexOf(cpu.socket) === -1) {
               this.cpuSocketList.push(cpu.socket);
@@ -295,9 +331,17 @@ export default {
           this.cpuThreadNumList.sort((a, b) => a - b);
         });
     },
+    buildCpuList() {
+      this.searchCpuList(
+        this.url.cpu,
+        this.pagination,
+        this.searchQuery,
+        this.sortOrder
+      );
+    },
     buildPage() {
       this.buildSearchFilter();
-      this.searchCpuList(this.url.cpu, this.pagination, this.searchQuery);
+      this.buildCpuList();
     },
   },
 };
@@ -332,7 +376,7 @@ export default {
   width: 100%;
   bottom: 0;
 }
-.cpu-list__search-filter {
+.cpu-list__search-sort-area {
   position: sticky;
   top: 64px;
   min-width: 250px;

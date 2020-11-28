@@ -34,7 +34,7 @@ export default {
         },
         {
           title: "Motherboard",
-          path: "/mb",
+          path: "/mobo",
           img: "/static/assets/motherboard.svg",
           desc:
             "Below you will find a list of the Motherboards released in recent years.",

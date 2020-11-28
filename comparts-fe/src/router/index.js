@@ -16,7 +16,7 @@ export default new Router({
       component: Homepage
     },
     {
-      path: '/mb',
+      path: '/mobo',
       component: Homepage
     },
     {

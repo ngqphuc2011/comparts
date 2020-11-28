@@ -21,7 +21,7 @@
             <v-col>
               <v-text-field
                 dense
-                v-model="cpu.manufacturer"
+                v-model="cpu.mfr"
                 label="Manufacturer"
                 :rules="validationRules.textRequiredRules"
                 :counter="50"
@@ -131,13 +131,14 @@
               ></v-text-field>
             </v-col>
             <v-col>
-              <v-text-field
+              <v-select
                 dense
                 v-model="cpu.memoryType"
-                :rules="validationRules.textRules"
+                :items="cpuMemoryTypeList"
+                :rules="validationRules.requiredRules"
                 label="Memory Type"
                 :disabled="!isEditable"
-              ></v-text-field>
+              ></v-select>
             </v-col>
             <v-col>
               <v-text-field
@@ -272,7 +273,7 @@ export default {
         return {
           id: 0,
           name: "",
-          manufacturer: "",
+          mfr: "",
           socket: "",
           coreNum: 0,
           threadNum: 0,
@@ -294,6 +295,7 @@ export default {
     return {
       isEditable: false,
       cpu: {},
+      cpuMemoryTypeList: ["DDR2", "DDR3", "DDR4"],
       urlImg: "",
       url: {
         cpu: "http://localhost:3000/cpus/",
@@ -301,6 +303,7 @@ export default {
         cpuUploadImg: "http://localhost:3000/cpus/upload/",
       },
       validationRules: {
+        requireRuldes: [(v) => !!v || "This field is required"],
         textRequiredRules: [
           (v) => !!v || "This field is required",
           (v) =>
@@ -391,22 +394,22 @@ export default {
           this.$http.post(this.url.cpuUploadImg, formData).then((res) => {
             let body = {
               name: this.cpu.name,
-              manufacturer: this.cpu.manufacturer,
+              mfr: this.cpu.mfr,
               socket: this.cpu.socket,
               core_num: this.cpu.coreNum,
               thread_num: this.cpu.threadNum,
-              base_frequency: this.cpu.baseFrequency,
-              turbo_frequency: this.cpu.turboFrequency,
+              base_freq: this.cpu.baseFrequency,
+              turbo_freq: this.cpu.turboFrequency,
               cache: this.cpu.cache,
               tdp: this.cpu.tdp,
               memory_type: this.cpu.memoryType,
-              memory_frequency: this.cpu.memoryFrequency,
+              memory_freq: this.cpu.memoryFrequency,
               process: this.cpu.process,
               graphics: this.cpu.graphics,
               price: this.cpu.price,
               img: res.data.filename,
             };
-                this.$http.delete(this.url.cpuUploadImg, res.data.filename);
+            this.$http.delete(this.url.cpuUploadImg, res.data.filename);
 
             this.$http
               .post(this.url.cpu, body)
@@ -424,16 +427,16 @@ export default {
           this.$http.post(this.url.cpuUploadImg, formData).then((res) => {
             let body = {
               name: this.cpu.name,
-              manufacturer: this.cpu.manufacturer,
+              mfr: this.cpu.mfr,
               socket: this.cpu.socket,
               core_num: this.cpu.coreNum,
               thread_num: this.cpu.threadNum,
-              base_frequency: this.cpu.baseFrequency,
-              turbo_frequency: this.cpu.turboFrequency,
+              base_freq: this.cpu.baseFrequency,
+              turbo_freq: this.cpu.turboFrequency,
               cache: this.cpu.cache,
               tdp: this.cpu.tdp,
               memory_type: this.cpu.memoryType,
-              memory_frequency: this.cpu.memoryFrequency,
+              memory_freq: this.cpu.memoryFrequency,
               process: this.cpu.process,
               graphics: this.cpu.graphics,
               price: this.cpu.price,

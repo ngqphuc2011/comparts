@@ -9,8 +9,11 @@
           >ComParts</v-toolbar-title
         >
         <v-spacer></v-spacer>
-        <v-btn icon>
-          <v-icon>mdi-help-circle</v-icon>
+        <v-btn v-if="language" @click="onClickChangeLanguageButton" icon>
+          <v-icon>mdi-translate</v-icon>
+        </v-btn>
+        <v-btn v-else icon @click="onClickChangeLanguageButton">
+          <v-icon>mdi-translate-off</v-icon>
         </v-btn>
       </v-toolbar>
       <v-card class="homepage__main-page" color="grey lighten-4">
@@ -52,20 +55,21 @@
                 'homepage__navdrawer__item--active':
                   $router.currentRoute.path === '/' + item.value,
               }"
+              :disabled="$router.currentRoute.path === '/' + item.value"
               v-for="item in menuItems"
               :key="item.title"
               @click="onClickItemTitle(item.value)"
               link
             >
-              <!-- <v-list-item-icon>
-                <v-icon>{{ item.icon }}</v-icon>
-              </v-list-item-icon> -->
-              <v-img
-                class="mr-4"
-                max-width="24px"
-                :src="'/static/assets/' + item.icon"
-              >
-              </v-img>
+              <v-list-item-icon>
+                <v-img
+                  class="mr-4"
+                  max-width="24px"
+                  :src="'/static/assets/' + item.icon"
+                >
+                </v-img>
+              </v-list-item-icon>
+
               <v-list-item-content>
                 <v-list-item-title>{{ item.title }}</v-list-item-title>
               </v-list-item-content>
@@ -138,9 +142,10 @@ export default {
       drawer: null,
       fab: false,
       cpuListFlag: true,
+      language: true,
       menuItems: [
         { title: "Processor", icon: "chip.svg", value: "cpu" },
-        { title: "Motherboard", icon: "motherboard.svg", value: "mb" },
+        { title: "Motherboard", icon: "motherboard.svg", value: "mobo" },
         { title: "Memory", icon: "ram-memory.svg", value: "ram" },
         { title: "Hard Disk Drive", icon: "hard-drive.svg", value: "hdd" },
         { title: "Solid State Drive", icon: "ssd.svg", value: "ssd" },
@@ -162,6 +167,9 @@ export default {
       this.$nextTick(() => {
         this.cpuListFlag = true;
       });
+    },
+    onClickChangeLanguageButton() {
+      this.language = !this.language;
     },
     onClickToTopPage() {
       document.body.scrollTop = 0;
