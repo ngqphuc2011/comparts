@@ -1,8 +1,12 @@
 <template>
   <v-dialog v-model="visible" max-width="50%" persistent class="cpu-cu-dialog">
     <v-card>
-      <v-card-title v-if="mode === 'C'" class="headline">Add CPU</v-card-title>
-      <v-card-title v-if="mode === 'U'" class="headline">Edit CPU</v-card-title>
+      <v-card-title v-if="mode === 'C'" class="headline">
+        {{ $t("cpu.add_cpu") }}
+      </v-card-title>
+      <v-card-title v-if="mode === 'U'" class="headline">
+        {{ $t("cpu.edit_cpu") }}
+      </v-card-title>
       <v-form v-model="valid" ref="form">
         <v-container class="pl-8 pr-8">
           <v-row>
@@ -10,7 +14,7 @@
               <v-text-field
                 dense
                 v-model="cpu.name"
-                label="Name"
+                :label="$t('cpu.name')"
                 :rules="validationRules.textRequiredRules"
                 :counter="50"
                 :disabled="!isEditable"
@@ -22,7 +26,7 @@
               <v-text-field
                 dense
                 v-model="cpu.mfr"
-                label="Manufacturer"
+                :label="$t('cpu.mfr')"
                 :rules="validationRules.textRequiredRules"
                 :counter="50"
                 :disabled="!isEditable"
@@ -32,7 +36,7 @@
               <v-text-field
                 dense
                 v-model="cpu.graphics"
-                label="Graphics"
+                :label="$t('cpu.graphics')"
                 :rules="validationRules.textRules"
                 :counter="50"
                 :disabled="!isEditable"
@@ -44,7 +48,7 @@
               <v-text-field
                 dense
                 v-model="cpu.socket"
-                label="Socket"
+                :label="$t('cpu.socket')"
                 :rules="validationRules.textRequiredRules"
                 :counter="50"
                 :disabled="!isEditable"
@@ -57,7 +61,7 @@
                 type="number"
                 suffix="nm"
                 :rules="validationRules.numberRules"
-                label="Process"
+                :label="$t('cpu.process')"
                 :disabled="!isEditable"
               ></v-text-field>
             </v-col>
@@ -69,7 +73,7 @@
                 v-model="cpu.coreNum"
                 type="number"
                 :rules="validationRules.numberRequiredRules"
-                label="Number of Cores"
+                :label="$t('cpu.core_num')"
                 :disabled="!isEditable"
               ></v-text-field>
             </v-col>
@@ -100,7 +104,6 @@
                 v-model="cpu.turboFrequency"
                 type="number"
                 label="Turbo Frequency"
-                :rules="validationRules.numberRules"
                 suffix="MHz"
                 :disabled="!isEditable"
               ></v-text-field>
@@ -386,72 +389,51 @@ export default {
     onClickCancelDetailButton() {
       this.$emit("close");
     },
-    onClickSaveButton() {
+    async onClickSaveButton() {
       if (this.$refs.form.validate()) {
+        let body = {
+          name: this.cpu.name,
+          mfr: this.cpu.mfr,
+          socket: this.cpu.socket,
+          core_num: this.cpu.coreNum,
+          thread_num: this.cpu.threadNum,
+          base_freq: this.cpu.baseFrequency,
+          turbo_freq: this.cpu.turboFrequency,
+          cache: this.cpu.cache,
+          tdp: this.cpu.tdp,
+          memory_type: this.cpu.memoryType,
+          memory_freq: this.cpu.memoryFrequency,
+          process: this.cpu.process,
+          graphics: this.cpu.graphics,
+          price: this.cpu.price,
+        };
+        if (this.cpu.imgFile) {
+          let formData = new FormData();
+          formData.append("img", this.cpu.imgFile);
+          await this.$http.post(this.url.cpuUploadImg, formData).then((res) => {
+            body.img = res.data.filename;
+          });
+        }
         if (this.mode === "C") {
-          let formData = new FormData();
-          formData.append("img", this.cpu.imgFile);
-          this.$http.post(this.url.cpuUploadImg, formData).then((res) => {
-            let body = {
-              name: this.cpu.name,
-              mfr: this.cpu.mfr,
-              socket: this.cpu.socket,
-              core_num: this.cpu.coreNum,
-              thread_num: this.cpu.threadNum,
-              base_freq: this.cpu.baseFrequency,
-              turbo_freq: this.cpu.turboFrequency,
-              cache: this.cpu.cache,
-              tdp: this.cpu.tdp,
-              memory_type: this.cpu.memoryType,
-              memory_freq: this.cpu.memoryFrequency,
-              process: this.cpu.process,
-              graphics: this.cpu.graphics,
-              price: this.cpu.price,
-              img: res.data.filename,
-            };
-            this.$http.delete(this.url.cpuUploadImg, res.data.filename);
-
-            this.$http
-              .post(this.url.cpu, body)
-              .then((res) => {
-                this.$emit("close");
-                this.$emit("search");
-              })
-              .catch((err) => {
-                this.$http.delete(this.url.cpuUploadImg, res.data.filename);
-              });
-          });
+          this.$http
+            .post(this.url.cpu, body)
+            .then((res) => {
+              this.$emit("close");
+              this.$emit("search");
+            })
+            .catch((err) => {
+              this.$http.delete(this.url.cpuUploadImg, res.data.filename);
+            });
         } else if (this.mode === "U") {
-          let formData = new FormData();
-          formData.append("img", this.cpu.imgFile);
-          this.$http.post(this.url.cpuUploadImg, formData).then((res) => {
-            let body = {
-              name: this.cpu.name,
-              mfr: this.cpu.mfr,
-              socket: this.cpu.socket,
-              core_num: this.cpu.coreNum,
-              thread_num: this.cpu.threadNum,
-              base_freq: this.cpu.baseFrequency,
-              turbo_freq: this.cpu.turboFrequency,
-              cache: this.cpu.cache,
-              tdp: this.cpu.tdp,
-              memory_type: this.cpu.memoryType,
-              memory_freq: this.cpu.memoryFrequency,
-              process: this.cpu.process,
-              graphics: this.cpu.graphics,
-              price: this.cpu.price,
-              img: res.data.filename,
-            };
-            this.$http
-              .put(this.url.cpu + this.cpu.id, body)
-              .then((res) => {
-                this.$emit("close");
-                this.$emit("search");
-              })
-              .catch((err) => {
-                this.$http.delete(this.url.cpuUploadImg, res.data.filename);
-              });
-          });
+          this.$http
+            .put(this.url.cpu + this.cpu.id, body)
+            .then((res) => {
+              this.$emit("close");
+              this.$emit("search");
+            })
+            .catch((err) => {
+              this.$http.delete(this.url.cpuUploadImg, res.data.filename);
+            });
         }
       }
     },

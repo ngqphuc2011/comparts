@@ -1,7 +1,7 @@
 require('dotenv').config();
 const express = require("express");
 const bodyParser = require("body-parser");
-const routes = require("./src/routes");
+const routes = require("./routes");
 const path = require("path");
 
 const app = express();
@@ -18,7 +18,7 @@ app.use((req, res, next) => {
 	);
 	next();
 });
-app.use("/public", express.static(path.join(__dirname, "public")));
+app.use("/public", express.static(path.join(__dirname, "../public/")));
 
 routes(app);
 

@@ -3,17 +3,19 @@
     <div class="mt-3 cpu-list__search-sort-area">
       <v-expansion-panels accordion :value="0">
         <v-expansion-panel>
-          <v-expansion-panel-header> Search </v-expansion-panel-header>
+          <v-expansion-panel-header>
+            {{ $t("common.search") }}
+          </v-expansion-panel-header>
           <v-expansion-panel-content>
-            <v-btn color="primary" block text @click="onClickSearchButton"
-              >Search
+            <v-btn color="primary" block text @click="onClickSearchButton">
+              {{ $t("common.search") }}
             </v-btn>
             <div class="mt-3">
               <v-select
                 dense
                 v-model="selectedManufacturer"
                 :items="cpuManufacturerList"
-                label="Manufacturer"
+                :label="$t('cpu.mfr')"
                 multiple
                 chips
               ></v-select>
@@ -21,7 +23,7 @@
                 dense
                 v-model="selectedSocket"
                 :items="cpuSocketList"
-                label="Socket"
+                :label="$t('cpu.socket')"
                 multiple
                 chips
               ></v-select>
@@ -29,7 +31,7 @@
                 dense
                 v-model="selectedCoreNum"
                 :items="cpuCoreNumList"
-                label="Number of Cores"
+                :label="$t('cpu.core_num')"
                 multiple
                 chips
               ></v-select>
@@ -37,23 +39,25 @@
                 dense
                 v-model="selectedThreadNum"
                 :items="cpuThreadNumList"
-                label="Number of Threads"
+                :label="$t('cpu.thread_num')"
                 multiple
                 chips
               ></v-select>
             </div>
-            <v-btn color="error" block text @click="onClickClearFilterButton"
-              >Clear Filter
+            <v-btn color="error" block text @click="onClickResetSearchButton">
+              {{ $t("common.reset") }}
             </v-btn>
           </v-expansion-panel-content>
         </v-expansion-panel>
         <v-expansion-panel>
-          <v-expansion-panel-header> Sort </v-expansion-panel-header>
+          <v-expansion-panel-header>
+            {{ $t("common.sort") }}
+          </v-expansion-panel-header>
           <v-expansion-panel-content>
-            <v-btn color="primary" block text @click="onClickSortButton"
-              >Sort
+            <v-btn color="primary" block text @click="onClickSortButton">
+              {{ $t("common.sort") }}
             </v-btn>
-            <v-radio-group label="Sort by" v-model="sortParam">
+            <v-radio-group :label="$t('common.sort_by')" v-model="sortParam">
               <v-radio
                 v-for="(item, index) in sortByRadios"
                 :key="index"
@@ -61,7 +65,7 @@
                 :value="item.value"
               ></v-radio>
             </v-radio-group>
-            <v-radio-group label="Sort in" v-model="orderParam">
+            <v-radio-group :label="$t('common.sort_in')" v-model="orderParam">
               <v-radio
                 v-for="(item, index) in sortInRadios"
                 :key="index"
@@ -69,6 +73,9 @@
                 :value="item.value"
               ></v-radio>
             </v-radio-group>
+            <v-btn color="error" block text @click="onClickResetSortButton">
+              {{ $t("common.reset") }}
+            </v-btn>
           </v-expansion-panel-content>
         </v-expansion-panel>
       </v-expansion-panels>
@@ -95,16 +102,16 @@
                 ₫ • {{ formatNumber(cpu.price) }}
               </div>
               <div class="subtitle-2 ellipsis">
-                • Base Frequency: {{ cpu.base_freq }} MHz
+                • {{ $t("cpu.base_freq") }}: {{ cpu.base_freq }} MHz
               </div>
               <div v-if="cpu.turbo_freq" class="subtitle-2 ellipsis">
-                • Turbo Frequency: {{ cpu.turbo_freq }} MHz
+                • {{ $t("cpu.turbo_freq") }}: {{ cpu.turbo_freq }} MHz
               </div>
               <div class="subtitle-2 ellipsis">
-                • Number of Cores: {{ cpu.core_num }}
+                • {{ $t("cpu.core_num") }}: {{ cpu.core_num }}
               </div>
               <div class="subtitle-2 ellipsis">
-                • Number of Threads: {{ cpu.thread_num }}
+                • {{ $t("cpu.thread_num") }}: {{ cpu.thread_num }}
               </div>
             </v-card-text>
 
@@ -114,33 +121,35 @@
                 class="transition-fast-in-fast-out cpu-list__card--reveal"
               >
                 <v-card-text class="pb-0">
-                  <div class="title text--primary">Specification</div>
+                  <div class="title text--primary">{{ $t("common.specs") }}</div>
                   <v-divider class="mb-4"></v-divider>
-                  <div class="subtitle-2">• CPU Name: {{ cpu.name }}</div>
-                  <div class="subtitle-2">• Manufacturer: {{ cpu.mfr }}</div>
-                  <div class="subtitle-2">• Number of Cores: {{ cpu.core_num }}</div>
+                  <div class="subtitle-2">• {{ $t("cpu.name") }}: {{ cpu.name }}</div>
+                  <div class="subtitle-2">• {{ $t("cpu.mfr") }}: {{ cpu.mfr }}</div>
                   <div class="subtitle-2">
-                    • Number of Threads: {{ cpu.thread_num }}
+                    • {{ $t("cpu.core_num") }}: {{ cpu.core_num }}
+                  </div>
+                  <div class="subtitle-2">
+                    • {{ $t("cpu.thread_num") }}: {{ cpu.thread_num }}
                     <div class="subtitle-2">
-                      • Base Frequency: {{ cpu.base_freq }} MHz
+                      • {{ $t("cpu.base_freq") }}: {{ cpu.base_freq }} MHz
                     </div>
                     <div v-if="cpu.turbo_freq" class="subtitle-2">
-                      • Turbo Frequency: {{ cpu.turbo_freq }} MHz
+                      • {{ $t("cpu.turbo_freq") }}: {{ cpu.turbo_freq }} MHz
                     </div>
-                    <div class="subtitle-2">• Cache: {{ cpu.cache }} MB</div>
-                    <div class="subtitle-2">• Socket: {{ cpu.socket }}</div>
-                    <div class="subtitle-2">• TDP: {{ cpu.tdp }} W</div>
+                    <div class="subtitle-2">• {{ $t("cpu.cache") }}: {{ cpu.cache }} MB</div>
+                    <div class="subtitle-2">• {{ $t("cpu.socket") }}: {{ cpu.socket }}</div>
+                    <div class="subtitle-2">• {{ $t("cpu.tdp") }}: {{ cpu.tdp }} W</div>
                     <div class="subtitle-2">
-                      • Supported Memory: {{ cpu.memory_type }}-{{
+                      • {{ $t("cpu.supported_memory") }}: {{ cpu.memory_type }}-{{
                         cpu.memory_freq
                       }}
                       MHz
                     </div>
                     <div class="subtitle-2">
-                      • Process: {{ cpu.process }} nm
+                      • {{ $t("cpu.process") }}: {{ cpu.process }} nm
                     </div>
                     <div v-if="cpu.graphics" class="subtitle-2">
-                      • Integrated Graphics: {{ cpu.graphics }}
+                      • {{ $t("cpu.graphics") }}: {{ cpu.graphics }}
                     </div>
                   </div>
                 </v-card-text>
@@ -187,16 +196,6 @@ export default {
       sortOrder: {},
       sortParam: "name",
       orderParam: "ASC",
-      sortByRadios: [
-        { label: "Name", value: "name" },
-        { label: "Price", value: "price" },
-        { label: "Number of Cores", value: "core_num" },
-        { label: "Number of Threads", value: "thread_num" },
-      ],
-      sortInRadios: [
-        { label: "Ascending", value: "ASC" },
-        { label: "Descending", value: "DESC" },
-      ],
 
       cpuList: [],
       cpuManufacturerList: [],
@@ -229,6 +228,22 @@ export default {
       },
     };
   },
+  computed: {
+    sortByRadios: function () {
+      return [
+        { label: this.$t("cpu.name"), value: "name" },
+        { label: this.$t("cpu.price"), value: "price" },
+        { label: this.$t("cpu.core_num"), value: "core_num" },
+        { label: this.$t("cpu.thread_num"), value: "thread_num" },
+      ];
+    },
+    sortInRadios: function () {
+      return [
+        { label: this.$t("common.asc"), value: "ASC" },
+        { label: this.$t("common.desc"), value: "DESC" },
+      ];
+    },
+  },
   watch: {
     currentPage(page) {
       this.pagination.page = page - 1;
@@ -239,6 +254,10 @@ export default {
     this.buildPage();
   },
   methods: {
+    onClickResetSortButton() {
+      this.sortParam = "name";
+      this.orderParam = "ASC";
+    },
     onClickSortButton() {
       this.sortOrder = {
         sort: this.sortParam,
@@ -257,7 +276,7 @@ export default {
       this.currentPage = 1;
       this.buildCpuList();
     },
-    onClickClearFilterButton() {
+    onClickResetSearchButton() {
       this.selectedManufacturer = [];
       this.selectedSocket = [];
       this.selectedCoreNum = [];

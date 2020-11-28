@@ -9,7 +9,11 @@
           >ComParts</v-toolbar-title
         >
         <v-spacer></v-spacer>
-        <v-btn v-if="language" @click="onClickChangeLanguageButton" icon>
+        <v-btn
+          v-if="$store.state.lang === 'vi'"
+          @click="onClickChangeLanguageButton"
+          icon
+        >
           <v-icon>mdi-translate</v-icon>
         </v-btn>
         <v-btn v-else icon @click="onClickChangeLanguageButton">
@@ -139,27 +143,68 @@ export default {
   name: "Homepage",
   data() {
     return {
-      drawer: null,
+      drawer: false,
       fab: false,
       cpuListFlag: true,
-      language: true,
-      menuItems: [
-        { title: "Processor", icon: "chip.svg", value: "cpu" },
-        { title: "Motherboard", icon: "motherboard.svg", value: "mobo" },
-        { title: "Memory", icon: "ram-memory.svg", value: "ram" },
-        { title: "Hard Disk Drive", icon: "hard-drive.svg", value: "hdd" },
-        { title: "Solid State Drive", icon: "ssd.svg", value: "ssd" },
-        { title: "Video Card", icon: "video-card.svg", value: "gpu" },
-        { title: "Power Supply", icon: "power-supply.svg", value: "psu" },
-        { title: "Case", icon: "computer.svg", value: "case" },
-      ],
-      footerItems: [
-        { title: "About Us", value: "aboutus" },
-        { title: "Contact", value: "contact" },
-        { title: "FAQ", value: "faq" },
-      ],
       showCpuCuForm: false,
     };
+  },
+  computed: {
+    menuItems: function () {
+      return [
+        {
+          title: this.$t("getting_started.cpu_label"),
+          icon: "chip.svg",
+          value: "cpu",
+        },
+        {
+          title: this.$t("getting_started.mobo_label"),
+          icon: "motherboard.svg",
+          value: "mobo",
+        },
+        {
+          title: this.$t("getting_started.ram_label"),
+          icon: "ram-memory.svg",
+          value: "ram",
+        },
+        {
+          title: this.$t("getting_started.hdd_label"),
+          icon: "hard-drive.svg",
+          value: "hdd",
+        },
+        {
+          title: this.$t("getting_started.ssd_label"),
+          icon: "ssd.svg",
+          value: "ssd",
+        },
+        {
+          title: this.$t("getting_started.gpu_label"),
+          icon: "video-card.svg",
+          value: "gpu",
+        },
+        {
+          title: this.$t("getting_started.psu_label"),
+          icon: "power-supply.svg",
+          value: "psu",
+        },
+        {
+          title: this.$t("getting_started.case_label"),
+          icon: "computer.svg",
+          value: "case",
+        },
+      ];
+    },
+
+    footerItems: function() {
+      return [
+        { title: this.$t('common.about_us'), value: "about-us" },
+        { title: this.$t('common.contact'), value: "contact" },
+        { title: this.$t('common.faq'), value: "faq" },
+      ]
+    } 
+  },
+  created() {
+    this.setDefaultLanguage();
   },
   methods: {
     rerenderCpuList() {
@@ -168,8 +213,16 @@ export default {
         this.cpuListFlag = true;
       });
     },
+    setDefaultLanguage() {
+      this.$store.dispatch("setLang", window.localStorage.getItem("language"));
+    },
     onClickChangeLanguageButton() {
-      this.language = !this.language;
+      if (this.$store.state.lang === "vi") {
+        this.$store.dispatch("setLang", "en");
+        this.$nextTick(() => {});
+      } else {
+        this.$store.dispatch("setLang", "vi");
+      }
     },
     onClickToTopPage() {
       document.body.scrollTop = 0;

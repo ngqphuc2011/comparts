@@ -1,0 +1,53 @@
+{
+  "common": {
+    "about_us": "Về chúng tôi",
+    "contact": "Liên hệ",
+    "faq": "FAQ",
+    "search": "Tìm kiếm",
+    "reset": "Đặt lại",
+    "sort": "Sắp xếp",
+    "image": "Hình ảnh",
+    "sort_by": "Sắp xếp theo",
+    "sort_in": "Thứ tự",
+    "asc": "Tăng dần",
+    "desc": "Giảm dần",
+    "specs": "Thông số kỹ thuật"
+  },
+  "getting_started": {
+    "cpu_label": "Vi xử lý",
+    "cpu_desc": "Dưới đây là danh sách các CPU đã ra mắt trong thời gian gần đây.",
+    "mobo_label": "Bo mạch chủ",
+    "mobo_desc": "Dưới đây là danh sách các bo mạch chủ đã ra mắt trong thời gian gần đây.",
+    "ram_label": "Bộ nhớ trong",
+    "ram_desc": "Dưới đây là danh sách các RAM đã ra mắt trong thời gian gần đây.",
+    "gpu_label": "Card đồ họa",
+    "gpu_desc": "Dưới đây là danh sách các GPU đã ra mắt trong thời gian gần đây.",
+    "hdd_label": "Ổ cứng",
+    "hdd_desc": "Dưới đây là danh sách các HDD đã ra mắt trong thời gian gần đây.",
+    "ssd_label": "Ổ cứng thể rắn",
+    "ssd_desc": "Dưới đây là danh sách các SSD đã ra mắt trong thời gian gần đây.",
+    "psu_label": "Nguồn máy tính",
+    "psu_desc": "Dưới đây là danh sách các PSU đã ra mắt trong thời gian gần đây.",
+    "case_label": "Vỏ máy tính",
+    "case_desc": "Dưới đây là danh sách các vỏ máy tính đã ra mắt trong thời gian gần đây."
+  },
+  "cpu": {
+    "name": "Tên",
+    "mfr": "Nhà sản xuất",
+    "socket": "Socket",
+    "core_num": "Số nhân",
+    "thread_num": "Số luồng",
+    "graphics": "Đồ họa tích hợp",
+    "process": "Tiến trình",
+    "base_freq": "Xung nhịp cơ bản",
+    "turbo_freq": "Xung nhịp tối đa",
+    "cache": "Bộ nhớ đệm",
+    "tdp": "Điện năng tiêu thụ",
+    "memory_type": "Loại bộ nhớ",
+    "memory_freq": "Tần số bộ nhớ",
+    "supported_memory": "Bộ nhớ hỗ trợ",
+    "price": "Giá",
+    "add_cpu": "Thêm CPU",
+    "edit_cpu": "Sửa CPU"
+  }
+}

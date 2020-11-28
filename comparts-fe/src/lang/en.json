@@ -1,0 +1,53 @@
+{
+  "common": {
+    "about_us": "About Us",
+    "contact": "Contact",
+    "faq": "FAQ",
+    "search": "Search",
+    "reset": "Reset",
+    "sort": "Sort",
+    "image": "Image",
+    "sort_by": "Sort by",
+    "sort_in": "Sort in",
+    "asc": "Ascending",
+    "desc": "Descending",
+    "specs": "Specification"
+  },
+  "getting_started": {
+    "cpu_label": "Processor",
+    "cpu_desc": "Below you will find a list of the CPUs released in recent years.",
+    "mobo_label": "Motherboard",
+    "mobo_desc": "Below you will find a list of the MOBOs released in recent years.",
+    "ram_label": "Memory",
+    "ram_desc": "Below you will find a list of the RAMs released in recent years.",
+    "gpu_label": "Video Card",
+    "gpu_desc": "Below you will find a list of the GPUs released in recent years.",
+    "hdd_label": "Hard Disk Drive",
+    "hdd_desc": "Below you will find a list of the HDDs released in recent years.",
+    "ssd_label": "Solid State Drive",
+    "ssd_desc": "Below you will find a list of the SSDs released in recent years.",
+    "psu_label": "Power Supply Unit",
+    "psu_desc": "Below you will find a list of the PSUs released in recent years.",
+    "case_label": "Computer Case",
+    "case_desc": "Below you will find a list of the Cases/Chassis released in recent years."
+  },
+  "cpu": {
+    "name": "Name",
+    "mfr": "Manufacturer",
+    "socket": "Socket",
+    "core_num": "Number of Cores",
+    "thread_num": "Number of Threads",
+    "graphics": "Integrated Graphics",
+    "process": "Process",
+    "base_freq": "Base Frequency",
+    "turbo_freq": "Turbo Frequency",
+    "cache": "Cache",
+    "tdp": "TDP",
+    "memory_type": "Memory Type",
+    "memory_freq": "Memory Frequency",
+    "supported_memory": "Supported Memory",
+    "price": "Price",
+    "add_cpu": "Add CPU",
+    "edit_cpu": "Edit CPU"
+  }
+}

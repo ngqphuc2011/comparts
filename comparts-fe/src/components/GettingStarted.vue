@@ -7,7 +7,9 @@
           @click="onClickGettingStartedItems(item.path)"
         >
           <v-img height="150" contain :src="item.img"></v-img>
-          <v-card-title class="text-center getting-started__card__title">{{ item.title }}</v-card-title>
+          <v-card-title class="text-center getting-started__card__title">{{
+            item.title
+          }}</v-card-title>
           <v-card-text>
             <div>
               {{ item.desc }}
@@ -22,66 +24,59 @@
 <script>
 export default {
   name: "GettingStarted",
-  data() {
-    return {
-      gettingStartedItems: [
+  computed: {
+    gettingStartedItems: function () {
+      return [
         {
-          title: "Processor",
+          title: this.$t("getting_started.cpu_label"),
           path: "/cpu",
           img: "/static/assets/chip.svg",
-          desc:
-            "Below you will find a list of the CPUs released in recent years.",
+          desc: this.$t("getting_started.cpu_desc"),
         },
         {
-          title: "Motherboard",
+          title: this.$t("getting_started.mobo_label"),
           path: "/mobo",
           img: "/static/assets/motherboard.svg",
-          desc:
-            "Below you will find a list of the Motherboards released in recent years.",
+          desc: this.$t("getting_started.mobo_desc"),
         },
         {
-          title: "Memory",
+          title: this.$t("getting_started.ram_label"),
           path: "/ram",
           img: "/static/assets/ram-memory.svg",
-          desc:
-            "Below you will find a list of the RAMs released in recent years.",
+          desc: this.$t("getting_started.ram_desc"),
         },
         {
-          title: "Video Card",
+          title: this.$t("getting_started.gpu_label"),
           path: "/gpu",
           img: "/static/assets/video-card.svg",
-          desc:
-            "Below you will find a list of the GPUs released in recent years.",
+          desc: this.$t("getting_started.gpu_desc"),
         },
         {
-          title: "Hard Disk Drive",
+          title: this.$t("getting_started.hdd_label"),
           path: "/hdd",
           img: "/static/assets/hard-drive.svg",
-          desc:
-            "Below you will find a list of the HDDs released in recent years.",
+          desc: this.$t("getting_started.hdd_desc"),
         },
         {
-          title: "Solid State Drive",
+          title: this.$t("getting_started.ssd_label"),
           path: "/ssd",
           img: "/static/assets/ssd.svg",
-          desc:
-            "Below you will find a list of the SSDs released in recent years.",
+          desc: this.$t("getting_started.ssd_desc"),
         },
         {
-          title: "Power Supply",
+          title: this.$t("getting_started.psu_label"),
           path: "/psu",
           img: "/static/assets/power-supply.svg",
-          desc:
-            "Below you will find a list of the PSUs released in recent years.",
+          desc: this.$t("getting_started.psu_desc"),
         },
         {
-          title: "Case",
+          title: this.$t("getting_started.case_label"),
           path: "/case",
           img: "/static/assets/computer.svg",
-          desc: "Below you will find a list of the Cases released in recent years.",
+          desc: this.$t("getting_started.case_desc"),
         },
-      ],
-    };
+      ];
+    },
   },
   methods: {
     onClickGettingStartedItems(val) {
@@ -102,9 +97,9 @@ export default {
   max-width: 250px;
   min-height: 350px;
   height: 100%;
-  padding-top: 50px
+  padding-top: 50px;
 }
 .getting-started__card__title {
-    display: block;
+  display: block;
 }
 </style>
