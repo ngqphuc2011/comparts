@@ -187,7 +187,7 @@
               <v-file-input
                 prepend-icon="mdi-camera"
                 accept="image/*"
-                label="Image"
+                :label="$t('common.image')"
                 @change="onImageChange"
                 @click:clear="onImageClear"
                 :disabled="!isEditable"
@@ -202,37 +202,42 @@
           color="error"
           @click="onClickDeleteButton"
           text
-          >Delete</v-btn
         >
+          {{ $t("common.delete") }}
+        </v-btn>
         <v-spacer></v-spacer>
-        <v-btn v-if="isEditable" text @click="onClickCancelButton"
-          >Cancel</v-btn
-        >
-
-        <v-btn v-if="!isEditable" text @click="onClickCancelDetailButton"
-          >Cancel</v-btn
-        >
+        <v-btn v-if="isEditable" text @click="onClickCancelButton">
+          {{ $t("common.cancel") }}
+        </v-btn>
+        <v-btn v-if="!isEditable" text @click="onClickCancelDetailButton">
+          {{ $t("common.cancel") }}
+        </v-btn>
         <v-btn
           color="primary"
           v-if="!isEditable"
           text
           @click="onClickModifyButton"
-          >Modify</v-btn
         >
+          {{ $t("common.modify") }}
+        </v-btn>
         <v-btn color="primary" v-if="isEditable" text @click="onClickSaveButton"
-          >Save</v-btn
-        >
+          >{{ $t("common.save") }}
+        </v-btn>
       </v-card-actions>
       <v-dialog v-model="discardConfirmDialog" persistent max-width="250">
         <v-card>
-          <v-card-title class="headline">Confirm</v-card-title>
-          <v-card-text>Unsaved changes will be lost. Are you sure?</v-card-text>
+          <v-card-title class="headline">{{
+            $t("common.confirm")
+          }}</v-card-title>
+          <v-card-text>{{ $t("message.discard_msg") }}</v-card-text>
           <v-card-actions>
             <v-spacer></v-spacer>
-            <v-btn text @click="onClickCancelDiscardButton">Cancel</v-btn>
-            <v-btn color="error" text @click="onClickAcceptDiscardButton"
-              >Discard</v-btn
-            >
+            <v-btn text @click="onClickCancelDiscardButton">
+              {{ $t("common.cancel") }}
+            </v-btn>
+            <v-btn color="error" text @click="onClickAcceptDiscardButton">
+              {{ $t("common.discard") }}
+            </v-btn>
           </v-card-actions>
         </v-card>
       </v-dialog>
@@ -243,14 +248,22 @@
         max-width="250"
       >
         <v-card>
-          <v-card-title class="headline">Confirm</v-card-title>
-          <v-card-text>Are you sure to delete this item?</v-card-text>
+          <v-card-title class="headline">{{
+            $t("common.confirm")
+          }}</v-card-title>
+          <v-card-text>{{ $t("common.delete_msg") }}</v-card-text>
           <v-card-actions>
             <v-spacer></v-spacer>
-            <v-btn text @click="onClickCancelDeleteButton">Cancel</v-btn>
-            <v-btn color="error" text @click="onClickAcceptDeleteButton(cpu.id)"
-              >Delete</v-btn
+            <v-btn text @click="onClickCancelDeleteButton">
+              {{ $t("common.cancel") }}
+            </v-btn>
+            <v-btn
+              color="error"
+              text
+              @click="onClickAcceptDeleteButton(cpu.id)"
             >
+              {{ $t("common.delete") }}
+            </v-btn>
           </v-card-actions>
         </v-card>
       </v-dialog>
@@ -306,32 +319,20 @@ export default {
         cpuUploadImg: "http://localhost:3000/cpus/upload/",
       },
       validationRules: {
-        requireRules: [(v) => !!v || "This field is required"],
+        requireRules: [(v) => !!v || this.$t("message.required_rule_msg")],
         textRequiredRules: [
-          (v) => !!v || "This field is required",
-          (v) =>
-            v.length <= 50 ||
-            "This field must be equal or less than 50 characters",
+          (v) => !!v || this.$t("message.required_rule_msg"),
+          (v) => v.length <= 50 || this.$t("message.text_rule_msg"),
         ],
-        textRules: [
-          (v) =>
-            v.length <= 50 ||
-            "This field must be equal or less than 50 characters",
-        ],
+        textRules: [(v) => v.length <= 50 || this.$t("message.text_rule_msg")],
         numberRequiredRules: [
-          (v) => !!v || "This field is required",
-          (v) =>
-            (v <= 65536 && v > 0) || "This field must be between 0 and 65,536",
+          (v) => !!v || this.$t("message.required_rule_msg"),
+          (v) => (v <= 65536 && v > 0) || this.$t("message.number_rule_msg"),
         ],
         numberRules: [
-          (v) =>
-            (v <= 65536 && v > 0) || "This field must be between 0 and 65,536",
+          (v) => (v <= 65536 && v > 0) || this.$t("message.number_rule_msg"),
         ],
-        intRules: [
-          (v) =>
-            v <= 2147483647 ||
-            "This field must be equal or less than 2,147,483,647",
-        ],
+        intRules: [(v) => v <= 2147483647 || this.$t("message.int_rule_msg")],
       },
       valid: false,
       deleteConfirmDialog: false,

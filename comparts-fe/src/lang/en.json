@@ -20,11 +20,12 @@
     "confirm": "Confirm"
   },
   "message": {
-    "unsaved_msg": "Unsaved changes will be lost. Are you sure?",
+    "discard_msg": "Unsaved changes will be lost. Are you sure?",
     "delete_msg": "Are you sure to delete this item?",
-    "required_rule_msg": "This field is required",
-    "text_rule_msg": "This field must be equal or less than 50 characters",
-    "number_rule_msg": "This field must be between 0 and 65,536"
+    "required_rule_msg": "This field is required.",
+    "text_rule_msg": "This field must be equal or less than 50 characters.",
+    "number_rule_msg": "This field must be between 0 and 65,536.",
+    "int_rule_msg": "This field must be equal or less than 2,147,483,647."
   },
   "getting_started": {
     "cpu_label": "Processor",

@@ -14,10 +14,18 @@
     "specs": "Thông số kỹ thuật",
     "delete": "Xóa",
     "cancel": "Hủy",
-    "modify": "Modify",
-    "save": "Save",
-    "discard": "Discard",
-    "confirm": "Confirm"
+    "modify": "Sửa",
+    "save": "Lưu",
+    "discard": "Bỏ",
+    "confirm": "Xác nhận"
+  },
+  "message": {
+    "discard_msg": "Những thay đổi chưa được lưu sẽ bị mất. Bạn có chắc chắn muốn bỏ không?",
+    "delete_msg": "Bạn có chắc chắn muốn xóa mục này không?",
+    "required_rule_msg": "Trường này là bắt buộc.",
+    "text_rule_msg": "Trường này phải có độ dài từ 50 kí tự trở xuống.",
+    "number_rule_msg": "Trường này phải có giá trị từ 0 đến 65,536.",
+    "int_rule_msg": "Trường này phải có giá trị từ 2,147,483,647 trở xuống."
   },
   "getting_started": {
     "cpu_label": "Vi xử lý",
