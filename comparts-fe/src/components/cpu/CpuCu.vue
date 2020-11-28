@@ -306,7 +306,7 @@ export default {
         cpuUploadImg: "http://localhost:3000/cpus/upload/",
       },
       validationRules: {
-        requireRuldes: [(v) => !!v || "This field is required"],
+        requireRules: [(v) => !!v || "This field is required"],
         textRequiredRules: [
           (v) => !!v || "This field is required",
           (v) =>
@@ -321,11 +321,11 @@ export default {
         numberRequiredRules: [
           (v) => !!v || "This field is required",
           (v) =>
-            (v <= 66536 && v > 0) || "This field must be between 0 and 66,536",
+            (v <= 65536 && v > 0) || "This field must be between 0 and 65,536",
         ],
         numberRules: [
           (v) =>
-            (v <= 66536 && v > 0) || "This field must be between 0 and 66,536",
+            (v <= 65536 && v > 0) || "This field must be between 0 and 65,536",
         ],
         intRules: [
           (v) =>

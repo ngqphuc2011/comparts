@@ -11,7 +11,13 @@
     "sort_in": "Thứ tự",
     "asc": "Tăng dần",
     "desc": "Giảm dần",
-    "specs": "Thông số kỹ thuật"
+    "specs": "Thông số kỹ thuật",
+    "delete": "Xóa",
+    "cancel": "Hủy",
+    "modify": "Modify",
+    "save": "Save",
+    "discard": "Discard",
+    "confirm": "Confirm"
   },
   "getting_started": {
     "cpu_label": "Vi xử lý",
