@@ -121,10 +121,16 @@
                 class="transition-fast-in-fast-out cpu-list__card--reveal"
               >
                 <v-card-text class="pb-0">
-                  <div class="title text--primary">{{ $t("common.specs") }}</div>
+                  <div class="title text--primary">
+                    {{ $t("common.specs") }}
+                  </div>
                   <v-divider class="mb-4"></v-divider>
-                  <div class="subtitle-2">• {{ $t("cpu.name") }}: {{ cpu.name }}</div>
-                  <div class="subtitle-2">• {{ $t("cpu.mfr") }}: {{ cpu.mfr }}</div>
+                  <div class="subtitle-2">
+                    • {{ $t("cpu.name") }}: {{ cpu.name }}
+                  </div>
+                  <div class="subtitle-2">
+                    • {{ $t("cpu.mfr") }}: {{ cpu.mfr }}
+                  </div>
                   <div class="subtitle-2">
                     • {{ $t("cpu.core_num") }}: {{ cpu.core_num }}
                   </div>
@@ -136,16 +142,21 @@
                     <div v-if="cpu.turbo_freq" class="subtitle-2">
                       • {{ $t("cpu.turbo_freq") }}: {{ cpu.turbo_freq }} MHz
                     </div>
-                    <div class="subtitle-2">• {{ $t("cpu.cache") }}: {{ cpu.cache }} MB</div>
-                    <div class="subtitle-2">• {{ $t("cpu.socket") }}: {{ cpu.socket }}</div>
-                    <div class="subtitle-2">• {{ $t("cpu.tdp") }}: {{ cpu.tdp }} W</div>
                     <div class="subtitle-2">
-                      • {{ $t("cpu.supported_memory") }}: {{ cpu.memory_type }}-{{
-                        cpu.memory_freq
-                      }}
-                      MHz
+                      • {{ $t("cpu.cache") }}: {{ cpu.cache }} MB
                     </div>
                     <div class="subtitle-2">
+                      • {{ $t("cpu.socket") }}: {{ cpu.socket }}
+                    </div>
+                    <div class="subtitle-2">
+                      • {{ $t("cpu.tdp") }}: {{ cpu.tdp }} W
+                    </div>
+                    <div class="subtitle-2">
+                      • {{ $t("cpu.supported_memory") }}:
+                      {{ cpu.memory_type }}-{{ cpu.memory_freq }}
+                      MHz
+                    </div>
+                    <div v-if="cpu.process" class="subtitle-2">
                       • {{ $t("cpu.process") }}: {{ cpu.process }} nm
                     </div>
                     <div v-if="cpu.graphics" class="subtitle-2">
@@ -183,8 +194,8 @@ export default {
   data() {
     return {
       url: {
-        cpu: "http://localhost:3000/cpus",
-        cpuImg: "http://localhost:3000/public/cpus",
+        cpu: "http://localhost:3000/cpu",
+        cpuImg: "http://localhost:3000/public/cpu",
       },
       currentPage: 1,
       totalPages: 1,
@@ -213,15 +224,15 @@ export default {
         name: "",
         mfr: "",
         socket: "",
-        coreNum: 0,
-        threadNum: 0,
-        baseFrequency: 0,
-        turboFrequency: 0,
-        cache: 0,
-        tdp: 0,
+        coreNum: null,
+        threadNum: null,
+        baseFrequency: null,
+        turboFrequency: null,
+        cache: null,
+        tdp: null,
         memoryType: "",
-        memoryFrequency: 0,
-        process: 0,
+        memoryFrequency: null,
+        process: null,
         graphics: "",
         price: 0,
         img: "",

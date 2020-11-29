@@ -251,7 +251,7 @@
           <v-card-title class="headline">{{
             $t("common.confirm")
           }}</v-card-title>
-          <v-card-text>{{ $t("common.delete_msg") }}</v-card-text>
+          <v-card-text>{{ $t("message.delete_msg") }}</v-card-text>
           <v-card-actions>
             <v-spacer></v-spacer>
             <v-btn text @click="onClickCancelDeleteButton">
@@ -291,17 +291,17 @@ export default {
           name: "",
           mfr: "",
           socket: "",
-          coreNum: 0,
-          threadNum: 0,
-          baseFrequency: 0,
-          turboFrequency: 0,
-          cache: 0,
-          tdp: 0,
-          memoryType: "",
-          memoryFrequency: 0,
-          process: 0,
+          coreNum: null,
+          threadNum: null,
+          baseFrequency: null,
+          turboFrequency: null,
+          cache: null,
+          tdp: null,
+          memoryType: "DDR4",
+          memoryFrequency: null,
+          process: null,
           graphics: "",
-          price: 0,
+          price: null,
           img: "",
         };
       },
@@ -314,9 +314,9 @@ export default {
       cpuMemoryTypeList: ["DDR2", "DDR3", "DDR4"],
       urlImg: "",
       url: {
-        cpu: "http://localhost:3000/cpus/",
-        cpuImg: "http://localhost:3000/public/cpus/",
-        cpuUploadImg: "http://localhost:3000/cpus/upload/",
+        cpu: "http://localhost:3000/cpu/",
+        cpuImg: "http://localhost:3000/public/cpu/",
+        cpuUploadImg: "http://localhost:3000/cpu/upload/",
       },
       validationRules: {
         requireRules: [(v) => !!v || this.$t("message.required_rule_msg")],
@@ -330,9 +330,15 @@ export default {
           (v) => (v <= 65536 && v > 0) || this.$t("message.number_rule_msg"),
         ],
         numberRules: [
-          (v) => (v <= 65536 && v > 0) || this.$t("message.number_rule_msg"),
+          (v) =>
+            (v <= 65536 && v > 0) ||
+            v == "" ||
+            v == null ||
+            this.$t("message.number_rule_msg"),
         ],
-        intRules: [(v) => v <= 2147483647 || this.$t("message.int_rule_msg")],
+        intRules: [
+          (v) => v <= 2147483647 || this.$t("message.int_rule_msg"),
+        ],
       },
       valid: false,
       deleteConfirmDialog: false,
@@ -399,14 +405,14 @@ export default {
           core_num: this.cpu.coreNum,
           thread_num: this.cpu.threadNum,
           base_freq: this.cpu.baseFrequency,
-          turbo_freq: this.cpu.turboFrequency,
-          cache: this.cpu.cache,
-          tdp: this.cpu.tdp,
+          turbo_freq: this.cpu.turboFrequency || null,
+          cache: this.cpu.cache || null,
+          tdp: this.cpu.tdp || null,
           memory_type: this.cpu.memoryType,
           memory_freq: this.cpu.memoryFrequency,
-          process: this.cpu.process,
+          process: this.cpu.process || null,
           graphics: this.cpu.graphics,
-          price: this.cpu.price,
+          price: this.cpu.price || null,
         };
         if (this.cpu.imgFile) {
           let formData = new FormData();

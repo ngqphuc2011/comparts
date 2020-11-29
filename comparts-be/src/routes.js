@@ -1,8 +1,12 @@
-const ctrl = require("../controller/controller");
+const cpu = require("./cpu/controller");
 
 module.exports = function (app) {
-	app.route("/cpus").get(ctrl.search).post(ctrl.create);
-	app.route("/cpus/upload").post(ctrl.saveImage).delete(ctrl.deleteImage);
-	app.route("/cpus/:id(\\d+)").get(ctrl.detail).delete(ctrl.delete).put(ctrl.update);
-	app.route("/public/cpus").get(ctrl.getDummyImage)
+	app.route("/cpu").get(cpu.search).post(cpu.create);
+	app.route("/cpu/upload").post(cpu.saveImage).delete(cpu.deleteImage);
+	app
+		.route("/cpu/:id(\\d+)")
+		.get(cpu.detail)
+		.delete(cpu.delete)
+		.put(cpu.update);
+	app.route("/public/cpu").get(cpu.getDummyImage);
 };

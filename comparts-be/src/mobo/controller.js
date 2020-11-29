@@ -1,5 +1,5 @@
-const sequelize = require("../src/database");
-const { initCpu } = require("../src/init-db");
+const sequelize = require("../database");
+const { initCpu } = require("./init");
 const { Sequelize } = require("sequelize");
 const Op = Sequelize.Op;
 
@@ -21,7 +21,7 @@ const storage = multer.diskStorage({
 });
 const upload = multer({ storage: storage }).single("img");
 
-const cpu = require("../model/cpu.model")(sequelize, Sequelize);
+const cpu = require("./model")(sequelize, Sequelize);
 initCpu(cpu);
 
 module.exports = {

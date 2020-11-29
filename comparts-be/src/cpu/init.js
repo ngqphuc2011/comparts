@@ -1,4 +1,4 @@
-const sequelize = require("./database");
+const sequelize = require("../database");
 module.exports = {
 	initCpu: (cpu) => {
 		sequelize.sync({ force: true }).then(() => {
