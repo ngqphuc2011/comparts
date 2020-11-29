@@ -346,4 +346,29 @@ module.exports = {
 			]);
 		});
 	},
+	initMobo: (mobo) => {
+		sequelize.sync({ force: true }).then(() => {
+			mobo.bulkCreate([
+				{
+					name: "B365M Phantom Gaming 4",
+					mfr: "ASRock",
+					chipset: "B365",
+					socket: "LGA1151",
+					size: "mATX",
+					memory_type: "DDR4",
+					memory_freq: "2666",
+					memory_slot_num: 4,
+					pcie_x16_slot_num: 2,
+					pcie_x8_slot_num: 0,
+					pcie_x4_slot_num: 0,
+					pcie_x2_slot_num: 0,
+					pcie_x1_slot_num: 1,
+					sata_slot_num: 6,
+					m2_slot_num: 2,
+					price: 2049000,
+					img: "asrock-b365m-phantom-gaming-4.jpg",
+				}
+			]);
+		
+		})}
 };

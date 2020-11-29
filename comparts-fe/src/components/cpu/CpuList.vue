@@ -92,7 +92,7 @@
             <v-img
               height="200"
               contain
-              :src="url.cpuImg + '/' + cpu.img"
+              :src="cpu.img ? url.cpuImg + '/' + cpu.img : ''"
             ></v-img>
             <v-card-title class="ellipsis">
               {{ cpu.mfr + " " + cpu.name }}
@@ -194,8 +194,8 @@ export default {
   data() {
     return {
       url: {
-        cpu: "http://localhost:3000/cpu",
-        cpuImg: "http://localhost:3000/public/cpu",
+        cpu: "http://localhost:3000/cpus",
+        cpuImg: "http://localhost:3000/public/cpus",
       },
       currentPage: 1,
       totalPages: 1,

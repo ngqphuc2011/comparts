@@ -3,7 +3,7 @@ const { initCpu } = require("../utils/init");
 const { Sequelize } = require("sequelize");
 const Op = Sequelize.Op;
 const fs = require("fs");
-const publicFilePath = "./public/cpu";
+const publicFilePath = "./public/cpus";
 const { upload } = require("../utils/multer")
 const cpu = require("../models/cpu")(sequelize, Sequelize);
 initCpu(cpu);
