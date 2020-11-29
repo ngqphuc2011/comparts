@@ -88,41 +88,8 @@
             </v-list-item>
           </v-list>
         </v-navigation-drawer>
-        <v-speed-dial
-          v-if="$router.currentRoute.path !== '/'"
-          v-model="fab"
-          class="homepage__floating-button"
-          transition="slide-y-reverse-transition"
-          open-on-hover
-        >
-          <template v-slot:activator>
-            <v-btn v-model="fab" color="grey darken-3" dark fab large>
-              <v-icon v-if="fab">mdi-close</v-icon>
-              <v-icon v-else>mdi-menu</v-icon>
-            </v-btn>
-          </template>
-          <v-btn fab dark color="grey">
-            <v-icon>mdi-export-variant</v-icon>
-          </v-btn>
-          <v-btn @click="onClickAddButton" fab dark color="grey">
-            <v-icon>mdi-plus</v-icon>
-          </v-btn>
-        </v-speed-dial>
       </v-card>
-      <v-footer class="homepage__footer" color="grey darken-4" padless>
-        <v-row justify="center" no-gutters>
-          <v-btn
-            v-for="(item, index) in footerItems"
-            :key="index"
-            color="white"
-            text
-            rounded
-            class="my-2"
-            >{{ item.title }}
-          </v-btn>
-        </v-row>
-      </v-footer>
-      <cpu-cu
+      <!-- <cpu-cu
         v-if="showCpuCuForm"
         :visible="showCpuCuForm"
         mode="C"
@@ -135,7 +102,7 @@
         mode="C"
         @close="showMoboCuForm = false"
         @search="rerenderMoboList"
-      />
+      /> -->
     </v-app>
   </div>
 </template>
@@ -153,11 +120,8 @@ export default {
   data() {
     return {
       drawer: false,
-      fab: false,
       cpuListFlag: true,
       moboListFlag: true,
-      showCpuCuForm: false,
-      showMoboCuForm: false,
     };
   },
   computed: {
@@ -203,14 +167,6 @@ export default {
           icon: "computer.svg",
           value: "case",
         },
-      ];
-    },
-
-    footerItems: function () {
-      return [
-        { title: this.$t("common.about_us"), value: "about-us" },
-        { title: this.$t("common.contact"), value: "contact" },
-        { title: this.$t("common.faq"), value: "faq" },
       ];
     },
   },
@@ -289,10 +245,5 @@ export default {
   display: flex;
   background-image: url(~/static/assets/background.jpg);
   height: 100%;
-}
-.homepage__floating-button {
-  position: fixed;
-  bottom: 64px;
-  right: 16px;
 }
 </style>

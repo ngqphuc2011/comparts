@@ -176,10 +176,29 @@
         :total-visible="5"
       ></v-pagination>
     </div>
+    <v-speed-dial
+      v-model="fab"
+      class="cpu__floating-button"
+      transition="slide-y-reverse-transition"
+      open-on-hover
+    >
+      <template v-slot:activator>
+        <v-btn v-model="fab" color="grey darken-3" dark fab large>
+          <v-icon v-if="fab">mdi-close</v-icon>
+          <v-icon v-else>mdi-menu</v-icon>
+        </v-btn>
+      </template>
+      <v-btn fab dark color="grey">
+        <v-icon>mdi-export-variant</v-icon>
+      </v-btn>
+      <v-btn @click="onClickAddButton" fab dark color="grey">
+        <v-icon>mdi-plus</v-icon>
+      </v-btn>
+    </v-speed-dial>
     <cpu-cu
       v-if="showCpuCuForm"
       :visible="showCpuCuForm"
-      mode="U"
+      :mode="this.mode"
       :originalCpu="selectedCpu"
       @close="showCpuCuForm = false"
       @search="buildPage"
@@ -209,6 +228,9 @@ export default {
       sortParam: "name",
       orderParam: "ASC",
 
+      mode: "",
+      fab: false,
+
       cpuList: [],
       cpuManufacturerList: [],
       cpuSocketList: [],
@@ -221,23 +243,7 @@ export default {
       selectedThreadNum: [],
 
       showCpuCuForm: false,
-      selectedCpu: {
-        name: "",
-        mfr: "",
-        socket: "",
-        coreNum: null,
-        threadNum: null,
-        baseFreq: null,
-        turboFreq: null,
-        cache: null,
-        tdp: null,
-        memoryType: "",
-        memoryFreq: null,
-        process: null,
-        graphics: "",
-        price: null,
-        img: "",
-      },
+      selectedCpu: {},
     };
   },
   computed: {
@@ -266,6 +272,27 @@ export default {
     this.buildPage();
   },
   methods: {
+    onClickAddButton() {
+      this.mode = "C";
+      this.showCpuCuForm = true;
+      this.selectedCpu = {
+        name: "",
+        mfr: "",
+        socket: "",
+        coreNum: null,
+        threadNum: null,
+        baseFreq: null,
+        turboFreq: null,
+        cache: null,
+        tdp: null,
+        memoryType: "",
+        memoryFreq: null,
+        process: null,
+        graphics: "",
+        price: null,
+        img: "",
+      };
+    },
     onClickResetSortButton() {
       this.sortParam = "name";
       this.orderParam = "ASC";
@@ -301,6 +328,7 @@ export default {
       cpu.reveal = false;
     },
     onClickCard(cpu) {
+      this.mode = "U";
       this.showCpuCuForm = true;
       this.selectedCpu = {
         id: cpu.id,
@@ -420,5 +448,10 @@ export default {
 }
 .cpu-list__grid-page__row {
   min-height: 840px;
+}
+.cpu__floating-button {
+  position: fixed;
+  bottom: 64px;
+  right: 16px;
 }
 </style>

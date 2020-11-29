@@ -146,19 +146,24 @@
                     MHz
                   </div>
                   <div v-if="mobo.pcie_x16_slot_num" class="subtitle-2">
-                    • {{ $t("mobo.pcie_x16_slot_num") }}: {{ mobo.pcie_x16_slot_num }}
+                    • {{ $t("mobo.pcie_x16_slot_num") }}:
+                    {{ mobo.pcie_x16_slot_num }}
                   </div>
                   <div v-if="mobo.pcie_x8_slot_num" class="subtitle-2">
-                    • {{ $t("mobo.pcie_x8_slot_num") }}: {{ mobo.pcie_x8_slot_num }}
+                    • {{ $t("mobo.pcie_x8_slot_num") }}:
+                    {{ mobo.pcie_x8_slot_num }}
                   </div>
                   <div v-if="mobo.pcie_x4_slot_num" class="subtitle-2">
-                    • {{ $t("mobo.pcie_x4_slot_num") }}: {{ mobo.pcie_x4_slot_num }}
+                    • {{ $t("mobo.pcie_x4_slot_num") }}:
+                    {{ mobo.pcie_x4_slot_num }}
                   </div>
                   <div v-if="mobo.pcie_x2_slot_num" class="subtitle-2">
-                    • {{ $t("mobo.pcie_x2_slot_num") }}: {{ mobo.pcie_x2_slot_num }}
+                    • {{ $t("mobo.pcie_x2_slot_num") }}:
+                    {{ mobo.pcie_x2_slot_num }}
                   </div>
                   <div v-if="mobo.pcie_x1_slot_num" class="subtitle-2">
-                    • {{ $t("mobo.pcie_x1_slot_num") }}: {{ mobo.pcie_x1_slot_num }}
+                    • {{ $t("mobo.pcie_x1_slot_num") }}:
+                    {{ mobo.pcie_x1_slot_num }}
                   </div>
                 </v-card-text>
               </v-card>
@@ -172,10 +177,29 @@
         :total-visible="5"
       ></v-pagination>
     </div>
+    <v-speed-dial
+      v-model="fab"
+      class="mobo__floating-button"
+      transition="slide-y-reverse-transition"
+      open-on-hover
+    >
+      <template v-slot:activator>
+        <v-btn v-model="fab" color="grey darken-3" dark fab large>
+          <v-icon v-if="fab">mdi-close</v-icon>
+          <v-icon v-else>mdi-menu</v-icon>
+        </v-btn>
+      </template>
+      <v-btn fab dark color="grey">
+        <v-icon>mdi-export-variant</v-icon>
+      </v-btn>
+      <v-btn @click="onClickAddButton" fab dark color="grey">
+        <v-icon>mdi-plus</v-icon>
+      </v-btn>
+    </v-speed-dial>
     <mobo-cu
       v-if="showMoboCuForm"
       :visible="showMoboCuForm"
-      mode="U"
+      :mode="this.mode"
       :originalMobo="selectedMobo"
       @close="showMoboCuForm = false"
       @search="buildPage"
@@ -205,6 +229,9 @@ export default {
       sortParam: "name",
       orderParam: "ASC",
 
+      fab: false,
+      mode: "",
+
       moboList: [],
       moboManufacturerList: [],
       moboSocketList: [],
@@ -217,25 +244,7 @@ export default {
       selectedSize: [],
 
       showMoboCuForm: false,
-      selectedMobo: {
-        name: "",
-        mfr: "",
-        chipset: "",
-        socket: "",
-        moboSize: "",
-        memoryType: "",
-        memoryFreq: null,
-        memorySlotNum: null,
-        pcieX16SlotNum: null,
-        pcieX8SlotNum: null,
-        pcieX4SlotNum: null,
-        pcieX2SlotNum: null,
-        pcieX1SlotNum: null,
-        sataSlotNum: null,
-        m2SlotNum: null,
-        price: null,
-        img: "",
-      },
+      selectedMobo: {},
     };
   },
   computed: {
@@ -262,6 +271,29 @@ export default {
     this.buildPage();
   },
   methods: {
+    onClickAddButton() {
+      this.mode = "C";
+      this.showMoboCuForm = true;
+      this.selectedMobo = {
+        name: "",
+        mfr: "",
+        chipset: "",
+        socket: "",
+        moboSize: "",
+        memoryType: "",
+        memoryFreq: null,
+        memorySlotNum: null,
+        pcieX16SlotNum: null,
+        pcieX8SlotNum: null,
+        pcieX4SlotNum: null,
+        pcieX2SlotNum: null,
+        pcieX1SlotNum: null,
+        sataSlotNum: null,
+        m2SlotNum: null,
+        price: null,
+        img: "",
+      };
+    },
     onClickResetSortButton() {
       this.sortParam = "name";
       this.orderParam = "ASC";
@@ -278,7 +310,7 @@ export default {
         mfr: this.selectedManufacturer,
         socket: this.selectedSocket,
         chipset: this.selectedChipset,
-        mobo_size: this.selectedSize
+        mobo_size: this.selectedSize,
       };
       this.pagination.page = 0;
       this.currentPage = 1;
@@ -297,6 +329,7 @@ export default {
       mobo.reveal = false;
     },
     onClickCard(mobo) {
+      this.mode = "U";
       this.showMoboCuForm = true;
       this.selectedMobo = {
         id: mobo.id,
@@ -418,5 +451,10 @@ export default {
 }
 .mobo-list__grid-page__row {
   min-height: 840px;
+}
+.mobo__floating-button {
+  position: fixed;
+  bottom: 64px;
+  right: 16px;
 }
 </style>
