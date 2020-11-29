@@ -69,7 +69,7 @@
     "mfr": "Manufacturer",
     "socket": "Socket",
     "chipset": "Chipset",
-    "size": "Size",
+    "mobo_size": "Size",
     "memory_type": "Memory Type",
     "memory_freq": "Memory Frequency",
     "memory_slot_num": "Number of Memory Slots",

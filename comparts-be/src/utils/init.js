@@ -354,7 +354,7 @@ module.exports = {
 					mfr: "ASRock",
 					chipset: "B365",
 					socket: "LGA1151",
-					size: "mATX",
+					mobo_size: "mATX",
 					memory_type: "DDR4",
 					memory_freq: "2666",
 					memory_slot_num: 4,

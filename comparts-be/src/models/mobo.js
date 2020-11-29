@@ -5,7 +5,7 @@ module.exports = (sequelize, DataTypes) =>
         mfr: { type: DataTypes.STRING },
         chipset: { type: DataTypes.STRING },
         socket: { type: DataTypes.STRING },
-        size: { type: DataTypes.STRING },
+        mobo_size: { type: DataTypes.STRING },
         memory_type: { type: DataTypes.STRING },
         memory_freq: { type: DataTypes.INTEGER },
         memory_slot_num: { type: DataTypes.INTEGER },

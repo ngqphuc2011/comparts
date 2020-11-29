@@ -35,8 +35,8 @@
             <v-col>
               <v-text-field
                 dense
-                v-model="mobo.size"
-                :label="$t('mobo.size')"
+                v-model="mobo.moboSize"
+                :label="$t('mobo.mobo_size')"
                 :rules="validationRules.textRequiredRules"
                 :counter="50"
                 :disabled="!isEditable"
@@ -306,7 +306,7 @@ export default {
           mfr: "",
           chipset: "",
           socket: "",
-          size: "",
+          moboSize: "",
           memoryType: "DDR4",
           memoryFreq: null,
           memorySlotNum: null,
@@ -426,7 +426,7 @@ export default {
           mfr: this.mobo.mfr,
           chipset: this.mobo.chipset,
           socket: this.mobo.socket,
-          size: this.mobo.size,
+          mobo_size: this.mobo.moboSize,
           memory_type: this.mobo.memoryType,
           memory_freq: this.mobo.memoryFreq,
           memory_slot_num: this.mobo.memorySlotNum || null,

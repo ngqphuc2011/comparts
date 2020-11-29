@@ -69,7 +69,7 @@
     "mfr": "Nhà sản xuất",
     "socket": "Socket",
     "chipset": "Chipset",
-    "size": "Kích thước",
+    "mobo_size": "Kích thước",
     "memory_type": "Loại bộ nhớ",
     "memory_freq": "Tần số bộ nhớ",
     "memory_slot_num": "Số khe RAM",

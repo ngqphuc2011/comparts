@@ -39,7 +39,7 @@
                 dense
                 v-model="selectedSize"
                 :items="moboSizeList"
-                :label="$t('mobo.size')"
+                :label="$t('mobo.mobo_size')"
                 multiple
                 chips
               ></v-select>
@@ -108,7 +108,7 @@
                 • {{ $t("mobo.socket") }}: {{ mobo.socket }}
               </div>
               <div class="subtitle-2 ellipsis">
-                • {{ $t("mobo.size") }}: {{ mobo.size }}
+                • {{ $t("mobo.mobo_size") }}: {{ mobo.mobo_size }}
               </div>
               <div class="subtitle-2 ellipsis">
                 • {{ $t("mobo.memory_slot_num") }}: {{ mobo.memory_slot_num }}
@@ -138,7 +138,7 @@
                     • {{ $t("mobo.socket") }}: {{ mobo.socket }}
                   </div>
                   <div class="subtitle-2">
-                    • {{ $t("mobo.size") }}: {{ mobo.size }}
+                    • {{ $t("mobo.mobo_size") }}: {{ mobo.mobo_size }}
                   </div>
                   <div class="subtitle-2">
                     • {{ $t("mobo.supported_memory") }}:
@@ -222,17 +222,17 @@ export default {
         mfr: "",
         chipset: "",
         socket: "",
-        size: "",
-        memory_type: "",
-        memory_freq: null,
-        memory_slot_num: null,
-        pcie_x16_slot_num: null,
-        pcie_x8_slot_num: null,
-        pcie_x4_slot_num: null,
-        pcie_x2_slot_num: null,
-        pcie_x1_slot_num: null,
-        sata_slot_num: null,
-        m2_slot_num: null,
+        moboSize: "",
+        memoryType: "",
+        memoryFreq: null,
+        memorySlotNum: null,
+        pcieX16SlotNum: null,
+        pcieX8SlotNum: null,
+        pcieX4SlotNum: null,
+        pcieX2SlotNum: null,
+        pcieX1SlotNum: null,
+        sataSlotNum: null,
+        m2SlotNum: null,
         price: null,
         img: "",
       },
@@ -278,7 +278,7 @@ export default {
         mfr: this.selectedManufacturer,
         socket: this.selectedSocket,
         chipset: this.selectedChipset,
-        size: this.selectedSize
+        mobo_size: this.selectedSize
       };
       this.pagination.page = 0;
       this.currentPage = 1;
@@ -304,7 +304,7 @@ export default {
         mfr: mobo.mfr,
         chipset: mobo.chipset,
         socket: mobo.socket,
-        size: mobo.size,
+        moboSize: mobo.mobo_size,
         memoryType: mobo.memory_type,
         memoryFreq: mobo.memory_freq,
         memorySlotNum: mobo.memory_slot_num,
@@ -351,8 +351,8 @@ export default {
             if (this.moboChipsetList.indexOf(mobo.chipset) === -1) {
               this.moboChipsetList.push(mobo.chipset);
             }
-            if (this.moboSizeList.indexOf(mobo.size) === -1) {
-              this.moboSizeList.push(mobo.size);
+            if (this.moboSizeList.indexOf(mobo.mobo_size) === -1) {
+              this.moboSizeList.push(mobo.mobo_size);
             }
           });
           this.moboManufacturerList.sort();
