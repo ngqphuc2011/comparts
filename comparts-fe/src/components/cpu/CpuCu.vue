@@ -314,8 +314,9 @@ export default {
       cpuMemoryTypeList: ["DDR2", "DDR3", "DDR4"],
       urlImg: "",
       url: {
+        cpu: `${this.baseUrl}/cpus`,
         cpuImg: `${this.baseUrl}/public/cpus`,
-        cpuUploadImg: `${this.baseUrl}/cpus/upload/`,
+        cpuUploadImg: `${this.baseUrl}/cpus/upload`,
       },
       validationRules: {
         requireRules: [(v) => !!v || this.$t("message.required_rule_msg")],
@@ -358,7 +359,7 @@ export default {
       this.isEditable = true;
     }
     this.cpu = { ...this.originalCpu };
-    this.urlImg = this.cpu.img ? this.url.cpuImg + this.cpu.img : "";
+    this.urlImg = this.cpu.img ? `${this.url.cpuImg}/${this.cpu.img}` : "";
   },
   methods: {
     onClickModifyButton() {
@@ -368,7 +369,7 @@ export default {
       this.deleteConfirmDialog = false;
     },
     onClickAcceptDeleteButton(id) {
-      this.$http.delete(this.url.cpu + id).then(() => {
+      this.$http.delete(`${this.url.cpu}/${id}`).then(() => {
         this.$http.delete(this.url.cpuUploadImg, {
           data: [this.cpu.img],
         });
@@ -439,7 +440,7 @@ export default {
             });
         } else if (this.mode === "U") {
           this.$http
-            .put(this.url.cpu + this.cpu.id, body)
+            .put(`${this.url.cpu}/${this.cpu.id}`, body)
             .then((res) => {
               if (this.cpu.imgFile) {
                 this.$http.delete(this.url.cpuUploadImg, {

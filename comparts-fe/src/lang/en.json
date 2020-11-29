@@ -81,7 +81,7 @@
     "sata_slot_num": "Number of SATA Slots",
     "m2_slot_num": "Number of M.2 Slots",
     "supported_memory": "Supported Memory",
-    "price": "Giá",
+    "price": "Price",
     "add_mobo": "Add Motherboard",
     "edit_mobo": "Edit Motherboard"
   }

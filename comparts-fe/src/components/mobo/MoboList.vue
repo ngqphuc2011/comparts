@@ -92,7 +92,7 @@
             <v-img
               height="200"
               contain
-              :src="mobo.img ? url.moboImg + '/' + mobo.img : ''"
+              :src="getMoboImg(mobo.img)"
             ></v-img>
             <v-card-title class="ellipsis">
               {{ mobo.mfr + " " + mobo.name }}
@@ -271,6 +271,13 @@ export default {
     this.buildPage();
   },
   methods: {
+    getMoboImg(img) {
+       if (img) {
+        return `${this.url.moboImg}/${img}`;
+      } else {
+        return "";
+      }
+    },
     onClickAddButton() {
       this.mode = "C";
       this.showMoboCuForm = true;

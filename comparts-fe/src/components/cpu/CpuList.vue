@@ -89,11 +89,7 @@
             @mouseover="onMouseOverCard(cpu)"
             @mouseleave="onMouseLeaveCard(cpu)"
           >
-            <v-img
-              height="200"
-              contain
-              :src="cpu.img ? url.cpuImg + '/' + cpu.img : ''"
-            ></v-img>
+            <v-img height="200" contain :src="getCpuImg(cpu.img)"></v-img>
             <v-card-title class="ellipsis">
               {{ cpu.mfr + " " + cpu.name }}
             </v-card-title>
@@ -272,6 +268,13 @@ export default {
     this.buildPage();
   },
   methods: {
+    getCpuImg(img) {
+      if (img) {
+        return `${this.url.cpuImg}/${img}`;
+      } else {
+        return "";
+      }
+    },
     onClickAddButton() {
       this.mode = "C";
       this.showCpuCuForm = true;

@@ -331,8 +331,8 @@ export default {
       urlImg: "",
       url: {
         mobo: `${this.baseUrl}/mobos`,
-        moboImg: `${this.baseUrl}/public/mobos/`,
-        moboUploadImg: `${this.baseUrl}/mobos/upload/`,
+        moboImg: `${this.baseUrl}/public/mobos`,
+        moboUploadImg: `${this.baseUrl}/mobos/upload`,
       },
       validationRules: {
         requireRules: [(v) => !!v || this.$t("message.required_rule_msg")],
@@ -375,7 +375,7 @@ export default {
       this.isEditable = true;
     }
     this.mobo = { ...this.originalMobo };
-    this.urlImg = this.mobo.img ? this.url.moboImg + this.mobo.img : "";
+    this.urlImg = this.mobo.img ? `${this.url.moboImg}/${this.mobo.img}` : "";
   },
   methods: {
     onClickModifyButton() {
@@ -385,7 +385,7 @@ export default {
       this.deleteConfirmDialog = false;
     },
     onClickAcceptDeleteButton(id) {
-      this.$http.delete(this.url.mobo + id).then(() => {
+      this.$http.delete(`${this.url.mobo}/${id}`).then(() => {
         this.$http.delete(this.url.moboUploadImg, {
           data: [this.mobo.img],
         });
@@ -460,7 +460,7 @@ export default {
             });
         } else if (this.mode === "U") {
           this.$http
-            .put(this.url.mobo + this.mobo.id, body)
+            .put(`${this.url.mobo}/${this.mobo.id}`, body)
             .then((res) => {
               if (this.mobo.imgFile) {
                 this.$http.delete(this.url.moboUploadImg, {
