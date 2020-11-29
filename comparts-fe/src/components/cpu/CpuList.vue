@@ -82,7 +82,7 @@
     </div>
     <div class="ml-6 cpu-list__grid-page">
       <v-row class="cpu-list__grid-page__row">
-        <v-col v-for="(cpu, index) in cpuList" :key="index" cols="2">
+        <v-col v-for="(cpu, index) in cpuList" :key="index" >
           <v-card
             class="cpu-list__card"
             @click="onClickCard(cpu)"

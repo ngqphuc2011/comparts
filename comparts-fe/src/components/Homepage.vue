@@ -228,7 +228,6 @@ export default {
 }
 .homepage__main-page {
   display: flex;
-  background-image: url(~/static/assets/background.jpg);
   height: 100%;
 }
 </style>
