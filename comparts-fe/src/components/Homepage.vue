@@ -81,7 +81,6 @@
                 >
                 </v-img>
               </v-list-item-icon>
-
               <v-list-item-content>
                 <v-list-item-title>{{ item.title }}</v-list-item-title>
               </v-list-item-content>
@@ -89,20 +88,6 @@
           </v-list>
         </v-navigation-drawer>
       </v-card>
-      <!-- <cpu-cu
-        v-if="showCpuCuForm"
-        :visible="showCpuCuForm"
-        mode="C"
-        @close="showCpuCuForm = false"
-        @search="rerenderCpuList"
-      />
-      <mobo-cu
-        v-if="showMoboCuForm"
-        :visible="showMoboCuForm"
-        mode="C"
-        @close="showMoboCuForm = false"
-        @search="rerenderMoboList"
-      /> -->
     </v-app>
   </div>
 </template>
