@@ -4,5 +4,5 @@ const prodEnv = require('./prod.env')
 
 module.exports = merge(prodEnv, {
   NODE_ENV: '"development"',
-  LOCAL_PATH: '"http://localhost:3000"'
+  LOCAL_PATH: '"http://13.250.81.41:3000/"'
 })
