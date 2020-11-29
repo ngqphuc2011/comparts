@@ -1,27 +1,11 @@
-const sequelize = require("../database");
-const { initCpu } = require("./init");
+const sequelize = require("../config/database");
+const { initCpu } = require("../utils/init");
 const { Sequelize } = require("sequelize");
 const Op = Sequelize.Op;
-
 const fs = require("fs");
-const path = require("path");
-const multer = require("multer");
-
-const publicFilePath = "./public/cpus/";
-const storage = multer.diskStorage({
-	destination: function (req, file, callback) {
-		callback(null, publicFilePath);
-	},
-	filename: function (req, file, callback) {
-		callback(
-			null,
-			file.fieldname + "-" + Date.now() + path.extname(file.originalname),
-		);
-	},
-});
-const upload = multer({ storage: storage }).single("img");
-
-const cpu = require("./model")(sequelize, Sequelize);
+const publicFilePath = "./public/cpu";
+const { upload } = require("../utils/multer")
+const cpu = require("../models/cpu")(sequelize, Sequelize);
 initCpu(cpu);
 
 module.exports = {
@@ -76,14 +60,14 @@ module.exports = {
 					[sort, order],
 				],
 			})
-			.then((cpus) => {
-				const response = getPagingData(cpus, page, limit);
+			.then((cpu) => {
+				const response = getPagingData(cpu, page, limit);
 				res.send(response);
 			});
 	},
 	detail: (req, res) => {
-		cpu.findAll({ where: { id: req.params.id } }).then((cpus) => {
-			res.json(cpus);
+		cpu.findAll({ where: { id: req.params.id } }).then((cpu) => {
+			res.json(cpu);
 		});
 	},
 	delete: (req, res) => {
@@ -108,15 +92,18 @@ module.exports = {
 			});
 	},
 	saveImage: (req, res) => {
-		upload(req, res, (err) => {
+		upload(publicFilePath)(req, res, (err) => {
 			res.json(req.file);
-		});
+		});;
 	},
 	deleteImage: (req, res) => {
-		console.log(req);
-		res.json("helloS");
+		req.body.forEach(img => {
+			fs.unlink(`${publicFilePath}/${img}`, (err) => {
+				res.json("Deleted")
+			})
+		});
 	},
-	getDummyImage: (req, res) => {
+	getNullImage: (req, res) => {
 		res.end();
 	},
 };

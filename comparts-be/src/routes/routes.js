@@ -1,4 +1,4 @@
-const cpu = require("./cpu/controller");
+const cpu = require("../controllers/cpu");
 
 module.exports = function (app) {
 	app.route("/cpu").get(cpu.search).post(cpu.create);
@@ -8,5 +8,5 @@ module.exports = function (app) {
 		.get(cpu.detail)
 		.delete(cpu.delete)
 		.put(cpu.update);
-	app.route("/public/cpu").get(cpu.getDummyImage);
+	app.route("/public/cpu").get(cpu.getNullImage);
 };

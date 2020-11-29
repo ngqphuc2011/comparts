@@ -2,7 +2,7 @@
   "common": {
     "about_us": "Về chúng tôi",
     "contact": "Liên hệ",
-    "faq": "FAQ",
+    "faq": "Câu hỏi",
     "search": "Tìm kiếm",
     "reset": "Đặt lại",
     "sort": "Sắp xếp",
@@ -25,7 +25,7 @@
     "required_rule_msg": "Trường này là bắt buộc.",
     "text_rule_msg": "Trường này phải có độ dài từ 50 kí tự trở xuống.",
     "number_rule_msg": "Trường này phải có giá trị từ 0 đến 65,536.",
-    "int_rule_msg": "Trường này phải có giá trị từ 2,147,483,647 trở xuống."
+    "int_rule_msg": "Trường này phải có giá trị từ 0 đến 2,147,483,647."
   },
   "getting_started": {
     "cpu_label": "Vi xử lý",

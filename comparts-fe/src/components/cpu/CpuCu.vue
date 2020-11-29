@@ -138,7 +138,6 @@
                 dense
                 v-model="cpu.memoryType"
                 :items="cpuMemoryTypeList"
-                :rules="validationRules.requiredRules"
                 :label="$t('cpu.memory_type')"
                 :disabled="!isEditable"
               ></v-select>
@@ -337,7 +336,11 @@ export default {
             this.$t("message.number_rule_msg"),
         ],
         intRules: [
-          (v) => v <= 2147483647 || this.$t("message.int_rule_msg"),
+          (v) =>
+            (v <= 2147483647 && v > 0) ||
+            v == "" ||
+            v == null ||
+            this.$t("message.int_rule_msg"),
         ],
       },
       valid: false,
@@ -366,6 +369,9 @@ export default {
     },
     onClickAcceptDeleteButton(id) {
       this.$http.delete(this.url.cpu + id).then(() => {
+        this.$http.delete(this.url.cpuUploadImg, {
+          data: [this.cpu.img],
+        });
         this.deleteConfirmDialog = false;
         this.$emit("close");
         this.$emit("search");
@@ -429,17 +435,20 @@ export default {
               this.$emit("search");
             })
             .catch((err) => {
-              this.$http.delete(this.url.cpuUploadImg, res.data.filename);
+              this.$http.delete(this.url.cpuUploadImg, { data: [body.img] });
             });
         } else if (this.mode === "U") {
           this.$http
             .put(this.url.cpu + this.cpu.id, body)
             .then((res) => {
+              this.$http.delete(this.url.cpuUploadImg, {
+                data: [this.cpu.img],
+              });
               this.$emit("close");
               this.$emit("search");
             })
             .catch((err) => {
-              this.$http.delete(this.url.cpuUploadImg, res.data.filename);
+              this.$http.delete(this.url.cpuUploadImg, { data: [body.img] });
             });
         }
       }
