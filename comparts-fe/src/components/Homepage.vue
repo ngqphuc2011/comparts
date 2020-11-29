@@ -89,6 +89,7 @@
           </v-list>
         </v-navigation-drawer>
         <v-speed-dial
+          v-if="$router.currentRoute.path !== '/'"
           v-model="fab"
           class="homepage__floating-button"
           transition="slide-y-reverse-transition"
@@ -101,19 +102,10 @@
             </v-btn>
           </template>
           <v-btn fab dark color="grey">
-            <v-icon>mdi-wrench</v-icon>
+            <v-icon>mdi-export-variant</v-icon>
           </v-btn>
-          <v-btn
-            v-if="$router.currentRoute.path !== '/'"
-            @click="onClickAddButton"
-            fab
-            dark
-            color="grey"
-          >
-            <v-icon>mdi-plus-thick</v-icon>
-          </v-btn>
-          <v-btn @click="onClickToTopPage" fab dark color="grey">
-            <v-icon>mdi-arrow-up-bold</v-icon>
+          <v-btn @click="onClickAddButton" fab dark color="grey">
+            <v-icon>mdi-plus</v-icon>
           </v-btn>
         </v-speed-dial>
       </v-card>
@@ -214,13 +206,13 @@ export default {
       ];
     },
 
-    footerItems: function() {
+    footerItems: function () {
       return [
-        { title: this.$t('common.about_us'), value: "about-us" },
-        { title: this.$t('common.contact'), value: "contact" },
-        { title: this.$t('common.faq'), value: "faq" },
-      ]
-    } 
+        { title: this.$t("common.about_us"), value: "about-us" },
+        { title: this.$t("common.contact"), value: "contact" },
+        { title: this.$t("common.faq"), value: "faq" },
+      ];
+    },
   },
   created() {
     this.setDefaultLanguage();
@@ -248,10 +240,6 @@ export default {
       } else {
         this.$store.dispatch("setLang", "vi");
       }
-    },
-    onClickToTopPage() {
-      document.body.scrollTop = 0;
-      document.documentElement.scrollTop = 0;
     },
     onClickGoToHomepage() {
       this.$router

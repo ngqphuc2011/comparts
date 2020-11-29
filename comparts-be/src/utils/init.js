@@ -367,8 +367,47 @@ module.exports = {
 					m2_slot_num: 2,
 					price: 2049000,
 					img: "asrock-b365m-phantom-gaming-4.jpg",
+				},
+				{
+					name: "B365M Pro4",
+					mfr: "ASRock",
+					chipset: "B365",
+					socket: "LGA1151",
+					mobo_size: "mATX",
+					memory_type: "DDR4",
+					memory_freq: "2666",
+					memory_slot_num: 4,
+					pcie_x16_slot_num: 2,
+					pcie_x8_slot_num: 0,
+					pcie_x4_slot_num: 0,
+					pcie_x2_slot_num: 0,
+					pcie_x1_slot_num: 1,
+					sata_slot_num: 6,
+					m2_slot_num: 2,
+					price: 1990000,
+					img: "asrock-b365m-pro4.jpg",
+				},
+				{
+					name: "B450M TUF Plus Gaming",
+					mfr: "ASUS",
+					chipset: "B450",
+					socket: "LGA1151",
+					mobo_size: "mATX",
+					memory_type: "DDR4",
+					memory_freq: "3466",
+					memory_slot_num: 4,
+					pcie_x16_slot_num: 2,
+					pcie_x8_slot_num: 0,
+					pcie_x4_slot_num: 0,
+					pcie_x2_slot_num: 0,
+					pcie_x1_slot_num: 1,
+					sata_slot_num: 6,
+					m2_slot_num: 2,
+					price: 2049000,
+					img: "asus-tuf-b450m-plus-gaming.jpg",
 				}
 			]);
-		
-		})}
+
+		})
+	}
 };
