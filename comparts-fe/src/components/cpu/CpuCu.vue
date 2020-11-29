@@ -358,7 +358,7 @@ export default {
       this.isEditable = true;
     }
     this.cpu = { ...this.originalCpu };
-    this.urlImg = this.url.cpuImg + this.cpu.img;
+    this.urlImg = this.cpu.img ? this.url.cpuImg + this.cpu.img : "";
   },
   methods: {
     onClickModifyButton() {
