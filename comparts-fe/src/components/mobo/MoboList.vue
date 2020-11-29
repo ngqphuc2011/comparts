@@ -1,6 +1,6 @@
 <template>
-  <v-container fluid class="cpu-list">
-    <div class="mt-3 cpu-list__search-sort-area">
+  <v-container fluid class="mobo-list">
+    <div class="mt-3 mobo-list__search-sort-area">
       <v-expansion-panels accordion :value="0">
         <v-expansion-panel>
           <v-expansion-panel-header>
@@ -14,32 +14,32 @@
               <v-select
                 dense
                 v-model="selectedManufacturer"
-                :items="cpuManufacturerList"
-                :label="$t('cpu.mfr')"
+                :items="moboManufacturerList"
+                :label="$t('mobo.mfr')"
                 multiple
                 chips
               ></v-select>
               <v-select
                 dense
                 v-model="selectedSocket"
-                :items="cpuSocketList"
-                :label="$t('cpu.socket')"
+                :items="moboSocketList"
+                :label="$t('mobo.socket')"
                 multiple
                 chips
               ></v-select>
               <v-select
                 dense
-                v-model="selectedCoreNum"
-                :items="cpuCoreNumList"
-                :label="$t('cpu.core_num')"
+                v-model="selectedChipset"
+                :items="moboChipsetList"
+                :label="$t('mobo.chipset')"
                 multiple
                 chips
               ></v-select>
               <v-select
                 dense
-                v-model="selectedThreadNum"
-                :items="cpuThreadNumList"
-                :label="$t('cpu.thread_num')"
+                v-model="selectedSize"
+                :items="moboSizeList"
+                :label="$t('mobo.size')"
                 multiple
                 chips
               ></v-select>
@@ -80,45 +80,45 @@
         </v-expansion-panel>
       </v-expansion-panels>
     </div>
-    <div class="ml-6 cpu-list__grid-page">
-      <v-row class="cpu-list__grid-page__row">
-        <v-col v-for="(cpu, index) in cpuList" :key="index" cols="2">
+    <div class="ml-6 mobo-list__grid-page">
+      <v-row class="mobo-list__grid-page__row">
+        <v-col v-for="(mobo, index) in moboList" :key="index" cols="2">
           <v-card
-            class="cpu-list__card"
-            @click="onClickCard(cpu)"
-            @mouseover="onMouseOverCard(cpu)"
-            @mouseleave="onMouseLeaveCard(cpu)"
+            class="mobo-list__card"
+            @click="onClickCard(mobo)"
+            @mouseover="onMouseOverCard(mobo)"
+            @mouseleave="onMouseLeaveCard(mobo)"
           >
             <v-img
               height="200"
               contain
-              :src="cpu.img ? url.cpuImg + '/' + cpu.img : ''"
+              :src="mobo.img ? url.moboImg + '/' + mobo.img : ''"
             ></v-img>
             <v-card-title class="ellipsis">
-              {{ cpu.mfr + " " + cpu.name }}
+              {{ mobo.mfr + " " + mobo.name }}
             </v-card-title>
-            <v-card-text class="cpu-list__card__description">
+            <v-card-text class="mobo-list__card__description">
               <div class="subtitle-1 red--text ellipsis">
-                ₫ • {{ formatNumber(cpu.price) }}
+                ₫ • {{ formatNumber(mobo.price) }}
               </div>
               <div class="subtitle-2 ellipsis">
-                • {{ $t("cpu.base_freq") }}: {{ cpu.base_freq }} MHz
-              </div>
-              <div v-if="cpu.turbo_freq" class="subtitle-2 ellipsis">
-                • {{ $t("cpu.turbo_freq") }}: {{ cpu.turbo_freq }} MHz
+                • {{ $t("mobo.chipset") }}: {{ mobo.chipset }}
               </div>
               <div class="subtitle-2 ellipsis">
-                • {{ $t("cpu.core_num") }}: {{ cpu.core_num }}
+                • {{ $t("mobo.socket") }}: {{ mobo.socket }}
               </div>
               <div class="subtitle-2 ellipsis">
-                • {{ $t("cpu.thread_num") }}: {{ cpu.thread_num }}
+                • {{ $t("mobo.size") }}: {{ mobo.size }}
+              </div>
+              <div class="subtitle-2 ellipsis">
+                • {{ $t("mobo.memory_slot_num") }}: {{ mobo.memory_slot_num }}
               </div>
             </v-card-text>
 
             <v-expand-transition>
               <v-card
-                v-if="cpu.reveal"
-                class="transition-fast-in-fast-out cpu-list__card--reveal"
+                v-if="mobo.reveal"
+                class="transition-fast-in-fast-out mobo-list__card--reveal"
               >
                 <v-card-text class="pb-0">
                   <div class="title text--primary">
@@ -126,43 +126,39 @@
                   </div>
                   <v-divider class="mb-4"></v-divider>
                   <div class="subtitle-2">
-                    • {{ $t("cpu.name") }}: {{ cpu.name }}
+                    • {{ $t("mobo.name") }}: {{ mobo.name }}
                   </div>
                   <div class="subtitle-2">
-                    • {{ $t("cpu.mfr") }}: {{ cpu.mfr }}
+                    • {{ $t("mobo.mfr") }}: {{ mobo.mfr }}
                   </div>
                   <div class="subtitle-2">
-                    • {{ $t("cpu.core_num") }}: {{ cpu.core_num }}
+                    • {{ $t("mobo.chipset") }}: {{ mobo.chipset }}
                   </div>
                   <div class="subtitle-2">
-                    • {{ $t("cpu.thread_num") }}: {{ cpu.thread_num }}
+                    • {{ $t("mobo.socket") }}: {{ mobo.socket }}
                   </div>
                   <div class="subtitle-2">
-                    • {{ $t("cpu.base_freq") }}: {{ cpu.base_freq }} MHz
-                  </div>
-                  <div v-if="cpu.turbo_freq" class="subtitle-2">
-                    • {{ $t("cpu.turbo_freq") }}: {{ cpu.turbo_freq }} MHz
+                    • {{ $t("mobo.size") }}: {{ mobo.size }}
                   </div>
                   <div class="subtitle-2">
-                    • {{ $t("cpu.cache") }}: {{ cpu.cache }} MB
-                  </div>
-                  <div class="subtitle-2">
-                    • {{ $t("cpu.socket") }}: {{ cpu.socket }}
-                  </div>
-                  <div class="subtitle-2">
-                    • {{ $t("cpu.tdp") }}: {{ cpu.tdp }} W
-                  </div>
-                  <div class="subtitle-2">
-                    • {{ $t("cpu.supported_memory") }}: {{ cpu.memory_type }}-{{
-                      cpu.memory_freq
-                    }}
+                    • {{ $t("mobo.supported_memory") }}:
+                    {{ mobo.memory_type }}-{{ mobo.memory_freq }}
                     MHz
                   </div>
-                  <div v-if="cpu.process" class="subtitle-2">
-                    • {{ $t("cpu.process") }}: {{ cpu.process }} nm
+                  <div v-if="mobo.pcie_x16_slot_num" class="subtitle-2">
+                    • {{ $t("mobo.pcie_x16_slot_num") }}: {{ mobo.pcie_x16_slot_num }}
                   </div>
-                  <div v-if="cpu.graphics" class="subtitle-2">
-                    • {{ $t("cpu.graphics") }}: {{ cpu.graphics }}
+                  <div v-if="mobo.pcie_x8_slot_num" class="subtitle-2">
+                    • {{ $t("mobo.pcie_x8_slot_num") }}: {{ mobo.pcie_x8_slot_num }}
+                  </div>
+                  <div v-if="mobo.pcie_x4_slot_num" class="subtitle-2">
+                    • {{ $t("mobo.pcie_x4_slot_num") }}: {{ mobo.pcie_x4_slot_num }}
+                  </div>
+                  <div v-if="mobo.pcie_x2_slot_num" class="subtitle-2">
+                    • {{ $t("mobo.pcie_x2_slot_num") }}: {{ mobo.pcie_x2_slot_num }}
+                  </div>
+                  <div v-if="mobo.pcie_x1_slot_num" class="subtitle-2">
+                    • {{ $t("mobo.pcie_x1_slot_num") }}: {{ mobo.pcie_x1_slot_num }}
                   </div>
                 </v-card-text>
               </v-card>
@@ -176,27 +172,27 @@
         :total-visible="5"
       ></v-pagination>
     </div>
-    <cpu-cu
-      v-if="showCpuCuForm"
-      :visible="showCpuCuForm"
+    <mobo-cu
+      v-if="showMoboCuForm"
+      :visible="showMoboCuForm"
       mode="U"
-      :originalCpu="selectedCpu"
-      @close="showCpuCuForm = false"
+      :originalMobo="selectedMobo"
+      @close="showMoboCuForm = false"
       @search="buildPage"
     />
   </v-container>
 </template>
 
 <script>
-import CpuCu from "./CpuCu";
+import MoboCu from "./MoboCu";
 export default {
-  name: "CpuList",
-  components: { CpuCu },
+  name: "MoboList",
+  components: { MoboCu },
   data() {
     return {
       url: {
-        cpu: "http://localhost:3000/cpus",
-        cpuImg: "http://localhost:3000/public/cpus",
+        mobo: "http://localhost:3000/mobos",
+        moboImg: "http://localhost:3000/public/mobos",
       },
       currentPage: 1,
       totalPages: 1,
@@ -209,32 +205,34 @@ export default {
       sortParam: "name",
       orderParam: "ASC",
 
-      cpuList: [],
-      cpuManufacturerList: [],
-      cpuSocketList: [],
-      cpuCoreNumList: [],
-      cpuThreadNumList: [],
+      moboList: [],
+      moboManufacturerList: [],
+      moboSocketList: [],
+      moboChipsetList: [],
+      moboSizeList: [],
 
       selectedManufacturer: [],
       selectedSocket: [],
-      selectedCoreNum: [],
-      selectedThreadNum: [],
+      selectedChipset: [],
+      selectedSize: [],
 
-      showCpuCuForm: false,
-      selectedCpu: {
+      showMoboCuForm: false,
+      selectedMobo: {
         name: "",
         mfr: "",
+        chipset: "",
         socket: "",
-        coreNum: null,
-        threadNum: null,
-        baseFrequency: null,
-        turboFrequency: null,
-        cache: null,
-        tdp: null,
-        memoryType: "",
-        memoryFrequency: null,
-        process: null,
-        graphics: "",
+        size: "",
+        memory_type: "",
+        memory_freq: null,
+        memory_slot_num: null,
+        pcie_x16_slot_num: null,
+        pcie_x8_slot_num: null,
+        pcie_x4_slot_num: null,
+        pcie_x2_slot_num: null,
+        pcie_x1_slot_num: null,
+        sata_slot_num: null,
+        m2_slot_num: null,
         price: null,
         img: "",
       },
@@ -243,10 +241,8 @@ export default {
   computed: {
     sortByRadios: function () {
       return [
-        { label: this.$t("cpu.name"), value: "name" },
-        { label: this.$t("cpu.price"), value: "price" },
-        { label: this.$t("cpu.core_num"), value: "core_num" },
-        { label: this.$t("cpu.thread_num"), value: "thread_num" },
+        { label: this.$t("mobo.name"), value: "name" },
+        { label: this.$t("mobo.price"), value: "price" },
       ];
     },
     sortInRadios: function () {
@@ -259,7 +255,7 @@ export default {
   watch: {
     currentPage(page) {
       this.pagination.page = page - 1;
-      this.buildCpuList();
+      this.buildMoboList();
     },
   },
   created() {
@@ -275,97 +271,99 @@ export default {
         sort: this.sortParam,
         order: this.orderParam,
       };
-      this.buildCpuList();
+      this.buildMoboList();
     },
     onClickSearchButton() {
       this.searchQuery = {
         mfr: this.selectedManufacturer,
         socket: this.selectedSocket,
-        core_num: this.selectedCoreNum,
-        thread_num: this.selectedThreadNum,
+        chipset: this.selectedChipset,
+        size: this.selectedSize
       };
       this.pagination.page = 0;
       this.currentPage = 1;
-      this.buildCpuList();
+      this.buildMoboList();
     },
     onClickResetSearchButton() {
       this.selectedManufacturer = [];
       this.selectedSocket = [];
-      this.selectedCoreNum = [];
-      this.selectedThreadNum = [];
+      this.selectedChipset = [];
+      this.selectedSize = [];
     },
-    onMouseOverCard(cpu) {
-      cpu.reveal = true;
+    onMouseOverCard(mobo) {
+      mobo.reveal = true;
     },
-    onMouseLeaveCard(cpu) {
-      cpu.reveal = false;
+    onMouseLeaveCard(mobo) {
+      mobo.reveal = false;
     },
-    onClickCard(cpu) {
-      this.showCpuCuForm = true;
-      this.selectedCpu = {
-        id: cpu.id,
-        name: cpu.name,
-        mfr: cpu.mfr,
-        socket: cpu.socket,
-        coreNum: cpu.core_num,
-        threadNum: cpu.thread_num,
-        baseFrequency: cpu.base_freq,
-        turboFrequency: cpu.turbo_freq,
-        cache: cpu.cache,
-        tdp: cpu.tdp,
-        memoryType: cpu.memory_type,
-        memoryFrequency: cpu.memory_freq,
-        process: cpu.process,
-        graphics: cpu.graphics,
-        price: cpu.price,
-        img: cpu.img,
+    onClickCard(mobo) {
+      this.showMoboCuForm = true;
+      this.selectedMobo = {
+        id: mobo.id,
+        name: mobo.name,
+        mfr: mobo.mfr,
+        chipset: mobo.chipset,
+        socket: mobo.socket,
+        size: mobo.size,
+        memory_type: mobo.memory_type,
+        memory_freq: mobo.memory_freq,
+        memory_slot_num: mobo.memory_slot_num,
+        pcie_x16_slot_num: mobo.pcie_x16_slot_num,
+        pcie_x8_slot_num: mobo.pcie_x8_slot_num,
+        pcie_x4_slot_num: mobo.pcie_x4_slot_num,
+        pcie_x2_slot_num: mobo.pcie_x2_slot_num,
+        pcie_x1_slot_num: mobo.pcie_x1_slot_num,
+        sata_slot_num: mobo.sata_slot_num,
+        m2_slot_num: mobo.m2_slot_num,
+        price: mobo.price,
+        img: mobo.img,
       };
     },
 
-    searchCpuList(url, pagination, query, sortOrder) {
+    searchMoboList(url, pagination, query, sortOrder) {
       return this.$http
         .get(url, { params: { ...pagination, ...query, ...sortOrder } })
         .then((res) => {
-          this.cpuList = [];
+          this.moboList = [];
           this.totalPages = res.data.totalPages;
-          res.data.items.forEach((cpu) => {
-            cpu.reveal = false;
-            this.cpuList.push(cpu);
+          res.data.items.forEach((mobo) => {
+            mobo.reveal = false;
+            this.moboList.push(mobo);
           });
         });
     },
     buildSearchFilter() {
-      this.cpuManufacturerList = [];
-      this.cpuSocketList = [];
-      this.cpuCoreNumList = [];
-      this.cpuThreadNumList = [];
+      this.moboManufacturerList = [];
+      this.moboSocketList = [];
+      this.moboChipsetList = [];
+      this.moboSizeList = [];
 
       return this.$http
-        .get(this.url.cpu, { params: { size: 9999 } })
+        .get(this.url.mobo, { params: { size: 9999 } })
         .then((res) => {
-          res.data.items.forEach((cpu) => {
-            if (this.cpuManufacturerList.indexOf(cpu.mfr) === -1) {
-              this.cpuManufacturerList.push(cpu.mfr);
+          res.data.items.forEach((mobo) => {
+            if (this.moboManufacturerList.indexOf(mobo.mfr) === -1) {
+              this.moboManufacturerList.push(mobo.mfr);
             }
-            if (this.cpuSocketList.indexOf(cpu.socket) === -1) {
-              this.cpuSocketList.push(cpu.socket);
+            if (this.moboSocketList.indexOf(mobo.socket) === -1) {
+              this.moboSocketList.push(mobo.socket);
             }
-            if (this.cpuCoreNumList.indexOf(cpu.core_num) === -1) {
-              this.cpuCoreNumList.push(cpu.core_num);
+            if (this.moboChipsetList.indexOf(mobo.chipset) === -1) {
+              this.moboChipsetList.push(mobo.chipset);
             }
-            if (this.cpuThreadNumList.indexOf(cpu.thread_num) === -1) {
-              this.cpuThreadNumList.push(cpu.thread_num);
+            if (this.moboSizeList.indexOf(mobo.size) === -1) {
+              this.moboSizeList.push(mobo.size);
             }
           });
-          this.cpuManufacturerList.sort();
-          this.cpuSocketList.sort();
-          this.cpuCoreNumList.sort((a, b) => a - b);
-          this.cpuThreadNumList.sort((a, b) => a - b);
+          this.moboManufacturerList.sort();
+          this.moboSocketList.sort();
+          this.moboChipsetList.sort((a, b) => a - b);
+          this.moboSizeList.sort((a, b) => a - b);
         });
     },
-    buildCpuList() {
-      this.searchCpuList(
-        this.url.cpu,
+    buildMoboList() {
+      this.searchMoboList(
+        this.url.mobo,
         this.pagination,
         this.searchQuery,
         this.sortOrder
@@ -373,23 +371,23 @@ export default {
     },
     buildPage() {
       this.buildSearchFilter();
-      this.buildCpuList();
+      this.buildMoboList();
     },
   },
 };
 </script>
 
 <style scoped>
-.cpu-list {
+.mobo-list {
   display: flex;
 }
-.cpu-list__card {
+.mobo-list__card {
   height: 100%;
   max-height: 400px;
   max-width: 250px;
   cursor: pointer;
 }
-.cpu-list__card--reveal {
+.mobo-list__card--reveal {
   bottom: 0;
   opacity: 1 !important;
   position: absolute;
@@ -403,22 +401,22 @@ export default {
   text-overflow: ellipsis;
   white-space: nowrap;
 }
-.cpu-list__card__actions {
+.mobo-list__card__actions {
   position: absolute;
   width: 100%;
   bottom: 0;
 }
-.cpu-list__search-sort-area {
+.mobo-list__search-sort-area {
   position: sticky;
   top: 64px;
   min-width: 250px;
   max-width: 250px;
   height: fit-content;
 }
-.cpu-list__grid-page {
+.mobo-list__grid-page {
   width: 100%;
 }
-.cpu-list__grid-page__row {
+.mobo-list__grid-page__row {
   min-height: 840px;
 }
 </style>

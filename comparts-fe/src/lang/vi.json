@@ -24,8 +24,8 @@
     "delete_msg": "Bạn có chắc chắn muốn xóa mục này không?",
     "required_rule_msg": "Trường này là bắt buộc.",
     "text_rule_msg": "Trường này phải có độ dài từ 50 kí tự trở xuống.",
-    "number_rule_msg": "Trường này phải có giá trị từ 0 đến 65,536.",
-    "int_rule_msg": "Trường này phải có giá trị từ 0 đến 2,147,483,647."
+    "number_rule_msg": "Trường này phải có giá trị giữa 0 và 65,536.",
+    "int_rule_msg": "Trường này phải có giá trị giữa 0 và 2,147,483,647."
   },
   "getting_started": {
     "cpu_label": "Vi xử lý",
@@ -61,7 +61,28 @@
     "memory_freq": "Tần số bộ nhớ",
     "supported_memory": "Bộ nhớ hỗ trợ",
     "price": "Giá",
-    "add_cpu": "Thêm CPU",
-    "edit_cpu": "Sửa CPU"
+    "add_cpu": "Thêm Vi xử lý",
+    "edit_cpu": "Sửa Vi xử lý"
+  },
+  "mobo" : {
+    "name": "Tên",
+    "mfr": "Nhà sản xuất",
+    "socket": "Socket",
+    "chipset": "Chipset",
+    "size": "Kích thước",
+    "memory_type": "Loại bộ nhớ",
+    "memory_freq": "Tần số bộ nhớ",
+    "memory_slot_num": "Số khe RAM",
+    "pcie_x16_slot_num": "Số khe PCIe x16",
+    "pcie_x8_slot_num": "Số khe PCIe x8",
+    "pcie_x4_slot_num": "Số khe PCIe x4",
+    "pcie_x2_slot_num": "Số khe PCIe x2",
+    "pcie_x1_slot_num": "Số khe PCIe x1",
+    "sata_slot_num": "Số khe SATA",
+    "m2_slot_num": "Số khe M.2",
+    "supported_memory": "Bộ nhớ hỗ trợ",
+    "price": "Giá",
+    "add_mobo": "Thêm Bo mạch chủ",
+    "edit_mobo": "Sửa Bo mạch chủ"
   }
 }

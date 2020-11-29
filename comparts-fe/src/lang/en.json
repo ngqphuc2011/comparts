@@ -61,7 +61,28 @@
     "memory_freq": "Memory Frequency",
     "supported_memory": "Supported Memory",
     "price": "Price",
-    "add_cpu": "Add CPU",
-    "edit_cpu": "Edit CPU"
+    "add_cpu": "Add Processor",
+    "edit_cpu": "Edit Processor"
+  },
+  "mobo" : {
+    "name": "Name",
+    "mfr": "Manufacturer",
+    "socket": "Socket",
+    "chipset": "Chipset",
+    "size": "Size",
+    "memory_type": "Memory Type",
+    "memory_freq": "Memory Frequency",
+    "memory_slot_num": "Number of Memory Slots",
+    "pcie_x16_slot_num": "Number of PCIe x16 Slots",
+    "pcie_x8_slot_num": "Number of PCIe x8 Slots",
+    "pcie_x4_slot_num": "Number of PCIe x4 Slots",
+    "pcie_x2_slot_num": "Number of PCIe x2 Slots",
+    "pcie_x1_slot_num": "Number of PCIe x1 Slots",
+    "sata_slot_num": "Number of SATA Slots",
+    "m2_slot_num": "Number of M.2 Slots",
+    "supported_memory": "Supported Memory",
+    "price": "Giá",
+    "add_mobo": "Add Motherboard",
+    "edit_mobo": "Edit Motherboard"
   }
 }

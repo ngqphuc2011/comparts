@@ -36,6 +36,14 @@
         >
           <cpu-list v-if="cpuListFlag" />
         </v-container>
+        <v-container
+          fluid
+          style="display: flex"
+          v-if="$router.currentRoute.path === '/mobo'"
+          color="grey lighten-4"
+        >
+          <mobo-list v-if="moboListFlag" />
+        </v-container>
         <v-navigation-drawer
           class="homepage__navdrawer"
           v-model="drawer"
@@ -129,6 +137,13 @@
         @close="showCpuCuForm = false"
         @search="rerenderCpuList"
       />
+      <mobo-cu
+        v-if="showMoboCuForm"
+        :visible="showMoboCuForm"
+        mode="C"
+        @close="showMoboCuForm = false"
+        @search="rerenderMoboList"
+      />
     </v-app>
   </div>
 </template>
@@ -137,16 +152,20 @@
 import GettingStarted from "./GettingStarted";
 import CpuList from "./cpu/CpuList";
 import CpuCu from "./cpu/CpuCu";
+import MoboList from "./mobo/MoboList";
+import MoboCu from "./mobo/MoboCu";
 
 export default {
-  components: { CpuList, CpuCu, GettingStarted },
+  components: { GettingStarted, CpuList, CpuCu, MoboList, MoboCu },
   name: "Homepage",
   data() {
     return {
       drawer: false,
       fab: false,
       cpuListFlag: true,
+      moboListFlag: true,
       showCpuCuForm: false,
+      showMoboCuForm: false,
     };
   },
   computed: {
@@ -213,6 +232,12 @@ export default {
         this.cpuListFlag = true;
       });
     },
+    rerenderMoboList() {
+      this.moboListFlag = false;
+      this.$nextTick(() => {
+        this.moboListFlag = true;
+      });
+    },
     setDefaultLanguage() {
       this.$store.dispatch("setLang", window.localStorage.getItem("language"));
     },
@@ -241,8 +266,9 @@ export default {
         case "/cpu":
           this.showCpuCuForm = true;
           break;
-        default:
-          this.snackbar = true;
+        case "/mobo":
+          this.showMoboCuForm = true;
+          break;
       }
     },
     onToggleDrawer() {

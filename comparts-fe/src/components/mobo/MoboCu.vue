@@ -1,11 +1,11 @@
 <template>
-  <v-dialog v-model="visible" max-width="50%" persistent class="cpu-cu-dialog">
+  <v-dialog v-model="visible" max-width="50%" persistent class="mobo-cu-dialog">
     <v-card>
       <v-card-title v-if="mode === 'C'" class="headline">
-        {{ $t("cpu.add_cpu") }}
+        {{ $t("mobo.add_mobo") }}
       </v-card-title>
       <v-card-title v-if="mode === 'U'" class="headline">
-        {{ $t("cpu.edit_cpu") }}
+        {{ $t("mobo.edit_mobo") }}
       </v-card-title>
       <v-form v-model="valid" ref="form">
         <v-container class="pl-8 pr-8">
@@ -13,8 +13,8 @@
             <v-col>
               <v-text-field
                 dense
-                v-model="cpu.name"
-                :label="$t('cpu.name')"
+                v-model="mobo.name"
+                :label="$t('mobo.name')"
                 :rules="validationRules.textRequiredRules"
                 :counter="50"
                 :disabled="!isEditable"
@@ -25,8 +25,8 @@
             <v-col>
               <v-text-field
                 dense
-                v-model="cpu.mfr"
-                :label="$t('cpu.mfr')"
+                v-model="mobo.mfr"
+                :label="$t('mobo.mfr')"
                 :rules="validationRules.textRequiredRules"
                 :counter="50"
                 :disabled="!isEditable"
@@ -35,9 +35,9 @@
             <v-col>
               <v-text-field
                 dense
-                v-model="cpu.graphics"
-                :label="$t('cpu.graphics')"
-                :rules="validationRules.textRules"
+                v-model="mobo.size"
+                :label="$t('mobo.size')"
+                :rules="validationRules.textRequiredRules"
                 :counter="50"
                 :disabled="!isEditable"
               ></v-text-field>
@@ -47,8 +47,8 @@
             <v-col>
               <v-text-field
                 dense
-                v-model="cpu.socket"
-                :label="$t('cpu.socket')"
+                v-model="mobo.socket"
+                :label="$t('mobo.socket')"
                 :rules="validationRules.textRequiredRules"
                 :counter="50"
                 :disabled="!isEditable"
@@ -57,55 +57,62 @@
             <v-col>
               <v-text-field
                 dense
-                v-model="cpu.process"
+                v-model="mobo.chipset"
+                :rules="validationRules.textRequiredRules"
+                :counter="50"
+                :label="$t('mobo.chipset')"
+                :disabled="!isEditable"
+              ></v-text-field>
+            </v-col>
+          </v-row>
+          <v-row>
+            <v-col>
+              <v-text-field
+                dense
+                v-model="mobo.coreNum"
                 type="number"
-                suffix="nm"
                 :rules="validationRules.numberRules"
-                :label="$t('cpu.process')"
-                :disabled="!isEditable"
-              ></v-text-field>
-            </v-col>
-          </v-row>
-          <v-row>
-            <v-col>
-              <v-text-field
-                dense
-                v-model="cpu.coreNum"
-                type="number"
-                :rules="validationRules.numberRequiredRules"
-                :label="$t('cpu.core_num')"
+                :label="$t('mobo.core_num')"
                 :disabled="!isEditable"
               ></v-text-field>
             </v-col>
             <v-col>
               <v-text-field
                 dense
-                v-model="cpu.threadNum"
+                v-model="mobo.coreNum"
                 type="number"
-                :rules="validationRules.numberRequiredRules"
-                :label="$t('cpu.thread_num')"
-                :disabled="!isEditable"
-              ></v-text-field>
-            </v-col>
-            <v-col>
-              <v-text-field
-                dense
-                v-model="cpu.baseFrequency"
-                type="number"
-                :label="$t('cpu.base_freq')"
-                :rules="validationRules.numberRequiredRules"
-                suffix="MHz"
-                :disabled="!isEditable"
-              ></v-text-field>
-            </v-col>
-            <v-col>
-              <v-text-field
-                dense
-                v-model="cpu.turboFrequency"
-                type="number"
-                :label="$t('cpu.turbo_freq')"
                 :rules="validationRules.numberRules"
-                suffix="MHz"
+                :label="$t('mobo.core_num')"
+                :disabled="!isEditable"
+              ></v-text-field>
+            </v-col>
+            <v-col>
+              <v-text-field
+                dense
+                v-model="mobo.threadNum"
+                type="number"
+                :rules="validationRules.numberRules"
+                :label="$t('mobo.thread_num')"
+                :disabled="!isEditable"
+              ></v-text-field>
+            </v-col>
+            <v-col>
+              <v-text-field
+                dense
+                v-model="mobo.baseFrequency"
+                type="number"
+                :label="$t('mobo.base_freq')"
+                :rules="validationRules.numberRules"
+                :disabled="!isEditable"
+              ></v-text-field>
+            </v-col>
+            <v-col>
+              <v-text-field
+                dense
+                v-model="mobo.turboFrequency"
+                type="number"
+                :label="$t('mobo.turbo_freq')"
+                :rules="validationRules.numberRules"
                 :disabled="!isEditable"
               ></v-text-field>
             </v-col>
@@ -115,9 +122,9 @@
             <v-col>
               <v-text-field
                 dense
-                v-model="cpu.cache"
+                v-model="mobo.cache"
                 type="number"
-                :label="$t('cpu.cache')"
+                :label="$t('mobo.cache')"
                 :rules="validationRules.numberRules"
                 suffix="MB"
                 :disabled="!isEditable"
@@ -126,9 +133,9 @@
             <v-col>
               <v-text-field
                 dense
-                v-model="cpu.tdp"
+                v-model="mobo.tdp"
                 type="number"
-                :label="$t('cpu.tdp')"
+                :label="$t('mobo.tdp')"
                 :rules="validationRules.numberRules"
                 suffix="W"
                 :disabled="!isEditable"
@@ -137,19 +144,19 @@
             <v-col>
               <v-select
                 dense
-                v-model="cpu.memoryType"
-                :items="cpuMemoryTypeList"
-                :label="$t('cpu.memory_type')"
+                v-model="mobo.memoryType"
+                :items="moboMemoryTypeList"
+                :label="$t('mobo.memory_type')"
                 :disabled="!isEditable"
               ></v-select>
             </v-col>
             <v-col>
               <v-text-field
                 dense
-                v-model="cpu.memoryFrequency"
+                v-model="mobo.memoryFrequency"
                 type="number"
                 :rules="validationRules.numberRules"
-                :label="$t('cpu.memory_freq')"
+                :label="$t('mobo.memory_freq')"
                 suffix="MHz"
                 :disabled="!isEditable"
               ></v-text-field>
@@ -159,9 +166,9 @@
             <v-col>
               <v-text-field
                 dense
-                v-model="cpu.price"
+                v-model="mobo.price"
                 type="number"
-                :label="$t('cpu.price')"
+                :label="$t('mobo.price')"
                 prefix="₫"
                 :rules="validationRules.intRules"
                 :disabled="!isEditable"
@@ -170,13 +177,13 @@
           </v-row>
           <v-row>
             <v-col cols="6">
-              <v-card class="cpu-cu-dialog__image-preview">
+              <v-card class="mobo-cu-dialog__image-preview">
                 <v-list-item>
                   <v-list-item-content>
                     <v-img
                       contain
                       height="150"
-                      class="cpu-cu-dialog__image-preview"
+                      class="mobo-cu-dialog__image-preview"
                       :src="urlImg"
                     ></v-img>
                   </v-list-item-content>
@@ -260,7 +267,7 @@
             <v-btn
               color="error"
               text
-              @click="onClickAcceptDeleteButton(cpu.id)"
+              @click="onClickAcceptDeleteButton(mobo.id)"
             >
               {{ $t("common.delete") }}
             </v-btn>
@@ -273,7 +280,7 @@
 
 <script>
 export default {
-  name: "CpuCu",
+  name: "MoboCu",
   props: {
     visible: {
       type: Boolean,
@@ -283,24 +290,26 @@ export default {
       type: String,
       default: "C",
     },
-    originalCpu: {
+    originalMobo: {
       type: Object,
       default: () => {
         return {
           id: 0,
           name: "",
           mfr: "",
+          chipset: "",
           socket: "",
-          coreNum: null,
-          threadNum: null,
-          baseFrequency: null,
-          turboFrequency: null,
-          cache: null,
-          tdp: null,
-          memoryType: "DDR4",
-          memoryFrequency: null,
-          process: null,
-          graphics: "",
+          size: "",
+          memory_type: "",
+          memory_freq: null,
+          memory_slot_num: null,
+          pcie_x16_slot_num: null,
+          pcie_x8_slot_num: null,
+          pcie_x4_slot_num: null,
+          pcie_x2_slot_num: null,
+          pcie_x1_slot_num: null,
+          sata_slot_num: null,
+          m2_slot_num: null,
           price: null,
           img: "",
         };
@@ -310,13 +319,13 @@ export default {
   data() {
     return {
       isEditable: false,
-      cpu: {},
-      cpuMemoryTypeList: ["DDR2", "DDR3", "DDR4"],
+      mobo: {},
+      moboMemoryTypeList: ["DDR2", "DDR3", "DDR4"],
       urlImg: "",
       url: {
-        cpu: "http://localhost:3000/cpus/",
-        cpuImg: "http://localhost:3000/public/cpus/",
-        cpuUploadImg: "http://localhost:3000/cpus/upload/",
+        mobo: "http://localhost:3000/mobos/",
+        moboImg: "http://localhost:3000/public/mobos/",
+        moboUploadImg: "http://localhost:3000/mobos/upload/",
       },
       validationRules: {
         requireRules: [(v) => !!v || this.$t("message.required_rule_msg")],
@@ -351,15 +360,15 @@ export default {
   },
   computed: {
     isEdited() {
-      return JSON.stringify(this.originalCpu) !== JSON.stringify(this.cpu);
+      return JSON.stringify(this.originalMobo) !== JSON.stringify(this.mobo);
     },
   },
   created() {
     if (this.mode === "C") {
       this.isEditable = true;
     }
-    this.cpu = { ...this.originalCpu };
-    this.urlImg = this.cpu.img ? this.url.cpuImg + this.cpu.img : "";
+    this.mobo = { ...this.originalMobo };
+    this.urlImg = this.mobo.img ? this.url.moboImg + this.mobo.img : "";
   },
   methods: {
     onClickModifyButton() {
@@ -369,9 +378,9 @@ export default {
       this.deleteConfirmDialog = false;
     },
     onClickAcceptDeleteButton(id) {
-      this.$http.delete(this.url.cpu + id).then(() => {
-        this.$http.delete(this.url.cpuUploadImg, {
-          data: [this.cpu.img],
+      this.$http.delete(this.url.mobo + id).then(() => {
+        this.$http.delete(this.url.moboUploadImg, {
+          data: [this.mobo.img],
         });
         this.deleteConfirmDialog = false;
         this.$emit("close");
@@ -388,7 +397,7 @@ export default {
       if (this.mode === "U") {
         this.isEditable = false;
         this.discardConfirmDialog = false;
-        this.cpu = { ...this.originalCpu };
+        this.mobo = { ...this.originalMobo };
       } else {
         this.$emit("close");
       }
@@ -406,59 +415,59 @@ export default {
     async onClickSaveButton() {
       if (this.$refs.form.validate()) {
         let body = {
-          name: this.cpu.name,
-          mfr: this.cpu.mfr,
-          socket: this.cpu.socket,
-          core_num: this.cpu.coreNum,
-          thread_num: this.cpu.threadNum,
-          base_freq: this.cpu.baseFrequency,
-          turbo_freq: this.cpu.turboFrequency || null,
-          cache: this.cpu.cache || null,
-          tdp: this.cpu.tdp || null,
-          memory_type: this.cpu.memoryType,
-          memory_freq: this.cpu.memoryFrequency,
-          process: this.cpu.process || null,
-          graphics: this.cpu.graphics,
-          price: this.cpu.price || null,
+          name: this.mobo.name,
+          mfr: this.mobo.mfr,
+          socket: this.mobo.socket,
+          core_num: this.mobo.coreNum,
+          thread_num: this.mobo.threadNum,
+          base_freq: this.mobo.baseFrequency,
+          turbo_freq: this.mobo.turboFrequency || null,
+          cache: this.mobo.cache || null,
+          tdp: this.mobo.tdp || null,
+          memory_type: this.mobo.memoryType,
+          memory_freq: this.mobo.memoryFrequency,
+          process: this.mobo.process || null,
+          graphics: this.mobo.graphics,
+          price: this.mobo.price || null,
         };
-        if (this.cpu.imgFile) {
+        if (this.mobo.imgFile) {
           let formData = new FormData();
-          formData.append("img", this.cpu.imgFile);
-          await this.$http.post(this.url.cpuUploadImg, formData).then((res) => {
-            body.img = res.data.filename;
-          });
+          formData.append("img", this.mobo.imgFile);
+          await this.$http
+            .post(this.url.moboUploadImg, formData)
+            .then((res) => {
+              body.img = res.data.filename;
+            });
         }
         if (this.mode === "C") {
           this.$http
-            .post(this.url.cpu, body)
+            .post(this.url.mobo, body)
             .then((res) => {
               this.$emit("close");
               this.$emit("search");
             })
             .catch((err) => {
-              this.$http.delete(this.url.cpuUploadImg, { data: [body.img] });
+              this.$http.delete(this.url.moboUploadImg, { data: [body.img] });
             });
         } else if (this.mode === "U") {
           this.$http
-            .put(this.url.cpu + this.cpu.id, body)
+            .put(this.url.mobo + this.mobo.id, body)
             .then((res) => {
-              if (this.cpu.imgFile) {
-                this.$http.delete(this.url.cpuUploadImg, {
-                  data: [this.cpu.img],
-                });
-              }
+              this.$http.delete(this.url.moboUploadImg, {
+                data: [this.mobo.img],
+              });
               this.$emit("close");
               this.$emit("search");
             })
             .catch((err) => {
-              this.$http.delete(this.url.cpuUploadImg, { data: [body.img] });
+              this.$http.delete(this.url.moboUploadImg, { data: [body.img] });
             });
         }
       }
     },
     onImageChange(img) {
       if (img) {
-        this.cpu.imgFile = img;
+        this.mobo.imgFile = img;
         this.setUrlImg(img);
       }
     },
@@ -466,14 +475,14 @@ export default {
       this.urlImg = URL.createObjectURL(img);
     },
     onImageClear() {
-      this.cpu.imgFile = "";
+      this.mobo.imgFile = "";
       this.urlImg = "";
     },
   },
 };
 </script>
 <style scoped>
-.cpu-cu-dialog__image-preview {
+.mobo-cu-dialog__image-preview {
   min-height: 200px;
 }
 </style>
