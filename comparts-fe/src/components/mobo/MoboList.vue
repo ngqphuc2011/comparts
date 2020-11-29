@@ -215,8 +215,8 @@ export default {
   data() {
     return {
       url: {
-        mobo: "http://127.0.0.1:3000/mobos",
-        moboImg: "http://127.0.0.1:3000/public/mobos",
+        mobo: "http://13.212.177.228:3000/mobos",
+        moboImg: "http://13.212.177.228:3000/public/mobos",
       },
       currentPage: 1,
       totalPages: 1,

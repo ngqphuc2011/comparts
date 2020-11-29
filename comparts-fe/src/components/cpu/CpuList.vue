@@ -214,8 +214,8 @@ export default {
   data() {
     return {
       url: {
-        cpu: "http://127.0.0.1:3000/cpus",
-        cpuImg: "http://127.0.0.1:3000/public/cpus",
+        cpu: "http://13.212.177.228:3000/cpus",
+        cpuImg: "http://13.212.177.228:3000/public/cpus",
       },
       currentPage: 1,
       totalPages: 1,
