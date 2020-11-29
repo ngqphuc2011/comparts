@@ -69,39 +69,39 @@
             <v-col>
               <v-text-field
                 dense
-                v-model="mobo.coreNum"
+                v-model="mobo.pcieX16SlotNum"
                 type="number"
                 :rules="validationRules.numberRules"
-                :label="$t('mobo.core_num')"
+                :label="$t('mobo.pcie_x16_slot_num')"
                 :disabled="!isEditable"
               ></v-text-field>
             </v-col>
             <v-col>
               <v-text-field
                 dense
-                v-model="mobo.coreNum"
+                v-model="mobo.pcieX8SlotNum"
                 type="number"
                 :rules="validationRules.numberRules"
-                :label="$t('mobo.core_num')"
+                :label="$t('mobo.pcie_x8_slot_num')"
                 :disabled="!isEditable"
               ></v-text-field>
             </v-col>
             <v-col>
               <v-text-field
                 dense
-                v-model="mobo.threadNum"
+                v-model="mobo.pcieX4SlotNum"
                 type="number"
                 :rules="validationRules.numberRules"
-                :label="$t('mobo.thread_num')"
+                :label="$t('mobo.pcie_x4_slot_num')"
                 :disabled="!isEditable"
               ></v-text-field>
             </v-col>
             <v-col>
               <v-text-field
                 dense
-                v-model="mobo.baseFrequency"
+                v-model="mobo.pcieX2SlotNum"
                 type="number"
-                :label="$t('mobo.base_freq')"
+                :label="$t('mobo.pcie_x2_slot_num')"
                 :rules="validationRules.numberRules"
                 :disabled="!isEditable"
               ></v-text-field>
@@ -109,35 +109,42 @@
             <v-col>
               <v-text-field
                 dense
-                v-model="mobo.turboFrequency"
+                v-model="mobo.pcieX1SlotNum"
                 type="number"
-                :label="$t('mobo.turbo_freq')"
+                :label="$t('mobo.pcie_x1_slot_num')"
                 :rules="validationRules.numberRules"
                 :disabled="!isEditable"
               ></v-text-field>
             </v-col>
           </v-row>
-
           <v-row>
             <v-col>
               <v-text-field
                 dense
-                v-model="mobo.cache"
+                v-model="mobo.sataSlotNum"
                 type="number"
-                :label="$t('mobo.cache')"
+                :label="$t('mobo.sata_slot_num')"
                 :rules="validationRules.numberRules"
-                suffix="MB"
                 :disabled="!isEditable"
               ></v-text-field>
             </v-col>
             <v-col>
               <v-text-field
                 dense
-                v-model="mobo.tdp"
+                v-model="mobo.m2SlotNum"
                 type="number"
-                :label="$t('mobo.tdp')"
+                :label="$t('mobo.m2_slot_num')"
                 :rules="validationRules.numberRules"
-                suffix="W"
+                :disabled="!isEditable"
+              ></v-text-field>
+            </v-col>
+            <v-col>
+              <v-text-field
+                dense
+                v-model="mobo.memorySlotNum"
+                type="number"
+                :label="$t('mobo.memory_slot_num')"
+                :rules="validationRules.numberRules"
                 :disabled="!isEditable"
               ></v-text-field>
             </v-col>
@@ -153,11 +160,11 @@
             <v-col>
               <v-text-field
                 dense
-                v-model="mobo.memoryFrequency"
+                v-model="mobo.memoryFreq"
                 type="number"
                 :rules="validationRules.numberRules"
-                :label="$t('mobo.memory_freq')"
                 suffix="MHz"
+                :label="$t('mobo.memory_freq')"
                 :disabled="!isEditable"
               ></v-text-field>
             </v-col>
@@ -300,16 +307,16 @@ export default {
           chipset: "",
           socket: "",
           size: "",
-          memory_type: "",
-          memory_freq: null,
-          memory_slot_num: null,
-          pcie_x16_slot_num: null,
-          pcie_x8_slot_num: null,
-          pcie_x4_slot_num: null,
-          pcie_x2_slot_num: null,
-          pcie_x1_slot_num: null,
-          sata_slot_num: null,
-          m2_slot_num: null,
+          memoryType: "DDR4",
+          memoryFreq: null,
+          memorySlotNum: null,
+          pcieX16SlotNum: null,
+          pcieX8SlotNum: null,
+          pcieX4SlotNum: null,
+          pcieX2SlotNum: null,
+          pcieX1SlotNum: null,
+          sataSlotNum: null,
+          m2SlotNum: null,
           price: null,
           img: "",
         };
@@ -417,17 +424,19 @@ export default {
         let body = {
           name: this.mobo.name,
           mfr: this.mobo.mfr,
+          chipset: this.mobo.chipset,
           socket: this.mobo.socket,
-          core_num: this.mobo.coreNum,
-          thread_num: this.mobo.threadNum,
-          base_freq: this.mobo.baseFrequency,
-          turbo_freq: this.mobo.turboFrequency || null,
-          cache: this.mobo.cache || null,
-          tdp: this.mobo.tdp || null,
+          size: this.mobo.size,
           memory_type: this.mobo.memoryType,
-          memory_freq: this.mobo.memoryFrequency,
-          process: this.mobo.process || null,
-          graphics: this.mobo.graphics,
+          memory_freq: this.mobo.memoryFreq,
+          memory_slot_num: this.mobo.memorySlotNum || null,
+          pcie_x16_slot_num: this.mobo.pcieX16SlotNum || null,
+          pcie_x8_slot_num: this.mobo.pcieX8SlotNum || null,
+          pcie_x4_slot_num: this.mobo.pcieX4SlotNum || null,
+          pcie_x2_slot_num: this.mobo.pcieX2SlotNum || null,
+          pcie_x1_slot_num: this.mobo.pcieX1SlotNum || null,
+          sata_slot_num: this.mobo.sataSlotNum || null,
+          m2_slot_num: this.mobo.m2SlotNum || null,
           price: this.mobo.price || null,
         };
         if (this.mobo.imgFile) {
@@ -453,9 +462,11 @@ export default {
           this.$http
             .put(this.url.mobo + this.mobo.id, body)
             .then((res) => {
-              this.$http.delete(this.url.moboUploadImg, {
-                data: [this.mobo.img],
-              });
+              if (this.mobo.imgFile) {
+                this.$http.delete(this.url.moboUploadImg, {
+                  data: [this.mobo.img],
+                });
+              }
               this.$emit("close");
               this.$emit("search");
             })

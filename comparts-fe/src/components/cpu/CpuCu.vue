@@ -90,7 +90,7 @@
             <v-col>
               <v-text-field
                 dense
-                v-model="cpu.baseFrequency"
+                v-model="cpu.baseFreq"
                 type="number"
                 :label="$t('cpu.base_freq')"
                 :rules="validationRules.numberRequiredRules"
@@ -101,7 +101,7 @@
             <v-col>
               <v-text-field
                 dense
-                v-model="cpu.turboFrequency"
+                v-model="cpu.turboFreq"
                 type="number"
                 :label="$t('cpu.turbo_freq')"
                 :rules="validationRules.numberRules"
@@ -146,7 +146,7 @@
             <v-col>
               <v-text-field
                 dense
-                v-model="cpu.memoryFrequency"
+                v-model="cpu.memoryFreq"
                 type="number"
                 :rules="validationRules.numberRules"
                 :label="$t('cpu.memory_freq')"
@@ -293,12 +293,12 @@ export default {
           socket: "",
           coreNum: null,
           threadNum: null,
-          baseFrequency: null,
-          turboFrequency: null,
+          baseFreq: null,
+          turboFreq: null,
           cache: null,
           tdp: null,
           memoryType: "DDR4",
-          memoryFrequency: null,
+          memoryFreq: null,
           process: null,
           graphics: "",
           price: null,
@@ -411,12 +411,12 @@ export default {
           socket: this.cpu.socket,
           core_num: this.cpu.coreNum,
           thread_num: this.cpu.threadNum,
-          base_freq: this.cpu.baseFrequency,
-          turbo_freq: this.cpu.turboFrequency || null,
+          base_freq: this.cpu.baseFreq,
+          turbo_freq: this.cpu.turboFreq || null,
           cache: this.cpu.cache || null,
           tdp: this.cpu.tdp || null,
           memory_type: this.cpu.memoryType,
-          memory_freq: this.cpu.memoryFrequency,
+          memory_freq: this.cpu.memoryFreq,
           process: this.cpu.process || null,
           graphics: this.cpu.graphics,
           price: this.cpu.price || null,
