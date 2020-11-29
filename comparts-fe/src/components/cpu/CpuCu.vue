@@ -314,9 +314,8 @@ export default {
       cpuMemoryTypeList: ["DDR2", "DDR3", "DDR4"],
       urlImg: "",
       url: {
-        cpu: "http://13.212.177.228:3000/cpus/",
-        cpuImg: "http://13.212.177.228:3000/public/cpus/",
-        cpuUploadImg: "http://13.212.177.228:3000/cpus/upload/",
+        cpuImg: `${this.baseUrl}/public/cpus`,
+        cpuUploadImg: `${this.baseUrl}/cpus/upload/`,
       },
       validationRules: {
         requireRules: [(v) => !!v || this.$t("message.required_rule_msg")],

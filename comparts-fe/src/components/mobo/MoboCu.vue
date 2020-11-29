@@ -330,9 +330,9 @@ export default {
       moboMemoryTypeList: ["DDR2", "DDR3", "DDR4"],
       urlImg: "",
       url: {
-        mobo: "http://13.212.177.228:3000/mobos/",
-        moboImg: "http://13.212.177.2283000/public/mobos/",
-        moboUploadImg: "http://13.212.177.2283000/mobos/upload/",
+        mobo: `${this.baseUrl}/mobos`,
+        moboImg: `${this.baseUrl}/public/mobos/`,
+        moboUploadImg: `${this.baseUrl}/mobos/upload/`,
       },
       validationRules: {
         requireRules: [(v) => !!v || this.$t("message.required_rule_msg")],
