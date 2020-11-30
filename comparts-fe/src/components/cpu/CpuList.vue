@@ -1,88 +1,13 @@
 <template>
-  <v-container fluid class="cpu-list">
-    <div class="mt-3 cpu-list__search-sort-area">
-      <v-expansion-panels accordion :value="0">
-        <v-expansion-panel>
-          <v-expansion-panel-header>
-            {{ $t("common.search") }}
-          </v-expansion-panel-header>
-          <v-expansion-panel-content>
-            <v-btn color="primary" block text @click="onClickSearchButton">
-              {{ $t("common.search") }}
-            </v-btn>
-            <div class="mt-3">
-              <v-select
-                dense
-                v-model="selectedManufacturer"
-                :items="cpuManufacturerList"
-                :label="$t('cpu.mfr')"
-                multiple
-                chips
-              ></v-select>
-              <v-select
-                dense
-                v-model="selectedSocket"
-                :items="cpuSocketList"
-                :label="$t('cpu.socket')"
-                multiple
-                chips
-              ></v-select>
-              <v-select
-                dense
-                v-model="selectedCoreNum"
-                :items="cpuCoreNumList"
-                :label="$t('cpu.core_num')"
-                multiple
-                chips
-              ></v-select>
-              <v-select
-                dense
-                v-model="selectedThreadNum"
-                :items="cpuThreadNumList"
-                :label="$t('cpu.thread_num')"
-                multiple
-                chips
-              ></v-select>
-            </div>
-            <v-btn color="error" block text @click="onClickResetSearchButton">
-              {{ $t("common.reset") }}
-            </v-btn>
-          </v-expansion-panel-content>
-        </v-expansion-panel>
-        <v-expansion-panel>
-          <v-expansion-panel-header>
-            {{ $t("common.sort") }}
-          </v-expansion-panel-header>
-          <v-expansion-panel-content>
-            <v-btn color="primary" block text @click="onClickSortButton">
-              {{ $t("common.sort") }}
-            </v-btn>
-            <v-radio-group :label="$t('common.sort_by')" v-model="sortParam">
-              <v-radio
-                v-for="(item, index) in sortByRadios"
-                :key="index"
-                :label="item.label"
-                :value="item.value"
-              ></v-radio>
-            </v-radio-group>
-            <v-radio-group :label="$t('common.sort_in')" v-model="orderParam">
-              <v-radio
-                v-for="(item, index) in sortInRadios"
-                :key="index"
-                :label="item.label"
-                :value="item.value"
-              ></v-radio>
-            </v-radio-group>
-            <v-btn color="error" block text @click="onClickResetSortButton">
-              {{ $t("common.reset") }}
-            </v-btn>
-          </v-expansion-panel-content>
-        </v-expansion-panel>
-      </v-expansion-panels>
-    </div>
-    <div class="ml-6 cpu-list__grid-page">
-      <v-row class="cpu-list__grid-page__row">
-        <v-col v-for="(cpu, index) in cpuList" :key="index" >
+  <v-container fluid class="cpu-list pa-8">
+    <v-container fluid>
+      <v-row class="cpu-list__row">
+        <v-col
+          class="cpu-list__col"
+          v-for="(cpu, index) in cpuList"
+          :key="index"
+          md="2"
+        >
           <v-card
             class="cpu-list__card"
             @click="onClickCard(cpu)"
@@ -93,6 +18,7 @@
             <v-card-title class="ellipsis">
               {{ cpu.mfr + " " + cpu.name }}
             </v-card-title>
+            <v-divider></v-divider>
             <v-card-text class="cpu-list__card__description">
               <div class="subtitle-1 red--text ellipsis">
                 ₫ • {{ formatNumber(cpu.price) }}
@@ -171,12 +97,11 @@
         :length="totalPages"
         :total-visible="5"
       ></v-pagination>
-    </div>
+    </v-container>
     <v-speed-dial
       v-model="fab"
       class="cpu__floating-button"
       transition="slide-y-reverse-transition"
-      open-on-hover
     >
       <template v-slot:activator>
         <v-btn v-model="fab" color="grey darken-3" dark fab large>
@@ -190,6 +115,9 @@
       <v-btn @click="onClickAddButton" fab dark color="grey">
         <v-icon>mdi-plus</v-icon>
       </v-btn>
+      <v-btn @click="showSearchForm = true" fab dark color="grey">
+        <v-icon>mdi-magnify</v-icon>
+      </v-btn>
     </v-speed-dial>
     <cpu-cu
       v-if="showCpuCuForm"
@@ -199,20 +127,99 @@
       @close="showCpuCuForm = false"
       @search="buildPage"
     />
+    <v-bottom-sheet v-model="showSearchForm" inset width="50%">
+      <v-expansion-panels accordion>
+        <v-expansion-panel>
+          <v-expansion-panel-header>
+            {{ $t("common.search") }}
+          </v-expansion-panel-header>
+          <v-expansion-panel-content>
+            <v-btn color="primary" block text @click="onClickSearchButton">
+              {{ $t("common.search") }}
+            </v-btn>
+            <div class="mt-3">
+              <v-select
+                dense
+                v-model="selectedManufacturer"
+                :items="cpuManufacturerList"
+                :label="$t('cpu.mfr')"
+                multiple
+                chips
+              ></v-select>
+              <v-select
+                dense
+                v-model="selectedSocket"
+                :items="cpuSocketList"
+                :label="$t('cpu.socket')"
+                multiple
+                chips
+              ></v-select>
+              <v-select
+                dense
+                v-model="selectedCoreNum"
+                :items="cpuCoreNumList"
+                :label="$t('cpu.core_num')"
+                multiple
+                chips
+              ></v-select>
+              <v-select
+                dense
+                v-model="selectedThreadNum"
+                :items="cpuThreadNumList"
+                :label="$t('cpu.thread_num')"
+                multiple
+                chips
+              ></v-select>
+            </div>
+            <v-btn color="error" block text @click="onClickResetSearchButton">
+              {{ $t("common.reset") }}
+            </v-btn>
+          </v-expansion-panel-content>
+        </v-expansion-panel>
+        <v-expansion-panel>
+          <v-expansion-panel-header>
+            {{ $t("common.sort") }}
+          </v-expansion-panel-header>
+          <v-expansion-panel-content>
+            <v-btn color="primary" block text @click="onClickSortButton">
+              {{ $t("common.sort") }}
+            </v-btn>
+            <v-radio-group :label="$t('common.sort_by')" v-model="sortParam">
+              <v-radio
+                v-for="(item, index) in sortByRadios"
+                :key="index"
+                :label="item.label"
+                :value="item.value"
+              ></v-radio>
+            </v-radio-group>
+            <v-radio-group :label="$t('common.sort_in')" v-model="orderParam">
+              <v-radio
+                v-for="(item, index) in sortInRadios"
+                :key="index"
+                :label="item.label"
+                :value="item.value"
+              ></v-radio>
+            </v-radio-group>
+            <v-btn color="error" block text @click="onClickResetSortButton">
+              {{ $t("common.reset") }}
+            </v-btn>
+          </v-expansion-panel-content>
+        </v-expansion-panel>
+      </v-expansion-panels>
+    </v-bottom-sheet>
   </v-container>
 </template>
 
 <script>
 import CpuCu from "./CpuCu";
+import UrlPathMixins from "../mixins//UrlPathMixins";
+
 export default {
   name: "CpuList",
+  mixins: [UrlPathMixins],
   components: { CpuCu },
   data() {
     return {
-      url: {
-        cpu: `${this.baseUrl}/cpus`,
-        cpuImg: `${this.baseUrl}/public/cpus`,
-      },
       currentPage: 1,
       totalPages: 1,
       pagination: {
@@ -240,6 +247,8 @@ export default {
 
       showCpuCuForm: false,
       selectedCpu: {},
+
+      showSearchForm: false,
     };
   },
   computed: {
@@ -288,7 +297,7 @@ export default {
         turboFreq: null,
         cache: null,
         tdp: null,
-        memoryType: "",
+        memoryType: "DDR4",
         memoryFreq: null,
         process: null,
         graphics: "",
@@ -352,7 +361,6 @@ export default {
         img: cpu.img,
       };
     },
-
     searchCpuList(url, pagination, query, sortOrder) {
       return this.$http
         .get(url, { params: { ...pagination, ...query, ...sortOrder } })
@@ -414,10 +422,17 @@ export default {
 .cpu-list {
   display: flex;
 }
+.cpu-list__row {
+  min-height: 874px;
+}
+.cpu-list__col {
+  display: flex;
+  justify-content: center;
+}
 .cpu-list__card {
   height: 100%;
-  max-height: 400px;
-  max-width: 250px;
+  max-height: 450px;
+  width: 250px;
   cursor: pointer;
 }
 .cpu-list__card--reveal {
@@ -438,19 +453,6 @@ export default {
   position: absolute;
   width: 100%;
   bottom: 0;
-}
-.cpu-list__search-sort-area {
-  position: sticky;
-  top: 64px;
-  min-width: 250px;
-  max-width: 250px;
-  height: fit-content;
-}
-.cpu-list__grid-page {
-  width: 100%;
-}
-.cpu-list__grid-page__row {
-  min-height: 840px;
 }
 .cpu__floating-button {
   position: fixed;

@@ -43,7 +43,7 @@
     "psu_label": "Power Supply Unit",
     "psu_desc": "Below you will find a list of the PSUs released in recent years.",
     "case_label": "Computer Case",
-    "case_desc": "Below you will find a list of the Cases/Chassis released in recent years."
+    "case_desc": "Below you will find a list of the Cases released in recent years."
   },
   "cpu": {
     "name": "Name",
@@ -64,7 +64,7 @@
     "add_cpu": "Add Processor",
     "edit_cpu": "Edit Processor"
   },
-  "mobo" : {
+  "mobo": {
     "name": "Name",
     "mfr": "Manufacturer",
     "socket": "Socket",

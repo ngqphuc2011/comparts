@@ -1,15 +1,20 @@
 <template>
-  <v-container class="mx-auto" style="display: flex">
-    <v-row class="my-16">
-      <v-col cols="3" v-for="(item, index) in gettingStartedItems" :key="index">
+  <v-container class="getting-started__container">
+    <v-row class="">
+      <v-col
+        class="getting-started__container__col"
+        v-for="(item, index) in gettingStartedItems"
+        :key="index"
+      >
         <v-card
-          class="mr-4 getting-started__card"
+          class="getting-started__card"
           @click="onClickGettingStartedItems(item.path)"
         >
           <v-img height="150" contain :src="item.img"></v-img>
           <v-card-title class="text-center getting-started__card__title">{{
             item.title
           }}</v-card-title>
+          <v-divider></v-divider>
           <v-card-text>
             <div>
               {{ item.desc }}
@@ -92,11 +97,14 @@ export default {
 </script>
 
 <style scoped>
+.getting-started__container__col {
+  display: flex;
+  justify-content: center;
+}
 .getting-started__card {
   cursor: pointer;
-  max-width: 250px;
-  min-height: 350px;
-  height: 100%;
+  width: 250px;
+  height: 375px;
   padding-top: 50px;
 }
 .getting-started__card__title {

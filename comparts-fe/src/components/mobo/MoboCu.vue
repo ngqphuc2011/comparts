@@ -286,8 +286,12 @@
 </template>
 
 <script>
+import UrlPathMixins from "../mixins//UrlPathMixins";
+import ValidateMixins from "../mixins/ValidateMixins";
+
 export default {
   name: "MoboCu",
+  mixins: [UrlPathMixins, ValidateMixins],
   props: {
     visible: {
       type: Boolean,
@@ -329,37 +333,6 @@ export default {
       mobo: {},
       moboMemoryTypeList: ["DDR2", "DDR3", "DDR4"],
       urlImg: "",
-      url: {
-        mobo: `${this.baseUrl}/mobos`,
-        moboImg: `${this.baseUrl}/public/mobos`,
-        moboUploadImg: `${this.baseUrl}/mobos/upload`,
-      },
-      validationRules: {
-        requireRules: [(v) => !!v || this.$t("message.required_rule_msg")],
-        textRequiredRules: [
-          (v) => !!v || this.$t("message.required_rule_msg"),
-          (v) => v.length <= 50 || this.$t("message.text_rule_msg"),
-        ],
-        textRules: [(v) => v.length <= 50 || this.$t("message.text_rule_msg")],
-        numberRequiredRules: [
-          (v) => !!v || this.$t("message.required_rule_msg"),
-          (v) => (v <= 65536 && v > 0) || this.$t("message.number_rule_msg"),
-        ],
-        numberRules: [
-          (v) =>
-            (v <= 65536 && v > 0) ||
-            v == "" ||
-            v == null ||
-            this.$t("message.number_rule_msg"),
-        ],
-        intRules: [
-          (v) =>
-            (v <= 2147483647 && v > 0) ||
-            v == "" ||
-            v == null ||
-            this.$t("message.int_rule_msg"),
-        ],
-      },
       valid: false,
       deleteConfirmDialog: false,
       discardConfirmDialog: false,

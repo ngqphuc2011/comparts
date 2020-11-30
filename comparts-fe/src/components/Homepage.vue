@@ -228,6 +228,9 @@ export default {
 }
 .homepage__main-page {
   display: flex;
+  background-image: url("~/static/assets/background.png");
+  background-repeat: repeat-y;
+  background-size: 100%;
   height: 100%;
 }
 </style>

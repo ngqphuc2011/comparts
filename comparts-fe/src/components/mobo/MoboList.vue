@@ -89,11 +89,7 @@
             @mouseover="onMouseOverCard(mobo)"
             @mouseleave="onMouseLeaveCard(mobo)"
           >
-            <v-img
-              height="200"
-              contain
-              :src="getMoboImg(mobo.img)"
-            ></v-img>
+            <v-img height="200" contain :src="getMoboImg(mobo.img)"></v-img>
             <v-card-title class="ellipsis">
               {{ mobo.mfr + " " + mobo.name }}
             </v-card-title>
@@ -209,15 +205,14 @@
 
 <script>
 import MoboCu from "./MoboCu";
+import UrlPathMixins from "../mixins//UrlPathMixins";
+
 export default {
   name: "MoboList",
+  mixins: [UrlPathMixins],
   components: { MoboCu },
   data() {
     return {
-      url: {
-        mobo: `${this.baseUrl}/mobos`,
-        moboImg: `${this.baseUrl}/public/mobos`,
-      },
       currentPage: 1,
       totalPages: 1,
       pagination: {
@@ -272,7 +267,7 @@ export default {
   },
   methods: {
     getMoboImg(img) {
-       if (img) {
+      if (img) {
         return `${this.url.moboImg}/${img}`;
       } else {
         return "";
@@ -287,7 +282,7 @@ export default {
         chipset: "",
         socket: "",
         moboSize: "",
-        memoryType: "",
+        memoryType: "DDR4",
         memoryFreq: null,
         memorySlotNum: null,
         pcieX16SlotNum: null,

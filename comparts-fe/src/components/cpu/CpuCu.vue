@@ -1,10 +1,12 @@
 <template>
-  <v-dialog v-model="visible" max-width="50%" persistent class="cpu-cu-dialog">
+  <v-dialog v-model="visible" width="50%" persistent class="cpu-cu-dialog">
     <v-card>
       <v-card-title v-if="mode === 'C'" class="headline">
+        <v-icon>mdi-database-plus-outline</v-icon>&nbsp;
         {{ $t("cpu.add_cpu") }}
       </v-card-title>
       <v-card-title v-if="mode === 'U'" class="headline">
+        <v-icon>mdi-database-edit-outline</v-icon>&nbsp;
         {{ $t("cpu.edit_cpu") }}
       </v-card-title>
       <v-form v-model="valid" ref="form">
@@ -94,7 +96,7 @@
                 type="number"
                 :label="$t('cpu.base_freq')"
                 :rules="validationRules.numberRequiredRules"
-                suffix="MHz"
+                suffix="GHz"
                 :disabled="!isEditable"
               ></v-text-field>
             </v-col>
@@ -105,7 +107,7 @@
                 type="number"
                 :label="$t('cpu.turbo_freq')"
                 :rules="validationRules.numberRules"
-                suffix="MHz"
+                suffix="GHz"
                 :disabled="!isEditable"
               ></v-text-field>
             </v-col>
@@ -185,6 +187,8 @@
             </v-col>
             <v-col>
               <v-file-input
+                dense
+                chips
                 prepend-icon="mdi-camera"
                 accept="image/*"
                 :label="$t('common.image')"
@@ -272,8 +276,12 @@
 </template>
 
 <script>
+import UrlPathMixins from "../mixins//UrlPathMixins";
+import ValidateMixins from "../mixins/ValidateMixins";
+
 export default {
   name: "CpuCu",
+  mixins: [UrlPathMixins, ValidateMixins],
   props: {
     visible: {
       type: Boolean,
@@ -313,37 +321,6 @@ export default {
       cpu: {},
       cpuMemoryTypeList: ["DDR2", "DDR3", "DDR4"],
       urlImg: "",
-      url: {
-        cpu: `${this.baseUrl}/cpus`,
-        cpuImg: `${this.baseUrl}/public/cpus`,
-        cpuUploadImg: `${this.baseUrl}/cpus/upload`,
-      },
-      validationRules: {
-        requireRules: [(v) => !!v || this.$t("message.required_rule_msg")],
-        textRequiredRules: [
-          (v) => !!v || this.$t("message.required_rule_msg"),
-          (v) => v.length <= 50 || this.$t("message.text_rule_msg"),
-        ],
-        textRules: [(v) => v.length <= 50 || this.$t("message.text_rule_msg")],
-        numberRequiredRules: [
-          (v) => !!v || this.$t("message.required_rule_msg"),
-          (v) => (v <= 65536 && v > 0) || this.$t("message.number_rule_msg"),
-        ],
-        numberRules: [
-          (v) =>
-            (v <= 65536 && v > 0) ||
-            v == "" ||
-            v == null ||
-            this.$t("message.number_rule_msg"),
-        ],
-        intRules: [
-          (v) =>
-            (v <= 2147483647 && v > 0) ||
-            v == "" ||
-            v == null ||
-            this.$t("message.int_rule_msg"),
-        ],
-      },
       valid: false,
       deleteConfirmDialog: false,
       discardConfirmDialog: false,
