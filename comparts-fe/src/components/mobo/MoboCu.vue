@@ -12,7 +12,7 @@
       <v-form v-model="valid" ref="form">
         <v-container class="pl-8 pr-8">
           <v-row>
-            <v-col>
+            <v-col md="12">
               <v-text-field
                 dense
                 v-model="mobo.name"
@@ -24,7 +24,7 @@
             </v-col>
           </v-row>
           <v-row>
-            <v-col>
+            <v-col md="6">
               <v-text-field
                 dense
                 v-model="mobo.mfr"
@@ -34,7 +34,7 @@
                 :disabled="!isEditable"
               ></v-text-field>
             </v-col>
-            <v-col>
+            <v-col md="6">
               <v-text-field
                 dense
                 v-model="mobo.moboSize"
@@ -46,7 +46,7 @@
             </v-col>
           </v-row>
           <v-row>
-            <v-col>
+            <v-col md="6">
               <v-text-field
                 dense
                 v-model="mobo.socket"
@@ -56,7 +56,7 @@
                 :disabled="!isEditable"
               ></v-text-field>
             </v-col>
-            <v-col>
+            <v-col md="6">
               <v-text-field
                 dense
                 v-model="mobo.chipset"
@@ -68,29 +68,7 @@
             </v-col>
           </v-row>
           <v-row>
-            <v-col>
-              <v-text-field
-                dense
-                v-model="mobo.sataSlotNum"
-                type="number"
-                :label="$t('mobo.sata_slot_num')"
-                :rules="validationRules.numberRules"
-                :disabled="!isEditable"
-              ></v-text-field>
-            </v-col>
-            <v-col>
-              <v-text-field
-                dense
-                v-model="mobo.m2SlotNum"
-                type="number"
-                :label="$t('mobo.m2_slot_num')"
-                :rules="validationRules.numberRules"
-                :disabled="!isEditable"
-              ></v-text-field>
-            </v-col>
-          </v-row>
-          <v-row>
-            <v-col>
+            <v-col md="4">
               <v-text-field
                 dense
                 v-model="mobo.pcieX16SlotNum"
@@ -100,7 +78,7 @@
                 :disabled="!isEditable"
               ></v-text-field>
             </v-col>
-            <v-col>
+            <v-col md="4">
               <v-text-field
                 dense
                 v-model="mobo.pcieX8SlotNum"
@@ -110,7 +88,7 @@
                 :disabled="!isEditable"
               ></v-text-field>
             </v-col>
-            <v-col>
+            <v-col md="4">
               <v-text-field
                 dense
                 v-model="mobo.pcieX4SlotNum"
@@ -120,7 +98,9 @@
                 :disabled="!isEditable"
               ></v-text-field>
             </v-col>
-            <v-col>
+          </v-row>
+          <v-row>
+            <v-col md="4">
               <v-text-field
                 dense
                 v-model="mobo.pcieX2SlotNum"
@@ -130,9 +110,7 @@
                 :disabled="!isEditable"
               ></v-text-field>
             </v-col>
-          </v-row>
-          <v-row>
-            <v-col>
+            <v-col md="4">
               <v-text-field
                 dense
                 v-model="mobo.pcieX1SlotNum"
@@ -142,7 +120,29 @@
                 :disabled="!isEditable"
               ></v-text-field>
             </v-col>
-            <v-col>
+            <v-col md="4">
+              <v-text-field
+                dense
+                v-model="mobo.sataSlotNum"
+                type="number"
+                :label="$t('mobo.sata_slot_num')"
+                :rules="validationRules.numberRules"
+                :disabled="!isEditable"
+              ></v-text-field>
+            </v-col>
+          </v-row>
+          <v-row>
+            <v-col md="6">
+              <v-text-field
+                dense
+                v-model="mobo.m2SlotNum"
+                type="number"
+                :label="$t('mobo.m2_slot_num')"
+                :rules="validationRules.numberRules"
+                :disabled="!isEditable"
+              ></v-text-field>
+            </v-col>
+            <v-col md="6">
               <v-text-field
                 dense
                 v-model="mobo.memorySlotNum"
@@ -152,7 +152,9 @@
                 :disabled="!isEditable"
               ></v-text-field>
             </v-col>
-            <v-col>
+          </v-row>
+          <v-row>
+            <v-col md="6">
               <v-select
                 dense
                 v-model="mobo.memoryType"
@@ -161,7 +163,7 @@
                 :disabled="!isEditable"
               ></v-select>
             </v-col>
-            <v-col>
+            <v-col md="6">
               <v-text-field
                 dense
                 v-model="mobo.memoryFreq"
@@ -174,7 +176,7 @@
             </v-col>
           </v-row>
           <v-row>
-            <v-col>
+            <v-col md="6">
               <v-text-field
                 dense
                 v-model="mobo.price"
@@ -185,9 +187,20 @@
                 :disabled="!isEditable"
               ></v-text-field>
             </v-col>
+            <v-col md="6">
+              <v-file-input
+                dense
+                prepend-icon="mdi-camera"
+                accept="image/*"
+                :label="$t('common.image')"
+                @change="onImageChange"
+                @click:clear="onImageClear"
+                :disabled="!isEditable"
+              ></v-file-input>
+            </v-col>
           </v-row>
           <v-row>
-            <v-col cols="6">
+            <v-col cols="12">
               <v-card class="mobo-cu-dialog__image-preview">
                 <v-list-item>
                   <v-list-item-content>
@@ -200,16 +213,6 @@
                   </v-list-item-content>
                 </v-list-item>
               </v-card>
-            </v-col>
-            <v-col>
-              <v-file-input
-                prepend-icon="mdi-camera"
-                accept="image/*"
-                :label="$t('common.image')"
-                @change="onImageChange"
-                @click:clear="onImageClear"
-                :disabled="!isEditable"
-              ></v-file-input>
             </v-col>
           </v-row>
         </v-container>

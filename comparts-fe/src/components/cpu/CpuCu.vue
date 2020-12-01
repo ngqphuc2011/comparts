@@ -12,7 +12,7 @@
       <v-form v-model="valid" ref="form">
         <v-container class="pl-8 pr-8">
           <v-row>
-            <v-col>
+            <v-col md="12">
               <v-text-field
                 dense
                 v-model="cpu.name"
@@ -24,7 +24,7 @@
             </v-col>
           </v-row>
           <v-row>
-            <v-col>
+            <v-col md="6">
               <v-text-field
                 dense
                 v-model="cpu.mfr"
@@ -34,7 +34,7 @@
                 :disabled="!isEditable"
               ></v-text-field>
             </v-col>
-            <v-col>
+            <v-col md="6">
               <v-text-field
                 dense
                 v-model="cpu.graphics"
@@ -46,7 +46,7 @@
             </v-col>
           </v-row>
           <v-row>
-            <v-col>
+            <v-col md="6">
               <v-text-field
                 dense
                 v-model="cpu.socket"
@@ -56,7 +56,7 @@
                 :disabled="!isEditable"
               ></v-text-field>
             </v-col>
-            <v-col>
+            <v-col md="6">
               <v-text-field
                 dense
                 v-model="cpu.process"
@@ -69,7 +69,7 @@
             </v-col>
           </v-row>
           <v-row>
-            <v-col>
+            <v-col md="4">
               <v-text-field
                 dense
                 v-model="cpu.coreNum"
@@ -79,7 +79,7 @@
                 :disabled="!isEditable"
               ></v-text-field>
             </v-col>
-            <v-col>
+            <v-col md="4">
               <v-text-field
                 dense
                 v-model="cpu.threadNum"
@@ -89,32 +89,7 @@
                 :disabled="!isEditable"
               ></v-text-field>
             </v-col>
-            <v-col>
-              <v-text-field
-                dense
-                v-model="cpu.baseFreq"
-                type="number"
-                :label="$t('cpu.base_freq')"
-                :rules="validationRules.numberRequiredRules"
-                suffix="GHz"
-                :disabled="!isEditable"
-              ></v-text-field>
-            </v-col>
-            <v-col>
-              <v-text-field
-                dense
-                v-model="cpu.turboFreq"
-                type="number"
-                :label="$t('cpu.turbo_freq')"
-                :rules="validationRules.numberRules"
-                suffix="GHz"
-                :disabled="!isEditable"
-              ></v-text-field>
-            </v-col>
-          </v-row>
-
-          <v-row>
-            <v-col>
+            <v-col md="4">
               <v-text-field
                 dense
                 v-model="cpu.cache"
@@ -125,7 +100,31 @@
                 :disabled="!isEditable"
               ></v-text-field>
             </v-col>
-            <v-col>
+          </v-row>
+          <v-row>
+            <v-col md="4">
+              <v-text-field
+                dense
+                v-model="cpu.baseFreq"
+                type="number"
+                :label="$t('cpu.base_freq')"
+                :rules="validationRules.numberRequiredRules"
+                suffix="GHz"
+                :disabled="!isEditable"
+              ></v-text-field>
+            </v-col>
+            <v-col md="4">
+              <v-text-field
+                dense
+                v-model="cpu.turboFreq"
+                type="number"
+                :label="$t('cpu.turbo_freq')"
+                :rules="validationRules.numberRules"
+                suffix="GHz"
+                :disabled="!isEditable"
+              ></v-text-field>
+            </v-col>
+            <v-col md="4">
               <v-text-field
                 dense
                 v-model="cpu.tdp"
@@ -136,7 +135,9 @@
                 :disabled="!isEditable"
               ></v-text-field>
             </v-col>
-            <v-col>
+          </v-row>
+          <v-row>
+            <v-col md="6">
               <v-select
                 dense
                 v-model="cpu.memoryType"
@@ -145,7 +146,7 @@
                 :disabled="!isEditable"
               ></v-select>
             </v-col>
-            <v-col>
+            <v-col md="6">
               <v-text-field
                 dense
                 v-model="cpu.memoryFreq"
@@ -158,7 +159,7 @@
             </v-col>
           </v-row>
           <v-row>
-            <v-col>
+            <v-col md="6">
               <v-text-field
                 dense
                 v-model="cpu.price"
@@ -169,9 +170,21 @@
                 :disabled="!isEditable"
               ></v-text-field>
             </v-col>
+            <v-col md="6">
+              <v-file-input
+                dense
+                chips
+                prepend-icon="mdi-camera"
+                accept="image/*"
+                :label="$t('common.image')"
+                @change="onImageChange"
+                @click:clear="onImageClear"
+                :disabled="!isEditable"
+              ></v-file-input>
+            </v-col>
           </v-row>
           <v-row>
-            <v-col cols="6">
+            <v-col cols="12">
               <v-card class="cpu-cu-dialog__image-preview">
                 <v-list-item>
                   <v-list-item-content>
@@ -184,18 +197,6 @@
                   </v-list-item-content>
                 </v-list-item>
               </v-card>
-            </v-col>
-            <v-col>
-              <v-file-input
-                dense
-                chips
-                prepend-icon="mdi-camera"
-                accept="image/*"
-                :label="$t('common.image')"
-                @change="onImageChange"
-                @click:clear="onImageClear"
-                :disabled="!isEditable"
-              ></v-file-input>
             </v-col>
           </v-row>
         </v-container>
