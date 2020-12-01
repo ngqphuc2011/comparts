@@ -14,7 +14,6 @@
           <v-card-title class="text-center getting-started__card__title">{{
             item.title
           }}</v-card-title>
-          <v-divider></v-divider>
           <v-card-text>
             <div>
               {{ item.desc }}
@@ -104,7 +103,7 @@ export default {
 .getting-started__card {
   cursor: pointer;
   width: 250px;
-  height: 375px;
+  height: 400px;
   padding-top: 50px;
 }
 .getting-started__card__title {

@@ -18,7 +18,6 @@
             <v-card-title class="ellipsis">
               {{ cpu.mfr + " " + cpu.name }}
             </v-card-title>
-            <v-divider></v-divider>
             <v-card-text class="cpu-list__card__description">
               <div class="subtitle-1 red--text ellipsis">
                 ₫ • {{ formatNumber(cpu.price) }}
@@ -110,13 +109,13 @@
         </v-btn>
       </template>
       <v-btn fab dark color="grey">
-        <v-icon>mdi-export-variant</v-icon>
+        <v-icon>mdi-database-export-outline</v-icon>
       </v-btn>
       <v-btn @click="onClickAddButton" fab dark color="grey">
-        <v-icon>mdi-plus</v-icon>
+        <v-icon>mdi-database-plus-outline </v-icon>
       </v-btn>
       <v-btn @click="showSearchForm = true" fab dark color="grey">
-        <v-icon>mdi-magnify</v-icon>
+        <v-icon>mdi-database-search-outline</v-icon>
       </v-btn>
     </v-speed-dial>
     <cpu-cu
@@ -127,7 +126,7 @@
       @close="showCpuCuForm = false"
       @search="buildPage"
     />
-    <v-bottom-sheet v-model="showSearchForm" inset width="50%">
+    <v-bottom-sheet v-model="showSearchForm" inset width="75%">
       <v-expansion-panels accordion>
         <v-expansion-panel>
           <v-expansion-panel-header>
@@ -213,10 +212,11 @@
 <script>
 import CpuCu from "./CpuCu";
 import UrlPathMixins from "../mixins//UrlPathMixins";
+import UtilsMixins from "../mixins/UtilsMixins";
 
 export default {
   name: "CpuList",
-  mixins: [UrlPathMixins],
+  mixins: [UrlPathMixins, UtilsMixins],
   components: { CpuCu },
   data() {
     return {
@@ -233,6 +233,8 @@ export default {
 
       mode: "",
       fab: false,
+      showCpuCuForm: false,
+      showSearchForm: false,
 
       cpuList: [],
       cpuManufacturerList: [],
@@ -245,10 +247,7 @@ export default {
       selectedCoreNum: [],
       selectedThreadNum: [],
 
-      showCpuCuForm: false,
       selectedCpu: {},
-
-      showSearchForm: false,
     };
   },
   computed: {
@@ -271,6 +270,7 @@ export default {
     currentPage(page) {
       this.pagination.page = page - 1;
       this.buildCpuList();
+      this.toTopPage();
     },
   },
   created() {
@@ -430,8 +430,7 @@ export default {
   justify-content: center;
 }
 .cpu-list__card {
-  height: 100%;
-  max-height: 450px;
+  height: 400px;
   width: 250px;
   cursor: pointer;
 }

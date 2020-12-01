@@ -1,88 +1,13 @@
 <template>
-  <v-container fluid class="mobo-list">
-    <div class="mt-3 mobo-list__search-sort-area">
-      <v-expansion-panels accordion :value="0">
-        <v-expansion-panel>
-          <v-expansion-panel-header>
-            {{ $t("common.search") }}
-          </v-expansion-panel-header>
-          <v-expansion-panel-content>
-            <v-btn color="primary" block text @click="onClickSearchButton">
-              {{ $t("common.search") }}
-            </v-btn>
-            <div class="mt-3">
-              <v-select
-                dense
-                v-model="selectedManufacturer"
-                :items="moboManufacturerList"
-                :label="$t('mobo.mfr')"
-                multiple
-                chips
-              ></v-select>
-              <v-select
-                dense
-                v-model="selectedSocket"
-                :items="moboSocketList"
-                :label="$t('mobo.socket')"
-                multiple
-                chips
-              ></v-select>
-              <v-select
-                dense
-                v-model="selectedChipset"
-                :items="moboChipsetList"
-                :label="$t('mobo.chipset')"
-                multiple
-                chips
-              ></v-select>
-              <v-select
-                dense
-                v-model="selectedSize"
-                :items="moboSizeList"
-                :label="$t('mobo.mobo_size')"
-                multiple
-                chips
-              ></v-select>
-            </div>
-            <v-btn color="error" block text @click="onClickResetSearchButton">
-              {{ $t("common.reset") }}
-            </v-btn>
-          </v-expansion-panel-content>
-        </v-expansion-panel>
-        <v-expansion-panel>
-          <v-expansion-panel-header>
-            {{ $t("common.sort") }}
-          </v-expansion-panel-header>
-          <v-expansion-panel-content>
-            <v-btn color="primary" block text @click="onClickSortButton">
-              {{ $t("common.sort") }}
-            </v-btn>
-            <v-radio-group :label="$t('common.sort_by')" v-model="sortParam">
-              <v-radio
-                v-for="(item, index) in sortByRadios"
-                :key="index"
-                :label="item.label"
-                :value="item.value"
-              ></v-radio>
-            </v-radio-group>
-            <v-radio-group :label="$t('common.sort_in')" v-model="orderParam">
-              <v-radio
-                v-for="(item, index) in sortInRadios"
-                :key="index"
-                :label="item.label"
-                :value="item.value"
-              ></v-radio>
-            </v-radio-group>
-            <v-btn color="error" block text @click="onClickResetSortButton">
-              {{ $t("common.reset") }}
-            </v-btn>
-          </v-expansion-panel-content>
-        </v-expansion-panel>
-      </v-expansion-panels>
-    </div>
-    <div class="ml-6 mobo-list__grid-page">
-      <v-row class="mobo-list__grid-page__row">
-        <v-col v-for="(mobo, index) in moboList" :key="index" cols="2">
+  <v-container fluid class="mobo-list pa-8">
+    <v-container fluid>
+      <v-row class="mobo-list__row">
+        <v-col
+          class="mobo-list__col"
+          v-for="(mobo, index) in moboList"
+          :key="index"
+          md="2"
+        >
           <v-card
             class="mobo-list__card"
             @click="onClickCard(mobo)"
@@ -172,12 +97,11 @@
         :length="totalPages"
         :total-visible="5"
       ></v-pagination>
-    </div>
+    </v-container>
     <v-speed-dial
       v-model="fab"
       class="mobo__floating-button"
       transition="slide-y-reverse-transition"
-      open-on-hover
     >
       <template v-slot:activator>
         <v-btn v-model="fab" color="grey darken-3" dark fab large>
@@ -186,10 +110,13 @@
         </v-btn>
       </template>
       <v-btn fab dark color="grey">
-        <v-icon>mdi-export-variant</v-icon>
+        <v-icon>mdi-database-export-outline</v-icon>
       </v-btn>
       <v-btn @click="onClickAddButton" fab dark color="grey">
-        <v-icon>mdi-plus</v-icon>
+        <v-icon>mdi-database-plus-outline </v-icon>
+      </v-btn>
+      <v-btn @click="showSearchForm = true" fab dark color="grey">
+        <v-icon>mdi-database-search-outline</v-icon>
       </v-btn>
     </v-speed-dial>
     <mobo-cu
@@ -200,16 +127,97 @@
       @close="showMoboCuForm = false"
       @search="buildPage"
     />
+    <v-bottom-sheet v-model="showSearchForm" inset width="75%">
+      <v-expansion-panels accordion>
+        <v-expansion-panel>
+          <v-expansion-panel-header>
+            {{ $t("common.search") }}
+          </v-expansion-panel-header>
+          <v-expansion-panel-content>
+            <v-btn color="primary" block text @click="onClickSearchButton">
+              {{ $t("common.search") }}
+            </v-btn>
+            <div class="mt-3">
+              <v-select
+                dense
+                v-model="selectedManufacturer"
+                :items="moboManufacturerList"
+                :label="$t('mobo.mfr')"
+                multiple
+                chips
+              ></v-select>
+              <v-select
+                dense
+                v-model="selectedSocket"
+                :items="moboSocketList"
+                :label="$t('mobo.socket')"
+                multiple
+                chips
+              ></v-select>
+              <v-select
+                dense
+                v-model="selectedChipset"
+                :items="moboChipsetList"
+                :label="$t('mobo.chipset')"
+                multiple
+                chips
+              ></v-select>
+              <v-select
+                dense
+                v-model="selectedSize"
+                :items="moboSizeList"
+                :label="$t('mobo.mobo_size')"
+                multiple
+                chips
+              ></v-select>
+            </div>
+            <v-btn color="error" block text @click="onClickResetSearchButton">
+              {{ $t("common.reset") }}
+            </v-btn>
+          </v-expansion-panel-content>
+        </v-expansion-panel>
+        <v-expansion-panel>
+          <v-expansion-panel-header>
+            {{ $t("common.sort") }}
+          </v-expansion-panel-header>
+          <v-expansion-panel-content>
+            <v-btn color="primary" block text @click="onClickSortButton">
+              {{ $t("common.sort") }}
+            </v-btn>
+            <v-radio-group :label="$t('common.sort_by')" v-model="sortParam">
+              <v-radio
+                v-for="(item, index) in sortByRadios"
+                :key="index"
+                :label="item.label"
+                :value="item.value"
+              ></v-radio>
+            </v-radio-group>
+            <v-radio-group :label="$t('common.sort_in')" v-model="orderParam">
+              <v-radio
+                v-for="(item, index) in sortInRadios"
+                :key="index"
+                :label="item.label"
+                :value="item.value"
+              ></v-radio>
+            </v-radio-group>
+            <v-btn color="error" block text @click="onClickResetSortButton">
+              {{ $t("common.reset") }}
+            </v-btn>
+          </v-expansion-panel-content>
+        </v-expansion-panel>
+      </v-expansion-panels>
+    </v-bottom-sheet>
   </v-container>
 </template>
 
 <script>
 import MoboCu from "./MoboCu";
 import UrlPathMixins from "../mixins//UrlPathMixins";
+import UtilsMixins from "../mixins/UtilsMixins";
 
 export default {
   name: "MoboList",
-  mixins: [UrlPathMixins],
+  mixins: [UrlPathMixins, UtilsMixins],
   components: { MoboCu },
   data() {
     return {
@@ -224,8 +232,10 @@ export default {
       sortParam: "name",
       orderParam: "ASC",
 
-      fab: false,
       mode: "",
+      fab: false,
+      showMoboCuForm: false,
+      showSearchForm: false,
 
       moboList: [],
       moboManufacturerList: [],
@@ -238,7 +248,6 @@ export default {
       selectedChipset: [],
       selectedSize: [],
 
-      showMoboCuForm: false,
       selectedMobo: {},
     };
   },
@@ -260,6 +269,7 @@ export default {
     currentPage(page) {
       this.pagination.page = page - 1;
       this.buildMoboList();
+      this.toTopPage();
     },
   },
   created() {
@@ -416,10 +426,16 @@ export default {
 .mobo-list {
   display: flex;
 }
+.mobo-list__row {
+  min-height: 874px;
+}
+.mobo-list__col {
+  display: flex;
+  justify-content: center;
+}
 .mobo-list__card {
-  height: 100%;
-  max-height: 400px;
-  max-width: 250px;
+  height: 400px;
+  width: 250px;
   cursor: pointer;
 }
 .mobo-list__card--reveal {
@@ -440,19 +456,6 @@ export default {
   position: absolute;
   width: 100%;
   bottom: 0;
-}
-.mobo-list__search-sort-area {
-  position: sticky;
-  top: 64px;
-  min-width: 250px;
-  max-width: 250px;
-  height: fit-content;
-}
-.mobo-list__grid-page {
-  width: 100%;
-}
-.mobo-list__grid-page__row {
-  min-height: 840px;
 }
 .mobo__floating-button {
   position: fixed;

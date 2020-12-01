@@ -1,10 +1,12 @@
 <template>
-  <v-dialog v-model="visible" max-width="50%" persistent class="mobo-cu-dialog">
+  <v-dialog v-model="visible" max-width="75%" persistent class="mobo-cu-dialog">
     <v-card>
       <v-card-title v-if="mode === 'C'" class="headline">
+        <v-icon>mdi-database-plus-outline</v-icon>&nbsp;
         {{ $t("mobo.add_mobo") }}
       </v-card-title>
       <v-card-title v-if="mode === 'U'" class="headline">
+        <v-icon>mdi-database-edit-outline</v-icon>&nbsp;
         {{ $t("mobo.edit_mobo") }}
       </v-card-title>
       <v-form v-model="valid" ref="form">
@@ -69,6 +71,28 @@
             <v-col>
               <v-text-field
                 dense
+                v-model="mobo.sataSlotNum"
+                type="number"
+                :label="$t('mobo.sata_slot_num')"
+                :rules="validationRules.numberRules"
+                :disabled="!isEditable"
+              ></v-text-field>
+            </v-col>
+            <v-col>
+              <v-text-field
+                dense
+                v-model="mobo.m2SlotNum"
+                type="number"
+                :label="$t('mobo.m2_slot_num')"
+                :rules="validationRules.numberRules"
+                :disabled="!isEditable"
+              ></v-text-field>
+            </v-col>
+          </v-row>
+          <v-row>
+            <v-col>
+              <v-text-field
+                dense
                 v-model="mobo.pcieX16SlotNum"
                 type="number"
                 :rules="validationRules.numberRules"
@@ -106,34 +130,14 @@
                 :disabled="!isEditable"
               ></v-text-field>
             </v-col>
+          </v-row>
+          <v-row>
             <v-col>
               <v-text-field
                 dense
                 v-model="mobo.pcieX1SlotNum"
                 type="number"
                 :label="$t('mobo.pcie_x1_slot_num')"
-                :rules="validationRules.numberRules"
-                :disabled="!isEditable"
-              ></v-text-field>
-            </v-col>
-          </v-row>
-          <v-row>
-            <v-col>
-              <v-text-field
-                dense
-                v-model="mobo.sataSlotNum"
-                type="number"
-                :label="$t('mobo.sata_slot_num')"
-                :rules="validationRules.numberRules"
-                :disabled="!isEditable"
-              ></v-text-field>
-            </v-col>
-            <v-col>
-              <v-text-field
-                dense
-                v-model="mobo.m2SlotNum"
-                type="number"
-                :label="$t('mobo.m2_slot_num')"
                 :rules="validationRules.numberRules"
                 :disabled="!isEditable"
               ></v-text-field>
