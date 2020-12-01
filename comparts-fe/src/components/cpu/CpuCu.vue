@@ -1,11 +1,11 @@
 <template>
   <v-dialog v-model="visible" persistent class="cpu-cu-dialog">
     <v-card>
-      <v-card-title v-if="mode === 'C'" class="headline">
+      <v-card-title v-if="mode === 'C'">
         <v-icon>mdi-database-plus-outline</v-icon>&nbsp;
         {{ $t("cpu.add_cpu") }}
       </v-card-title>
-      <v-card-title v-if="mode === 'U'" class="headline">
+      <v-card-title v-if="mode === 'U'">
         <v-icon>mdi-database-edit-outline</v-icon>&nbsp;
         {{ $t("cpu.edit_cpu") }}
       </v-card-title>
@@ -230,9 +230,7 @@
       </v-card-actions>
       <v-dialog v-model="discardConfirmDialog" persistent max-width="250">
         <v-card>
-          <v-card-title class="headline">{{
-            $t("common.confirm")
-          }}</v-card-title>
+          <v-card-title>{{ $t("common.confirm") }}</v-card-title>
           <v-card-text>{{ $t("message.discard_msg") }}</v-card-text>
           <v-card-actions>
             <v-spacer></v-spacer>
@@ -252,9 +250,7 @@
         max-width="250"
       >
         <v-card>
-          <v-card-title class="headline">{{
-            $t("common.confirm")
-          }}</v-card-title>
+          <v-card-title>{{ $t("common.confirm") }}</v-card-title>
           <v-card-text>{{ $t("message.delete_msg") }}</v-card-text>
           <v-card-actions>
             <v-spacer></v-spacer>
