@@ -1,5 +1,5 @@
 <template>
-  <v-dialog v-model="visible" max-width="75%" persistent class="mobo-cu-dialog">
+  <v-dialog v-model="visible" persistent class="mobo-cu-dialog">
     <v-card>
       <v-card-title v-if="mode === 'C'" class="headline">
         <v-icon>mdi-database-plus-outline</v-icon>&nbsp;

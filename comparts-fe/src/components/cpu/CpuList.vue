@@ -126,7 +126,7 @@
       @close="showCpuCuForm = false"
       @search="buildPage"
     />
-    <v-bottom-sheet v-model="showSearchForm" inset width="75%">
+    <v-bottom-sheet v-model="showSearchForm" inset>
       <v-expansion-panels accordion>
         <v-expansion-panel>
           <v-expansion-panel-header>
