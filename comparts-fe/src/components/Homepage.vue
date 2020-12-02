@@ -25,6 +25,7 @@
           <getting-started v-if="$router.currentRoute.path === '/'" />
           <cpu-list v-if="$router.currentRoute.path === '/cpu'" />
           <mobo-list v-if="$router.currentRoute.path === '/mobo'" />
+          <gpu-list v-if="$router.currentRoute.path === '/gpu'" />
         </v-container>
         <v-navigation-drawer
           class="homepage__navdrawer"
@@ -89,14 +90,13 @@
 
 <script>
 import GettingStarted from "./GettingStarted";
-import CpuList from "./cpu/CpuList";
-import CpuCu from "./cpu/CpuCu";
-import MoboList from "./mobo/MoboList";
-import MoboCu from "./mobo/MoboCu";
 import UtilsMixins from "./mixins/UtilsMixins";
+import CpuList from "./cpu/CpuList";
+import MoboList from "./mobo/MoboList";
+import GpuList from "./gpu/GpuList";
 
 export default {
-  components: { GettingStarted, CpuList, CpuCu, MoboList, MoboCu },
+  components: { GettingStarted, CpuList, MoboList, GpuList },
   mixins: [UtilsMixins],
   name: "Homepage",
   data() {

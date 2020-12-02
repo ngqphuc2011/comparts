@@ -9,6 +9,10 @@ export default {
                 mobo: `${this.baseUrl}/mobos`,
                 moboImg: `${this.baseUrl}/public/mobos`,
                 moboUploadImg: `${this.baseUrl}/mobos/upload`,
+
+                gpu: `${this.baseUrl}/gpus`,
+                gpuImg: `${this.baseUrl}/public/gpus`,
+                gpuUploadImg: `${this.baseUrl}/gpus/upload`,
             },
         }
     }
