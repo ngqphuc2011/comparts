@@ -1,0 +1,23 @@
+module.exports = (sequelize, DataTypes) =>
+    sequelize.define("gpu", {
+        id: { type: DataTypes.INTEGER, primaryKey: true, autoIncrement: true },
+        name: { type: DataTypes.STRING },
+        mfr: { type: DataTypes.STRING },
+        engine_mfr: { type: DataTypes.STRING },
+        engine_name: { type: DataTypes.STRING },
+        core_speed: { type: DataTypes.INTEGER },
+        boost_speed: { type: DataTypes.INTEGER },
+        memory_size: { type: DataTypes.INTEGER },
+        memory_type: { type: DataTypes.STRING },
+        memory_freq: { type: DataTypes.INTEGER },
+        memory_interface: { type: DataTypes.INTEGER },
+        cuda_core: { type: DataTypes.INTEGER },
+        dp_port_num: { type: DataTypes.INTEGER },
+        hdmi_port_num: { type: DataTypes.INTEGER },
+        dvi_port_num: { type: DataTypes.INTEGER },
+        vga_port_num: { type: DataTypes.INTEGER },
+        tdp: { type: DataTypes.INTEGER },
+        psu_wattage: { type: DataTypes.INTEGER },
+        price: { type: DataTypes.INTEGER },
+        img: { type: DataTypes.TEXT },
+    });

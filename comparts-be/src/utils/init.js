@@ -409,5 +409,53 @@ module.exports = {
 			]);
 
 		})
+	},
+	initGpu: (gpu) => {
+		sequelize.sync({ force: true }).then(() => {
+			gpu.bulkCreate([
+				{
+					name: "TUF-GTX1660S-6G-GAMING",
+					mfr: "ASUS",
+					engine_mfr: "NVIDIA",
+					engine_name: "GeForce GTX 1660 Super",
+					core_speed: 1530,
+					boost_speed: 1785,
+					memory_size: 6,
+					memory_type: "GDDR6",
+					memory_freq: 14002,
+					memory_interface: 192,
+					cuda_core: 1408,
+					dp_port_num: 1,
+					hdmi_port_num: 1,
+					dvi_port_num: 1,
+					vga_port_num: 0,
+					tdp: 125,
+					psu_wattage: 450,
+					price: 6599000,
+					img: "asus-tuf-gtx-1660-super-6g-gaming.jpg",
+				},
+				{
+					name: "Radeon RX 5600 XT GAMING OC 6G",
+					mfr: "Gigabyte",
+					engine_mfr: "AMD",
+					engine_name: "Radeon RX 5600 XT",
+					core_speed: 1560,
+					boost_speed: 1620,
+					memory_size: 6,
+					memory_type: "GDDR6",
+					memory_freq: 12000,
+					memory_interface: 192,
+					cuda_core: 2304,
+					dp_port_num: 3,
+					hdmi_port_num: 1,
+					dvi_port_num: 0,
+					vga_port_num: 0,
+					tdp: 150,
+					psu_wattage: 450,
+					price: 8299000,
+					img: "gigabyte-rx-5600xt-gaming-oc.png",
+				},
+			])
+		})
 	}
 };

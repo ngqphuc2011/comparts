@@ -63,21 +63,29 @@ module.exports = {
 			.then((cpu) => {
 				const response = getPagingData(cpu, page, limit);
 				res.send(response);
+			}).catch((err) => {
+				res.status(500).send(err)
 			});
 	},
 	detail: (req, res) => {
 		cpu.findAll({ where: { id: req.params.id } }).then((cpu) => {
 			res.json(cpu);
+		}).catch((err) => {
+			res.status(500).send(err)
 		});
 	},
 	delete: (req, res) => {
 		cpu.destroy({ where: { id: req.params.id } }).then(() => {
 			res.json("Deleted");
+		}).catch((err) => {
+			res.status(500).send(err)
 		});
 	},
 	create: (req, res) => {
 		cpu.create(req.body).then(() => {
 			res.json("Created");
+		}).catch((err) => {
+			res.status(500).send(err)
 		});
 	},
 	update: (req, res) => {
@@ -89,16 +97,24 @@ module.exports = {
 			})
 			.then(() => {
 				res.json("Updated");
+			}).catch((err) => {
+				res.status(500).send(err)
 			});
 	},
 	saveImage: (req, res) => {
 		upload(publicFilePath)(req, res, (err) => {
+			if (err) {
+				res.status(500).send(err)
+			}
 			res.json(req.file);
-		});;
+		});
 	},
 	deleteImage: (req, res) => {
 		req.body.forEach(img => {
 			fs.unlink(`${publicFilePath}/${img}`, (err) => {
+				if (err) {
+					res.status(500).send(err)
+				}
 				res.json("Deleted")
 			})
 		});

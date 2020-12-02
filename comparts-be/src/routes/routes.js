@@ -1,5 +1,6 @@
 const cpu = require("../controllers/cpu");
 const mobo = require("../controllers/mobo")
+const gpu = require("../controllers/gpu")
 
 module.exports = function (app) {
 	app.route("/cpus").get(cpu.search).post(cpu.create);
@@ -19,4 +20,13 @@ module.exports = function (app) {
 		.delete(mobo.delete)
 		.put(mobo.update);
 	app.route("/public/mobos").get(mobo.getNullImage);
+
+	app.route("/gpus").get(gpu.search).post(gpu.create);
+	app.route("/gpus/upload").post(gpu.saveImage).delete(gpu.deleteImage);
+	app
+		.route("/gpus/:id(\\d+)")
+		.get(gpu.detail)
+		.delete(gpu.delete)
+		.put(gpu.update);
+	app.route("/public/gpus").get(gpu.getNullImage);
 };
