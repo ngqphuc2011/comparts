@@ -43,7 +43,9 @@
     "psu_label": "Power Supply Unit",
     "psu_desc": "Below you will find a list of the PSUs released in recent years.",
     "case_label": "Computer Case",
-    "case_desc": "Below you will find a list of the Cases released in recent years."
+    "case_desc": "Below you will find a list of the Cases released in recent years.",
+    "pc_builder_label": "PC Builder",
+    "pc_builder_desc": "Pick the desired PC parts from the list of latest components."
   },
   "cpu": {
     "name": "Name",

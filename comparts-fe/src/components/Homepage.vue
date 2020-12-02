@@ -88,6 +88,20 @@
           </v-list>
         </v-navigation-drawer>
       </v-card>
+      <v-footer class="homepage__footer" color="grey darken-4" padless fixed>
+        <v-row justify="center" no-gutters>
+          <v-btn
+            v-for="(item, index) in footerItems"
+            :key="index"
+            color="white"
+            text
+            rounded
+            class="my-2"
+          >
+            {{ item.title }}
+          </v-btn>
+        </v-row>
+      </v-footer>
     </v-app>
   </div>
 </template>
@@ -152,6 +166,18 @@ export default {
           icon: "computer.svg",
           value: "case",
         },
+        {
+          title: this.$t("getting_started.pc_builder_label"),
+          icon: "pc.svg",
+          value: "pc-builder",
+        },
+      ];
+    },
+    footerItems: function () {
+      return [
+        { title: this.$t("common.about_us"), value: "about-us" },
+        { title: this.$t("common.contact"), value: "contact" },
+        { title: this.$t("common.faq"), value: "faq" },
       ];
     },
   },

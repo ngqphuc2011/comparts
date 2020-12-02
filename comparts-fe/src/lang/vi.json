@@ -43,7 +43,9 @@
     "psu_label": "Nguồn máy tính",
     "psu_desc": "Dưới đây là danh sách các PSU đã ra mắt trong thời gian gần đây.",
     "case_label": "Vỏ máy tính",
-    "case_desc": "Dưới đây là danh sách các vỏ máy tính đã ra mắt trong thời gian gần đây."
+    "case_desc": "Dưới đây là danh sách các vỏ máy tính đã ra mắt trong thời gian gần đây.",
+    "pc_builder_label": "Xây dựng cấu hình",
+    "pc_builder_desc": "Chọn những linh kiện máy tính mong muốn từ danh sách các linh kiện mới nhất."
   },
   "cpu": {
     "name": "Tên",

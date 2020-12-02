@@ -5,6 +5,7 @@
         class="getting-started__container__col"
         v-for="(item, index) in gettingStartedItems"
         :key="index"
+        md="3"
       >
         <v-card
           class="getting-started__card"
@@ -14,6 +15,7 @@
           <v-card-title class="text-center getting-started__card__title">{{
             item.title
           }}</v-card-title>
+          <v-divider></v-divider>
           <v-card-text>
             <div>
               {{ item.desc }}
@@ -78,7 +80,7 @@ export default {
           path: "/case",
           img: "/static/assets/computer.svg",
           desc: this.$t("getting_started.case_desc"),
-        },
+        }
       ];
     },
   },
@@ -102,7 +104,7 @@ export default {
 }
 .getting-started__card {
   cursor: pointer;
-  width: 250px;
+  width: 275px;
   height: 400px;
   padding-top: 50px;
 }

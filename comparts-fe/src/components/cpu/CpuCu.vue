@@ -159,7 +159,7 @@
             </v-col>
           </v-row>
           <v-row>
-            <v-col md="6">
+            <v-col md="12">
               <v-text-field
                 dense
                 v-model="cpu.price"
@@ -170,32 +170,28 @@
                 :disabled="!isEditable"
               ></v-text-field>
             </v-col>
-            <v-col md="6">
-              <v-file-input
-                dense
-                chips
-                prepend-icon="mdi-camera"
-                accept="image/*"
-                :label="$t('common.image')"
-                @change="onImageChange"
-                @click:clear="onImageClear"
-                :disabled="!isEditable"
-              ></v-file-input>
-            </v-col>
           </v-row>
           <v-row>
             <v-col cols="12">
-              <v-card class="cpu-cu-dialog__image-preview">
-                <v-list-item>
-                  <v-list-item-content>
-                    <v-img
-                      contain
-                      height="150"
-                      class="cpu-cu-dialog__image-preview"
-                      :src="urlImg"
-                    ></v-img>
-                  </v-list-item-content>
-                </v-list-item>
+              <v-card class="pa-4">
+                <v-img
+                  contain
+                  height="150"
+                  class="cpu-cu-dialog__image-preview"
+                  :src="urlImg"
+                >
+                  <v-file-input
+                    dense
+                    hide-input
+                    prepend-icon="mdi-camera"
+                    accept="image/*"
+                    :label="$t('common.image')"
+                    @change="onImageChange"
+                    @click:clear="onImageClear"
+                    :disabled="!isEditable"
+                  >
+                  </v-file-input>
+                </v-img>
               </v-card>
             </v-col>
           </v-row>
@@ -318,6 +314,7 @@ export default {
       cpu: {},
       cpuMemoryTypeList: ["DDR2", "DDR3", "DDR4"],
       urlImg: "",
+      originalUrlImg: "",
       valid: false,
       deleteConfirmDialog: false,
       discardConfirmDialog: false,
@@ -333,7 +330,10 @@ export default {
       this.isEditable = true;
     }
     this.cpu = { ...this.originalCpu };
-    this.urlImg = this.cpu.img ? `${this.url.cpuImg}/${this.cpu.img}` : "";
+    this.originalUrlImg = this.cpu.img
+      ? `${this.url.cpuImg}/${this.cpu.img}`
+      : "";
+    this.urlImg = this.originalUrlImg;
   },
   methods: {
     onClickModifyButton() {
@@ -363,6 +363,7 @@ export default {
         this.isEditable = false;
         this.discardConfirmDialog = false;
         this.cpu = { ...this.originalCpu };
+        this.urlImg = this.originalUrlImg;
       } else {
         this.$emit("close");
       }
@@ -448,6 +449,6 @@ export default {
 </script>
 <style scoped>
 .cpu-cu-dialog__image-preview {
-  min-height: 200px;
+  height: 250px;
 }
 </style>

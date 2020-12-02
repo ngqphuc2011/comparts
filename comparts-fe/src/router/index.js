@@ -43,5 +43,9 @@ export default new Router({
       path: '/case',
       component: Homepage
     },
+    {
+      path: '/pc-builder',
+      component: Homepage
+    }
   ]
 })

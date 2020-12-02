@@ -1,5 +1,5 @@
 <template>
-  <v-container fluid class="mobo-list pa-8">
+  <v-container fluid class="mobo-list mb-8">
     <v-container fluid>
       <v-row class="mobo-list__row">
         <v-col
@@ -18,8 +18,9 @@
             <v-card-title class="ellipsis">
               {{ mobo.mfr + " " + mobo.name }}
             </v-card-title>
+            <v-divider></v-divider>
             <v-card-text class="mobo-list__card__description">
-              <div class="subtitle-1 red--text ellipsis">
+              <div class="subtitle-2 red--text ellipsis">
                 ₫ • {{ formatNumber(mobo.price) }}
               </div>
               <div class="subtitle-2 ellipsis">
@@ -95,7 +96,7 @@
       <v-pagination
         v-model="currentPage"
         :length="totalPages"
-        :total-visible="5"
+        :total-visible="10"
       ></v-pagination>
     </v-container>
     <v-speed-dial
@@ -315,7 +316,10 @@ export default {
         sort: this.sortParam,
         order: this.orderParam,
       };
-      this.buildMoboList();
+      this.currentPage = 1;
+      this.buildCpuList();
+      this.showSearchForm = false;
+      this.toTopPage();
     },
     onClickSearchButton() {
       this.searchQuery = {
@@ -324,9 +328,10 @@ export default {
         chipset: this.selectedChipset,
         mobo_size: this.selectedSize,
       };
-      this.pagination.page = 0;
       this.currentPage = 1;
-      this.buildMoboList();
+      this.buildCpuList();
+      this.showSearchForm = false;
+      this.toTopPage();
     },
     onClickResetSearchButton() {
       this.selectedManufacturer = [];
@@ -435,7 +440,7 @@ export default {
 }
 .mobo-list__card {
   height: 400px;
-  width: 250px;
+  width: 275px;
   cursor: pointer;
 }
 .mobo-list__card--reveal {
