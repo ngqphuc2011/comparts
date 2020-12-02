@@ -129,7 +129,7 @@
       @search="buildPage"
     />
     <v-bottom-sheet v-model="showSearchForm" inset>
-      <v-expansion-panels accordion>
+      <v-expansion-panels accordion v-model="expansionPanel">
         <v-expansion-panel>
           <v-expansion-panel-header>
             {{ $t("common.search") }}
@@ -235,6 +235,8 @@ export default {
 
       mode: "",
       fab: false,
+      expansionPanel: "",
+
       showMoboCuForm: false,
       showSearchForm: false,
 
@@ -271,6 +273,9 @@ export default {
       this.pagination.page = page - 1;
       this.buildMoboList();
       this.toTopPage();
+    },
+    showSearchForm() {
+      this.expansionPanel = "";
     },
   },
   created() {
@@ -317,7 +322,7 @@ export default {
         order: this.orderParam,
       };
       this.currentPage = 1;
-      this.buildCpuList();
+      this.buildMoboList();
       this.showSearchForm = false;
       this.toTopPage();
     },
@@ -329,7 +334,7 @@ export default {
         mobo_size: this.selectedSize,
       };
       this.currentPage = 1;
-      this.buildCpuList();
+      this.buildMoboList();
       this.showSearchForm = false;
       this.toTopPage();
     },

@@ -128,7 +128,7 @@
       @search="buildPage"
     />
     <v-bottom-sheet v-model="showSearchForm" inset>
-      <v-expansion-panels accordion>
+      <v-expansion-panels accordion v-model="expansionPanel">
         <v-expansion-panel>
           <v-expansion-panel-header>
             {{ $t("common.search") }}
@@ -234,6 +234,8 @@ export default {
 
       mode: "",
       fab: false,
+      expansionPanel: "",
+
       showCpuCuForm: false,
       showSearchForm: false,
 
@@ -272,6 +274,9 @@ export default {
       this.pagination.page = page - 1;
       this.buildCpuList();
       this.toTopPage();
+    },
+    showSearchForm() {
+      this.expansionPanel = "";
     },
   },
   created() {
