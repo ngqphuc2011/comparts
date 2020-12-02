@@ -6,8 +6,8 @@
         <v-toolbar-title
           class="homepage__toolbar-title"
           @click="onClickGoToHomepage"
-          >ComParts</v-toolbar-title
-        >
+          >ComParts
+        </v-toolbar-title>
         <v-spacer></v-spacer>
         <v-btn
           v-if="$store.state.lang === 'vi'"
@@ -21,28 +21,10 @@
         </v-btn>
       </v-toolbar>
       <v-card class="homepage__main-page" color="grey lighten-4">
-        <v-container
-          fluid
-          v-if="$router.currentRoute.path === '/'"
-          color="grey lighten-4"
-        >
-          <getting-started />
-        </v-container>
-        <v-container
-          fluid
-          style="display: flex"
-          v-if="$router.currentRoute.path === '/cpu'"
-          color="grey lighten-4"
-        >
-          <cpu-list v-if="cpuListFlag" />
-        </v-container>
-        <v-container
-          fluid
-          style="display: flex"
-          v-if="$router.currentRoute.path === '/mobo'"
-          color="grey lighten-4"
-        >
-          <mobo-list v-if="moboListFlag" />
+        <v-container fluid>
+          <getting-started v-if="$router.currentRoute.path === '/'" />
+          <cpu-list v-if="$router.currentRoute.path === '/cpu'" />
+          <mobo-list v-if="$router.currentRoute.path === '/mobo'" />
         </v-container>
         <v-navigation-drawer
           class="homepage__navdrawer"
@@ -55,7 +37,6 @@
             <v-list-item-avatar>
               <v-img src="/static/assets/user.jpg"></v-img>
             </v-list-item-avatar>
-
             <v-list-item-content>
               <v-list-item-title>User</v-list-item-title>
             </v-list-item-content>
@@ -65,9 +46,9 @@
             <v-list-item
               :class="{
                 'homepage__navdrawer__item--active':
-                  $router.currentRoute.path === '/' + item.value,
+                  $router.currentRoute.path === `/${item.value}`,
               }"
-              :disabled="$router.currentRoute.path === '/' + item.value"
+              :disabled="$router.currentRoute.path === `/${item.value}`"
               v-for="item in menuItems"
               :key="item.title"
               @click="onClickItemTitle(item.value)"
@@ -77,7 +58,7 @@
                 <v-img
                   class="mr-4"
                   max-width="24px"
-                  :src="'/static/assets/' + item.icon"
+                  :src="`/static/assets/${item.icon}`"
                 >
                 </v-img>
               </v-list-item-icon>
@@ -112,9 +93,11 @@ import CpuList from "./cpu/CpuList";
 import CpuCu from "./cpu/CpuCu";
 import MoboList from "./mobo/MoboList";
 import MoboCu from "./mobo/MoboCu";
+import UtilsMixins from "./mixins/UtilsMixins";
 
 export default {
   components: { GettingStarted, CpuList, CpuCu, MoboList, MoboCu },
+  mixins: [UtilsMixins],
   name: "Homepage",
   data() {
     return {
@@ -185,18 +168,6 @@ export default {
     this.setDefaultLanguage();
   },
   methods: {
-    rerenderCpuList() {
-      this.cpuListFlag = false;
-      this.$nextTick(() => {
-        this.cpuListFlag = true;
-      });
-    },
-    rerenderMoboList() {
-      this.moboListFlag = false;
-      this.$nextTick(() => {
-        this.moboListFlag = true;
-      });
-    },
     setDefaultLanguage() {
       this.$store.dispatch("setLang", window.localStorage.getItem("language"));
     },
@@ -215,16 +186,6 @@ export default {
           this.$router.go(0);
         })
         .catch(() => {});
-    },
-    onClickAddButton() {
-      switch (this.$router.currentRoute.path) {
-        case "/cpu":
-          this.showCpuCuForm = true;
-          break;
-        case "/mobo":
-          this.showMoboCuForm = true;
-          break;
-      }
     },
     onToggleDrawer() {
       this.drawer = !this.drawer;
