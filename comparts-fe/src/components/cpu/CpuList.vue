@@ -16,7 +16,7 @@
           >
             <v-img height="200" contain :src="getCpuImg(cpu.img)"></v-img>
             <v-card-title class="ellipsis">
-              {{ cpu.mfr + " " + cpu.name }}
+              {{ cpu.mfr }} {{ cpu.name }}
             </v-card-title>
             <v-divider></v-divider>
             <v-card-text class="cpu-list__card__description">

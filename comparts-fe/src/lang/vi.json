@@ -66,7 +66,7 @@
     "add_cpu": "Thêm Vi xử lý",
     "edit_cpu": "Sửa Vi xử lý"
   },
-  "mobo" : {
+  "mobo": {
     "name": "Tên",
     "mfr": "Nhà sản xuất",
     "socket": "Socket",
@@ -86,5 +86,29 @@
     "price": "Giá",
     "add_mobo": "Thêm Bo mạch chủ",
     "edit_mobo": "Sửa Bo mạch chủ"
+  },
+  "gpu": {
+    "name": "Tên",
+    "mfr": "Nhà sản xuất",
+    "engine": "Bộ xử lý",
+    "engine_name": "Tên bộ xử lý",
+    "engine_mfr": "Nhà sản xuất bộ xử lý",
+    "core_speed": "Xung nhịp cơ bản",
+    "boost_speed": "Xung nhịp tối đa",
+    "memory": "Bộ nhớ",
+    "memory_size": "Dung lượng bộ nhớ",
+    "memory_type": "Loại bộ nhớ",
+    "memory_freq": "Tần số bộ nhớ",
+    "memory_interface": "Giao diện bộ nhớ",
+    "cuda_core": "Số nhân CUDA",
+    "dp_port_num": "Số cổng DisplayPort",
+    "hdmi_port_num": "Số cổng HDMI",
+    "dvi_port_num": "Số cổng DVI",
+    "vga_port_num": "Số cổng VGA",
+    "tdp": "Công suất tiêu thụ",
+    "psu_wattage": "Công suất nguồn đề nghị",
+    "price": "Giá",
+    "add_gpu": "Thêm Card đồ họa",
+    "edit_gpu": "Sửa Card đồ họa"
   }
 }

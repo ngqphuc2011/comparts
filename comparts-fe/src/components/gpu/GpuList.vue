@@ -16,7 +16,7 @@
           >
             <v-img height="200" contain :src="getGpuImg(gpu.img)"></v-img>
             <v-card-title class="ellipsis">
-              {{ gpu.mfr + " " + gpu.name }}
+              {{ gpu.mfr }} {{ gpu.name }}
             </v-card-title>
             <v-divider></v-divider>
             <v-card-text class="gpu-list__card__description">
@@ -24,16 +24,18 @@
                 ₫ • {{ formatNumber(gpu.price) }}
               </div>
               <div class="subtitle-2 ellipsis">
-                • {{ $t("gpu.base_freq") }}: {{ gpu.base_freq }} MHz
-              </div>
-              <div v-if="gpu.turbo_freq" class="subtitle-2 ellipsis">
-                • {{ $t("gpu.turbo_freq") }}: {{ gpu.turbo_freq }} MHz
+                • {{ $t("gpu.engine") }}: {{ gpu.engine_mfr }}
+                {{ gpu.engine_name }}
               </div>
               <div class="subtitle-2 ellipsis">
-                • {{ $t("gpu.core_num") }}: {{ gpu.core_num }}
+                • {{ $t("gpu.memory") }}: {{ gpu.memory_size }}GB
+                {{ gpu.memory_type }}
               </div>
               <div class="subtitle-2 ellipsis">
-                • {{ $t("gpu.thread_num") }}: {{ gpu.thread_num }}
+                • {{ $t("gpu.boost_speed") }}: {{ gpu.boost_speed }} MHz
+              </div>
+              <div class="subtitle-2 ellipsis">
+                • {{ $t("gpu.cuda_core") }}: {{ gpu.cuda_core }}
               </div>
             </v-card-text>
 
@@ -54,37 +56,40 @@
                     • {{ $t("gpu.mfr") }}: {{ gpu.mfr }}
                   </div>
                   <div class="subtitle-2">
-                    • {{ $t("gpu.core_num") }}: {{ gpu.core_num }}
+                    • {{ $t("gpu.engine") }}: {{ gpu.engine_mfr }}
+                    {{ gpu.engine_name }}
                   </div>
                   <div class="subtitle-2">
-                    • {{ $t("gpu.thread_num") }}: {{ gpu.thread_num }}
+                    • {{ $t("gpu.memory") }}: {{ gpu.memory_size }}GB
+                    {{ gpu.memory_type }}
                   </div>
                   <div class="subtitle-2">
-                    • {{ $t("gpu.base_freq") }}: {{ gpu.base_freq }} MHz
-                  </div>
-                  <div v-if="gpu.turbo_freq" class="subtitle-2">
-                    • {{ $t("gpu.turbo_freq") }}: {{ gpu.turbo_freq }} MHz
+                    • {{ $t("gpu.memory_freq") }}: {{ gpu.memory_freq }} MHz
                   </div>
                   <div class="subtitle-2">
-                    • {{ $t("gpu.cache") }}: {{ gpu.cache }} MB
+                    • {{ $t("gpu.memory_interface") }}:
+                    {{ gpu.memory_interface }}-bit
                   </div>
                   <div class="subtitle-2">
-                    • {{ $t("gpu.socket") }}: {{ gpu.socket }}
+                    • {{ $t("gpu.cuda_core") }}: {{ gpu.cuda_core }}
+                  </div>
+                  <div v-if="gpu.dp_port_num" class="subtitle-2">
+                    • {{ $t("gpu.dp_port_num") }}: {{ gpu.dp_port_num }}
+                  </div>
+                  <div v-if="gpu.hdmi_port_num" class="subtitle-2">
+                    • {{ $t("gpu.hdmi_port_num") }}: {{ gpu.hdmi_port_num }}
+                  </div>
+                  <div v-if="gpu.dvi_port_num" class="subtitle-2">
+                    • {{ $t("gpu.dvi_port_num") }}: {{ gpu.dvi_port_num }}
+                  </div>
+                  <div v-if="gpu.vga_port_num" class="subtitle-2">
+                    • {{ $t("gpu.vga_port_num") }}: {{ gpu.vga_port_num }}
                   </div>
                   <div class="subtitle-2">
                     • {{ $t("gpu.tdp") }}: {{ gpu.tdp }} W
                   </div>
                   <div class="subtitle-2">
-                    • {{ $t("gpu.supported_memory") }}: {{ gpu.memory_type }}-{{
-                      gpu.memory_freq
-                    }}
-                    MHz
-                  </div>
-                  <div v-if="gpu.process" class="subtitle-2">
-                    • {{ $t("gpu.process") }}: {{ gpu.process }} nm
-                  </div>
-                  <div v-if="gpu.graphics" class="subtitle-2">
-                    • {{ $t("gpu.graphics") }}: {{ gpu.graphics }}
+                    • {{ $t("gpu.psu_wattage") }}: {{ gpu.psu_wattage }} W
                   </div>
                 </v-card-text>
               </v-card>
@@ -150,7 +155,7 @@
                 dense
                 v-model="selectedSocket"
                 :items="gpuSocketList"
-                :label="$t('gpu.socket')"
+                :label="$t('gpu.engine_mfr')"
                 multiple
                 chips
               ></v-select>
@@ -158,15 +163,7 @@
                 dense
                 v-model="selectedCoreNum"
                 :items="gpuCoreNumList"
-                :label="$t('gpu.core_num')"
-                multiple
-                chips
-              ></v-select>
-              <v-select
-                dense
-                v-model="selectedThreadNum"
-                :items="gpuThreadNumList"
-                :label="$t('gpu.thread_num')"
+                :label="$t('gpu.engine_name')"
                 multiple
                 chips
               ></v-select>
@@ -258,8 +255,6 @@ export default {
       return [
         { label: this.$t("gpu.name"), value: "name" },
         { label: this.$t("gpu.price"), value: "price" },
-        { label: this.$t("gpu.core_num"), value: "core_num" },
-        { label: this.$t("gpu.thread_num"), value: "thread_num" },
       ];
     },
     sortInRadios: function () {

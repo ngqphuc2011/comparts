@@ -58,7 +58,7 @@
     "base_freq": "Base Frequency",
     "turbo_freq": "Turbo Frequency",
     "cache": "Cache",
-    "tdp": "TDP",
+    "tdp": "Thermal Design Power",
     "memory_type": "Memory Type",
     "memory_freq": "Memory Frequency",
     "supported_memory": "Supported Memory",
@@ -86,5 +86,29 @@
     "price": "Price",
     "add_mobo": "Add Motherboard",
     "edit_mobo": "Edit Motherboard"
+  },
+  "gpu": {
+    "name": "Name",
+    "mfr": "Manufacturer",
+    "engine": "Engine",
+    "engine_name": "Engine Name",
+    "engine_mfr": "Engine Manufacturer",
+    "core_speed": "Core Speed",
+    "boost_speed": "Boost Speed",
+    "memory": "Memory",
+    "memory_size": "Memory Size",
+    "memory_type": "Memory Type",
+    "memory_freq": "Memory Frequency",
+    "memory_interface": "Memory Interface",
+    "cuda_core": "CUDA Core",
+    "dp_port_num": "Number of DisplayPort Ports",
+    "hdmi_port_num": "Number of HDMI Ports",
+    "dvi_port_num": "Number of DVI Ports",
+    "vga_port_num": "Number of VGA Ports",
+    "tdp": "Thermal Design Power",
+    "psu_wattage": "Recommended PSU Wattage",
+    "price": "Price",
+    "add_gpu": "Add Video Card",
+    "edit_gpu": "Edit Video Card"
   }
 }

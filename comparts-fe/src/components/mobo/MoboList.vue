@@ -16,7 +16,7 @@
           >
             <v-img height="200" contain :src="getMoboImg(mobo.img)"></v-img>
             <v-card-title class="ellipsis">
-              {{ mobo.mfr + " " + mobo.name }}
+              {{ mobo.mfr }} {{ mobo.name }}
             </v-card-title>
             <v-divider></v-divider>
             <v-card-text class="mobo-list__card__description">
