@@ -39,7 +39,7 @@
               <v-img src="/static/assets/user.jpg"></v-img>
             </v-list-item-avatar>
             <v-list-item-content>
-              <v-list-item-title>User</v-list-item-title>
+              <v-list-item-title>{{ $t("common.user") }}</v-list-item-title>
             </v-list-item-content>
           </v-list-item>
           <v-divider></v-divider>
