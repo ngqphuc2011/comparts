@@ -64,8 +64,8 @@ module.exports = {
 				const response = getPagingData(mobo, page, limit);
 				res.send(response);
 			}).catch((err) => {
-                res.status(500).send(err)
-            });
+				res.status(500).send(err)
+			});
 	},
 	detail: (req, res) => {
 		mobo.findAll({ where: { id: req.params.id } }).then((mobo) => {
@@ -98,23 +98,17 @@ module.exports = {
 			.then(() => {
 				res.json("Updated");
 			}).catch((err) => {
-                res.status(500).send(err)
-            });
+				res.status(500).send(err)
+			});
 	},
 	saveImage: (req, res) => {
 		upload(publicFilePath)(req, res, (err) => {
-			if (err) {
-				res.status(500).send(err)
-			}
 			res.json(req.file);
-		});;
+		});
 	},
 	deleteImage: (req, res) => {
 		req.body.forEach(img => {
 			fs.unlink(`${publicFilePath}/${img}`, (err) => {
-				if (err) {
-                    res.status(500).send(err)
-                }
 				res.json("Deleted")
 			})
 		});

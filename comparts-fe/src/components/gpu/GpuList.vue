@@ -153,17 +153,26 @@
               ></v-select>
               <v-select
                 dense
-                v-model="selectedSocket"
-                :items="gpuSocketList"
+                v-model="selectedEngineManufacturerList"
+                :items="gpuEngineManufacturerList"
                 :label="$t('gpu.engine_mfr')"
                 multiple
                 chips
               ></v-select>
               <v-select
                 dense
-                v-model="selectedCoreNum"
-                :items="gpuCoreNumList"
+                v-model="selectedEngineNameList"
+                :items="gpuEngineNameList"
                 :label="$t('gpu.engine_name')"
+                multiple
+                chips
+              ></v-select>
+              <v-select
+                dense
+                v-model="selectedMemorySizeList"
+                :items="gpuMemorySizeList"
+                :label="$t('gpu.memory_size')"
+                suffix="GB"
                 multiple
                 chips
               ></v-select>
@@ -238,14 +247,14 @@ export default {
 
       gpuList: [],
       gpuManufacturerList: [],
-      gpuSocketList: [],
-      gpuCoreNumList: [],
-      gpuThreadNumList: [],
+      gpuEngineManufacturerList: [],
+      gpuEngineNameList: [],
+      gpuMemorySizeList: [],
 
       selectedManufacturer: [],
-      selectedSocket: [],
-      selectedCoreNum: [],
-      selectedThreadNum: [],
+      selectedEngineManufacturerList: [],
+      selectedEngineNameList: [],
+      selectedMemorySizeList: [],
 
       selectedGpu: {},
     };
@@ -291,17 +300,21 @@ export default {
       this.selectedGpu = {
         name: "",
         mfr: "",
-        socket: "",
-        coreNum: null,
-        threadNum: null,
-        baseFreq: null,
-        turboFreq: null,
-        cache: null,
-        tdp: null,
-        memoryType: "DDR4",
+        engineMfr: "",
+        engineName: "",
+        coreSpeed: null,
+        boostSpeed: null,
+        memorySize: null,
+        memoryType: "",
         memoryFreq: null,
-        process: null,
-        graphics: "",
+        memoryInterface: null,
+        cudaCore: null,
+        dpPortNum: null,
+        hdmiPortNum: null,
+        dviPortNum: null,
+        vgaPortNum: null,
+        tdp: null,
+        psuWattage: null,
         price: null,
         img: "",
       };
@@ -323,9 +336,9 @@ export default {
     onClickSearchButton() {
       this.searchQuery = {
         mfr: this.selectedManufacturer,
-        socket: this.selectedSocket,
-        core_num: this.selectedCoreNum,
-        thread_num: this.selectedThreadNum,
+        engine_mfr: this.selectedEngineManufacturerList,
+        engine_name: this.selectedEngineNameList,
+        memory_size: this.selectedMemorySizeList,
       };
       this.currentPage = 1;
       this.buildGpuList();
@@ -334,9 +347,9 @@ export default {
     },
     onClickResetSearchButton() {
       this.selectedManufacturer = [];
-      this.selectedSocket = [];
-      this.selectedCoreNum = [];
-      this.selectedThreadNum = [];
+      this.selectedEngineManufacturerList = [];
+      this.selectedEngineNameList = [];
+      this.selectedMemorySizeList = [];
     },
     onMouseOverCard(gpu) {
       gpu.reveal = true;
@@ -351,17 +364,21 @@ export default {
         id: gpu.id,
         name: gpu.name,
         mfr: gpu.mfr,
-        socket: gpu.socket,
-        coreNum: gpu.core_num,
-        threadNum: gpu.thread_num,
-        baseFreq: gpu.base_freq,
-        turboFreq: gpu.turbo_freq,
-        cache: gpu.cache,
-        tdp: gpu.tdp,
+        engineMfr: gpu.engine_mfr,
+        engineName: gpu.engine_name,
+        coreSpeed: gpu.core_speed,
+        boostSpeed: gpu.boost_speed,
+        memorySize: gpu.memory_size,
         memoryType: gpu.memory_type,
         memoryFreq: gpu.memory_freq,
-        process: gpu.process,
-        graphics: gpu.graphics,
+        memoryInterface: gpu.memory_interface,
+        cudaCore: gpu.cuda_core,
+        dpPortNum: gpu.dp_port_num,
+        hdmiPortNum: gpu.hdmi_port_num,
+        dviPortNum: gpu.dvi_port_num,
+        vgaPortNum: gpu.vga_port_num,
+        tdp: gpu.tdp,
+        psuWattage: gpu.psu_wattage,
         price: gpu.price,
         img: gpu.img,
       };
@@ -380,9 +397,9 @@ export default {
     },
     buildSearchFilter() {
       this.gpuManufacturerList = [];
-      this.gpuSocketList = [];
-      this.gpuCoreNumList = [];
-      this.gpuThreadNumList = [];
+      this.gpuEngineManufacturerList = [];
+      this.gpuEngineNameList = [];
+      this.gpuMemorySizeList = [];
 
       return this.$http
         .get(this.url.gpu, { params: { size: 9999 } })
@@ -391,20 +408,20 @@ export default {
             if (this.gpuManufacturerList.indexOf(gpu.mfr) === -1) {
               this.gpuManufacturerList.push(gpu.mfr);
             }
-            if (this.gpuSocketList.indexOf(gpu.socket) === -1) {
-              this.gpuSocketList.push(gpu.socket);
+            if (this.gpuEngineManufacturerList.indexOf(gpu.engine_mfr) === -1) {
+              this.gpuEngineManufacturerList.push(gpu.engine_mfr);
             }
-            if (this.gpuCoreNumList.indexOf(gpu.core_num) === -1) {
-              this.gpuCoreNumList.push(gpu.core_num);
+            if (this.gpuEngineNameList.indexOf(gpu.engine_name) === -1) {
+              this.gpuEngineNameList.push(gpu.engine_name);
             }
-            if (this.gpuThreadNumList.indexOf(gpu.thread_num) === -1) {
-              this.gpuThreadNumList.push(gpu.thread_num);
+            if (this.gpuMemorySizeList.indexOf(gpu.memory_size) === -1) {
+              this.gpuMemorySizeList.push(gpu.memory_size);
             }
           });
           this.gpuManufacturerList.sort();
-          this.gpuSocketList.sort();
-          this.gpuCoreNumList.sort((a, b) => a - b);
-          this.gpuThreadNumList.sort((a, b) => a - b);
+          this.gpuEngineManufacturerList.sort();
+          this.gpuEngineNameList.sort();
+          this.gpuMemorySizeList.sort((a, b) => a - b);
         });
     },
     buildGpuList() {

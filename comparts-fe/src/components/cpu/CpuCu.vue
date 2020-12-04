@@ -381,19 +381,19 @@ export default {
     async onClickSaveButton() {
       if (this.$refs.form.validate()) {
         let body = {
-          name: this.cpu.name,
-          mfr: this.cpu.mfr,
-          socket: this.cpu.socket,
-          core_num: this.cpu.coreNum,
-          thread_num: this.cpu.threadNum,
-          base_freq: this.cpu.baseFreq,
+          name: this.cpu.name || null,
+          mfr: this.cpu.mfr || null,
+          socket: this.cpu.socket || null,
+          core_num: this.cpu.coreNum || null,
+          thread_num: this.cpu.threadNum || null,
+          base_freq: this.cpu.baseFreq || null,
           turbo_freq: this.cpu.turboFreq || null,
           cache: this.cpu.cache || null,
           tdp: this.cpu.tdp || null,
           memory_type: this.cpu.memoryType,
-          memory_freq: this.cpu.memoryFreq,
+          memory_freq: this.cpu.memoryFreq || null,
           process: this.cpu.process || null,
-          graphics: this.cpu.graphics,
+          graphics: this.cpu.graphics || null,
           price: this.cpu.price || null,
         };
         if (this.cpu.imgFile) {

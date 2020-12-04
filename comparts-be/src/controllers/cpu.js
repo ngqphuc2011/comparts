@@ -103,18 +103,12 @@ module.exports = {
 	},
 	saveImage: (req, res) => {
 		upload(publicFilePath)(req, res, (err) => {
-			if (err) {
-				res.status(500).send(err)
-			}
 			res.json(req.file);
 		});
 	},
 	deleteImage: (req, res) => {
 		req.body.forEach(img => {
 			fs.unlink(`${publicFilePath}/${img}`, (err) => {
-				if (err) {
-					res.status(500).send(err)
-				}
 				res.json("Deleted")
 			})
 		});

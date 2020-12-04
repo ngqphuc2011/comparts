@@ -1,6 +1,6 @@
 <template>
-  <v-container class="getting-started__container">
-    <v-row class="">
+  <v-container class="getting-started__container mb-8">
+    <v-row>
       <v-col
         class="getting-started__container__col"
         v-for="(item, index) in gettingStartedItems"

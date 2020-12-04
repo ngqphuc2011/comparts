@@ -68,7 +68,7 @@
             </v-col>
           </v-row>
           <v-row>
-            <v-col md="4">
+            <v-col md="3">
               <v-text-field
                 dense
                 v-model="mobo.pcieX16SlotNum"
@@ -78,7 +78,7 @@
                 :disabled="!isEditable"
               ></v-text-field>
             </v-col>
-            <v-col md="4">
+            <v-col md="3">
               <v-text-field
                 dense
                 v-model="mobo.pcieX8SlotNum"
@@ -88,7 +88,7 @@
                 :disabled="!isEditable"
               ></v-text-field>
             </v-col>
-            <v-col md="4">
+            <v-col md="3">
               <v-text-field
                 dense
                 v-model="mobo.pcieX4SlotNum"
@@ -98,9 +98,7 @@
                 :disabled="!isEditable"
               ></v-text-field>
             </v-col>
-          </v-row>
-          <v-row>
-            <v-col md="4">
+            <v-col md="3">
               <v-text-field
                 dense
                 v-model="mobo.pcieX2SlotNum"
@@ -110,7 +108,9 @@
                 :disabled="!isEditable"
               ></v-text-field>
             </v-col>
-            <v-col md="4">
+          </v-row>
+          <v-row>
+            <v-col md="3">
               <v-text-field
                 dense
                 v-model="mobo.pcieX1SlotNum"
@@ -120,7 +120,7 @@
                 :disabled="!isEditable"
               ></v-text-field>
             </v-col>
-            <v-col md="4">
+            <v-col md="3">
               <v-text-field
                 dense
                 v-model="mobo.sataSlotNum"
@@ -130,9 +130,7 @@
                 :disabled="!isEditable"
               ></v-text-field>
             </v-col>
-          </v-row>
-          <v-row>
-            <v-col md="6">
+            <v-col md="3">
               <v-text-field
                 dense
                 v-model="mobo.m2SlotNum"
@@ -142,7 +140,7 @@
                 :disabled="!isEditable"
               ></v-text-field>
             </v-col>
-            <v-col md="6">
+            <v-col md="3">
               <v-text-field
                 dense
                 v-model="mobo.memorySlotNum"
@@ -400,13 +398,13 @@ export default {
     async onClickSaveButton() {
       if (this.$refs.form.validate()) {
         let body = {
-          name: this.mobo.name,
-          mfr: this.mobo.mfr,
-          chipset: this.mobo.chipset,
-          socket: this.mobo.socket,
-          mobo_size: this.mobo.moboSize,
-          memory_type: this.mobo.memoryType,
-          memory_freq: this.mobo.memoryFreq,
+          name: this.mobo.name || null,
+          mfr: this.mobo.mfr || null,
+          chipset: this.mobo.chipset || null,
+          socket: this.mobo.socket || null,
+          mobo_size: this.mobo.moboSize || null,
+          memory_type: this.mobo.memoryType || null,
+          memory_freq: this.mobo.memoryFreq || null,
           memory_slot_num: this.mobo.memorySlotNum || null,
           pcie_x16_slot_num: this.mobo.pcieX16SlotNum || null,
           pcie_x8_slot_num: this.mobo.pcieX8SlotNum || null,
