@@ -12,9 +12,9 @@
           @click="onClickGettingStartedItems(item.path)"
         >
           <v-img height="150" contain :src="item.img"></v-img>
-          <v-card-title class="text-center getting-started__card__title">{{
-            item.title
-          }}</v-card-title>
+          <v-card-title class="text-center getting-started__card__title">
+            {{ item.title }}
+          </v-card-title>
           <v-divider></v-divider>
           <v-card-text>
             <div>
@@ -80,7 +80,7 @@ export default {
           path: "/case",
           img: "/static/assets/computer.svg",
           desc: this.$t("getting_started.case_desc"),
-        }
+        },
       ];
     },
   },
