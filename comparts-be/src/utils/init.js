@@ -463,10 +463,11 @@ module.exports = {
 			ram.bulkCreate([
 				{
 					name: "Trident Z Neo",
+					model: "F4-3600C16D-16GTZNC",
 					mfr: "G.SKILL",
 					capacity: 16,
 					stick_num: 2,
-					ecc: false,
+					ecc: "non-ecc",
 					memory_type: "DDR4",
 					memory_freq: 3600,
 					cas_latency: 16,
@@ -476,10 +477,11 @@ module.exports = {
 				},
 				{
 					name: "Vengeance LPX",
+					model: "CMK16GX4M2A2666C16",
 					mfr: "Corsair",
 					capacity: 16,
 					stick_num: 2,
-					ecc: false,
+					ecc: "non-ecc",
 					memory_type: "DDR4",
 					memory_freq: 2666,
 					cas_latency: 16,

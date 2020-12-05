@@ -24,16 +24,19 @@
                 ₫ • {{ formatNumber(ram.price) }}
               </div>
               <div class="subtitle-2 ellipsis">
-                • {{ $t("ram.chipset") }}: {{ ram.chipset }}
+                • {{ $t("ram.model") }}: {{ ram.model }}
+              </div>
+              <div v-if="ram.ecc === 'ecc'" class="subtitle-2 ellipsis">
+                • {{ $t("ram.memory_type") }}: {{ ram.memory_type }} ECC
+              </div>
+              <div v-else class="subtitle-2 ellipsis">
+                • {{ $t("ram.memory_type") }}: {{ ram.memory_type }}
               </div>
               <div class="subtitle-2 ellipsis">
-                • {{ $t("ram.socket") }}: {{ ram.socket }}
+                • {{ $t("ram.memory_freq") }}: {{ ram.memory_freq }} MHz
               </div>
               <div class="subtitle-2 ellipsis">
-                • {{ $t("ram.ram_size") }}: {{ ram.ram_size }}
-              </div>
-              <div class="subtitle-2 ellipsis">
-                • {{ $t("ram.memory_slot_num") }}: {{ ram.memory_slot_num }}
+                • {{ $t("ram.capacity") }}: {{ ram.capacity }} GB
               </div>
             </v-card-text>
 
@@ -51,41 +54,31 @@
                     • {{ $t("ram.name") }}: {{ ram.name }}
                   </div>
                   <div class="subtitle-2">
+                    • {{ $t("ram.model") }}: {{ ram.model }}
+                  </div>
+                  <div class="subtitle-2">
                     • {{ $t("ram.mfr") }}: {{ ram.mfr }}
                   </div>
-                  <div class="subtitle-2">
-                    • {{ $t("ram.chipset") }}: {{ ram.chipset }}
+                  <div v-if="ram.ecc === 'ecc'" class="subtitle-2">
+                    • {{ $t("ram.memory_type") }}: {{ ram.memory_type }} ECC
+                  </div>
+                  <div v-else class="subtitle-2">
+                    • {{ $t("ram.memory_type") }}: {{ ram.memory_type }}
                   </div>
                   <div class="subtitle-2">
-                    • {{ $t("ram.socket") }}: {{ ram.socket }}
+                    • {{ $t("ram.memory_freq") }}: {{ ram.memory_freq }} MHz
                   </div>
                   <div class="subtitle-2">
-                    • {{ $t("ram.ram_size") }}: {{ ram.ram_size }}
+                    • {{ $t("ram.capacity") }}: {{ ram.capacity }} GB
                   </div>
                   <div class="subtitle-2">
-                    • {{ $t("ram.supported_memory") }}:
-                    {{ ram.memory_type }}-{{ ram.memory_freq }}
-                    MHz
+                    • {{ $t("ram.stick_num") }}: {{ ram.stick_num }}
                   </div>
-                  <div v-if="ram.pcie_x16_slot_num" class="subtitle-2">
-                    • {{ $t("ram.pcie_x16_slot_num") }}:
-                    {{ ram.pcie_x16_slot_num }}
+                  <div class="subtitle-2">
+                    • {{ $t("ram.cas_latency") }}: {{ ram.cas_latency }}
                   </div>
-                  <div v-if="ram.pcie_x8_slot_num" class="subtitle-2">
-                    • {{ $t("ram.pcie_x8_slot_num") }}:
-                    {{ ram.pcie_x8_slot_num }}
-                  </div>
-                  <div v-if="ram.pcie_x4_slot_num" class="subtitle-2">
-                    • {{ $t("ram.pcie_x4_slot_num") }}:
-                    {{ ram.pcie_x4_slot_num }}
-                  </div>
-                  <div v-if="ram.pcie_x2_slot_num" class="subtitle-2">
-                    • {{ $t("ram.pcie_x2_slot_num") }}:
-                    {{ ram.pcie_x2_slot_num }}
-                  </div>
-                  <div v-if="ram.pcie_x1_slot_num" class="subtitle-2">
-                    • {{ $t("ram.pcie_x1_slot_num") }}:
-                    {{ ram.pcie_x1_slot_num }}
+                  <div class="subtitle-2">
+                    • {{ $t("ram.voltage") }}: {{ ram.voltage }} V
                   </div>
                 </v-card-text>
               </v-card>
@@ -149,25 +142,25 @@
               ></v-select>
               <v-select
                 dense
-                v-model="selectedSocket"
-                :items="ramSocketList"
-                :label="$t('ram.socket')"
+                v-model="selectedType"
+                :items="ramTypeList"
+                :label="$t('ram.memory_type')"
                 multiple
                 chips
               ></v-select>
               <v-select
                 dense
-                v-model="selectedChipset"
-                :items="ramChipsetList"
-                :label="$t('ram.chipset')"
+                v-model="selectedFrequency"
+                :items="ramFrequencyList"
+                :label="$t('ram.memory_freq')"
                 multiple
                 chips
               ></v-select>
               <v-select
                 dense
-                v-model="selectedSize"
-                :items="ramSizeList"
-                :label="$t('ram.ram_size')"
+                v-model="selectedCapacity"
+                :items="ramCapacityList"
+                :label="$t('ram.capacity')"
                 multiple
                 chips
               ></v-select>
@@ -242,14 +235,14 @@ export default {
 
       ramList: [],
       ramManufacturerList: [],
-      ramSocketList: [],
-      ramChipsetList: [],
-      ramSizeList: [],
+      ramTypeList: [],
+      ramFrequencyList: [],
+      ramCapacityList: [],
 
       selectedManufacturer: [],
-      selectedSocket: [],
-      selectedChipset: [],
-      selectedSize: [],
+      selectedType: [],
+      selectedFrequency: [],
+      selectedCapacity: [],
 
       selectedRam: {},
     };
@@ -259,6 +252,8 @@ export default {
       return [
         { label: this.$t("ram.name"), value: "name" },
         { label: this.$t("ram.price"), value: "price" },
+        { label: this.$t("ram.memory_freq"), value: "memory_freq" },
+        { label: this.$t("ram.capacity"), value: "capacity" },
       ];
     },
     sortInRadios: function () {
@@ -294,20 +289,15 @@ export default {
       this.showRamCuForm = true;
       this.selectedRam = {
         name: "",
+        model: "",
         mfr: "",
-        chipset: "",
-        socket: "",
-        ramSize: "",
+        capacity: null,
+        stickNum: null,
+        ecc: false,
         memoryType: "",
         memoryFreq: null,
-        memorySlotNum: null,
-        pcieX16SlotNum: null,
-        pcieX8SlotNum: null,
-        pcieX4SlotNum: null,
-        pcieX2SlotNum: null,
-        pcieX1SlotNum: null,
-        sataSlotNum: null,
-        m2SlotNum: null,
+        casLatency: null,
+        voltage: null,
         price: null,
         img: "",
       };
@@ -329,9 +319,9 @@ export default {
     onClickSearchButton() {
       this.searchQuery = {
         mfr: this.selectedManufacturer,
-        socket: this.selectedSocket,
-        chipset: this.selectedChipset,
-        ram_size: this.selectedSize,
+        memory_type: this.selectedType,
+        memory_freq: this.selectedFrequency,
+        capacity: this.selectedCapacity,
       };
       this.currentPage = 1;
       this.buildRamList();
@@ -340,9 +330,9 @@ export default {
     },
     onClickResetSearchButton() {
       this.selectedManufacturer = [];
-      this.selectedSocket = [];
-      this.selectedChipset = [];
-      this.selectedSize = [];
+      this.selectedType = [];
+      this.selectedFrequency = [];
+      this.selectedCapacity = [];
     },
     onMouseOverCard(ram) {
       ram.reveal = true;
@@ -356,20 +346,15 @@ export default {
       this.selectedRam = {
         id: ram.id,
         name: ram.name,
+        model: ram.model,
         mfr: ram.mfr,
-        chipset: ram.chipset,
-        socket: ram.socket,
-        ramSize: ram.ram_size,
+        capacity: ram.capacity,
+        stickNum: ram.stick_num,
+        ecc: ram.ecc,
         memoryType: ram.memory_type,
         memoryFreq: ram.memory_freq,
-        memorySlotNum: ram.memory_slot_num,
-        pcieX16SlotNum: ram.pcie_x16_slot_num,
-        pcieX8SlotNum: ram.pcie_x8_slot_num,
-        pcieX4SlotNum: ram.pcie_x4_slot_num,
-        pcieX2SlotNum: ram.pcie_x2_slot_num,
-        pcieX1SlotNum: ram.pcie_x1_slot_num,
-        sataSlotNum: ram.sata_slot_num,
-        m2SlotNum: ram.m2_slot_num,
+        casLatency: ram.cas_latency,
+        voltage: ram.voltage,
         price: ram.price,
         img: ram.img,
       };
@@ -389,9 +374,9 @@ export default {
     },
     buildSearchFilter() {
       this.ramManufacturerList = [];
-      this.ramSocketList = [];
-      this.ramChipsetList = [];
-      this.ramSizeList = [];
+      this.ramTypeList = [];
+      this.ramFrequencyList = [];
+      this.ramCapacityList = [];
 
       return this.$http
         .get(this.url.ram, { params: { size: 9999 } })
@@ -400,20 +385,20 @@ export default {
             if (this.ramManufacturerList.indexOf(ram.mfr) === -1) {
               this.ramManufacturerList.push(ram.mfr);
             }
-            if (this.ramSocketList.indexOf(ram.socket) === -1) {
-              this.ramSocketList.push(ram.socket);
+            if (this.ramTypeList.indexOf(ram.memory_type) === -1) {
+              this.ramTypeList.push(ram.memory_type);
             }
-            if (this.ramChipsetList.indexOf(ram.chipset) === -1) {
-              this.ramChipsetList.push(ram.chipset);
+            if (this.ramFrequencyList.indexOf(ram.memory_freq) === -1) {
+              this.ramFrequencyList.push(ram.memory_freq);
             }
-            if (this.ramSizeList.indexOf(ram.ram_size) === -1) {
-              this.ramSizeList.push(ram.ram_size);
+            if (this.ramCapacityList.indexOf(ram.capacity) === -1) {
+              this.ramCapacityList.push(ram.capacity);
             }
           });
           this.ramManufacturerList.sort();
-          this.ramSocketList.sort();
-          this.ramChipsetList.sort((a, b) => a - b);
-          this.ramSizeList.sort((a, b) => a - b);
+          this.ramTypeList.sort();
+          this.ramFrequencyList.sort((a, b) => a - b);
+          this.ramCapacityList.sort((a, b) => a - b);
         });
     },
     buildRamList() {

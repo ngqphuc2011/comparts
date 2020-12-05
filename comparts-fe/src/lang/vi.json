@@ -114,16 +114,17 @@
   },
   "ram": {
     "name": "Tên",
+    "model": "Model",
     "mfr": "Nhà sản xuất",
     "capacity": "Dung lượng",
-    "stick_num": "Số thanh RAM",
-    "type": "Loại",
-    "memory_type": "Memory Type",
-    "memory_freq": "Memory Frequency",
-    "cas_latency": "CAS Latency",
-    "voltage": "Voltage",
-    "price": "Price",
-    "add_ram": "Add Memory",
-    "edit_ram": "Edit Memory"
+    "stick_num": "Số thanh",
+    "memory_type": "Loại bộ nhớ",
+    "memory_freq": "Tần số bộ nhớ",
+    "cas_latency": "Độ trễ",
+    "voltage": "Hiệu điện thế",
+    "ecc": "ECC",
+    "price": "Giá",
+    "add_ram": "Thêm Bộ nhớ trong",
+    "edit_ram": "Sửa Bộ nhớ trong"
   }
 }

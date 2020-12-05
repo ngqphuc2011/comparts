@@ -114,14 +114,15 @@
   },
   "ram": {
     "name": "Name",
+    "model": "Model",
     "mfr": "Manufacturer",
     "capacity": "Capacity",
     "stick_num": "Number of Sticks",
-    "type": "Type",
     "memory_type": "Memory Type",
     "memory_freq": "Memory Frequency",
     "cas_latency": "CAS Latency",
     "voltage": "Voltage",
+    "ecc": "ECC",
     "price": "Price",
     "add_ram": "Add Memory",
     "edit_ram": "Edit Memory"

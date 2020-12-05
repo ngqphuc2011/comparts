@@ -2,10 +2,11 @@ module.exports = (sequelize, DataTypes) =>
     sequelize.define("ram", {
         id: { type: DataTypes.INTEGER, primaryKey: true, autoIncrement: true },
         name: { type: DataTypes.STRING },
+        model: { type: DataTypes.STRING},
         mfr: { type: DataTypes.STRING },
         capacity: { type: DataTypes.INTEGER },
         stick_num: { type: DataTypes.INTEGER },
-        ecc: { type: DataTypes.BOOLEAN },
+        ecc: { type: DataTypes.STRING },
         memory_type: { type: DataTypes.STRING },
         memory_freq: { type: DataTypes.INTEGER },
         cas_latency: { type: DataTypes.INTEGER },
