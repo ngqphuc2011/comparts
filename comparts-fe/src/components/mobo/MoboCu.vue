@@ -16,6 +16,7 @@
               <v-text-field
                 dense
                 v-model="mobo.name"
+                placeholder=" "
                 :label="$t('mobo.name')"
                 :rules="validationRules.textRequiredRules"
                 :counter="50"
@@ -28,6 +29,7 @@
               <v-text-field
                 dense
                 v-model="mobo.mfr"
+                placeholder=" "
                 :label="$t('mobo.mfr')"
                 :rules="validationRules.textRequiredRules"
                 :counter="50"
@@ -38,6 +40,7 @@
               <v-text-field
                 dense
                 v-model="mobo.moboSize"
+                placeholder=" "
                 :label="$t('mobo.mobo_size')"
                 :rules="validationRules.textRequiredRules"
                 :counter="50"
@@ -50,6 +53,7 @@
               <v-text-field
                 dense
                 v-model="mobo.socket"
+                placeholder=" "
                 :label="$t('mobo.socket')"
                 :rules="validationRules.textRequiredRules"
                 :counter="50"
@@ -60,6 +64,7 @@
               <v-text-field
                 dense
                 v-model="mobo.chipset"
+                placeholder=" "
                 :rules="validationRules.textRequiredRules"
                 :counter="50"
                 :label="$t('mobo.chipset')"
@@ -72,6 +77,7 @@
               <v-text-field
                 dense
                 v-model="mobo.pcieX16SlotNum"
+                placeholder=" "
                 type="number"
                 :rules="validationRules.numberRules"
                 :label="$t('mobo.pcie_x16_slot_num')"
@@ -82,6 +88,7 @@
               <v-text-field
                 dense
                 v-model="mobo.pcieX8SlotNum"
+                placeholder=" "
                 type="number"
                 :rules="validationRules.numberRules"
                 :label="$t('mobo.pcie_x8_slot_num')"
@@ -92,6 +99,7 @@
               <v-text-field
                 dense
                 v-model="mobo.pcieX4SlotNum"
+                placeholder=" "
                 type="number"
                 :rules="validationRules.numberRules"
                 :label="$t('mobo.pcie_x4_slot_num')"
@@ -102,6 +110,7 @@
               <v-text-field
                 dense
                 v-model="mobo.pcieX2SlotNum"
+                placeholder=" "
                 type="number"
                 :label="$t('mobo.pcie_x2_slot_num')"
                 :rules="validationRules.numberRules"
@@ -114,6 +123,7 @@
               <v-text-field
                 dense
                 v-model="mobo.pcieX1SlotNum"
+                placeholder=" "
                 type="number"
                 :label="$t('mobo.pcie_x1_slot_num')"
                 :rules="validationRules.numberRules"
@@ -124,6 +134,7 @@
               <v-text-field
                 dense
                 v-model="mobo.sataSlotNum"
+                placeholder=" "
                 type="number"
                 :label="$t('mobo.sata_slot_num')"
                 :rules="validationRules.numberRules"
@@ -134,6 +145,7 @@
               <v-text-field
                 dense
                 v-model="mobo.m2SlotNum"
+                placeholder=" "
                 type="number"
                 :label="$t('mobo.m2_slot_num')"
                 :rules="validationRules.numberRules"
@@ -144,6 +156,7 @@
               <v-text-field
                 dense
                 v-model="mobo.memorySlotNum"
+                placeholder=" "
                 type="number"
                 :label="$t('mobo.memory_slot_num')"
                 :rules="validationRules.numberRules"
@@ -156,6 +169,7 @@
               <v-select
                 dense
                 v-model="mobo.memoryType"
+                placeholder=" "
                 :items="moboMemoryTypeList"
                 :label="$t('mobo.memory_type')"
                 :rules="validationRules.requiredRules"
@@ -166,6 +180,7 @@
               <v-text-field
                 dense
                 v-model="mobo.memoryFreq"
+                placeholder=" "
                 type="number"
                 :rules="validationRules.numberRules"
                 suffix="MHz"
@@ -179,6 +194,7 @@
               <v-text-field
                 dense
                 v-model="mobo.price"
+                placeholder=" "
                 type="number"
                 :label="$t('mobo.price')"
                 prefix="₫"

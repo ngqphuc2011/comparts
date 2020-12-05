@@ -16,6 +16,7 @@
               <v-text-field
                 dense
                 v-model="ram.name"
+                placeholder=" "
                 :label="$t('ram.name')"
                 :rules="validationRules.textRequiredRules"
                 :counter="50"
@@ -26,6 +27,7 @@
               <v-text-field
                 dense
                 v-model="ram.model"
+                placeholder=" "
                 :label="$t('ram.model')"
                 :rules="validationRules.textRules"
                 :counter="50"
@@ -38,6 +40,7 @@
               <v-text-field
                 dense
                 v-model="ram.mfr"
+                placeholder=" "
                 :label="$t('ram.mfr')"
                 :rules="validationRules.textRequiredRules"
                 :counter="50"
@@ -48,6 +51,7 @@
               <v-text-field
                 dense
                 v-model="ram.capacity"
+                placeholder=" "
                 type="number"
                 :label="$t('ram.capacity')"
                 :rules="validationRules.numberRequiredRules"
@@ -59,6 +63,7 @@
               <v-text-field
                 dense
                 v-model="ram.memoryFreq"
+                placeholder=" "
                 type="number"
                 :rules="validationRules.numberRequiredRules"
                 suffix="MHz"
@@ -72,6 +77,7 @@
               <v-select
                 dense
                 v-model="ram.memoryType"
+                placeholder=" "
                 :items="ramMemoryTypeList"
                 :label="$t('ram.memory_type')"
                 :rules="validationRules.requiredRules"
@@ -83,6 +89,7 @@
               <v-select
                 dense
                 v-model="ram.ecc"
+                placeholder=" "
                 :items="ramEccList"
                 :label="$t('ram.ecc')"
                 :rules="validationRules.requiredRules"
@@ -96,6 +103,7 @@
               <v-text-field
                 dense
                 v-model="ram.casLatency"
+                placeholder=" "
                 type="number"
                 :rules="validationRules.numberRules"
                 :label="$t('ram.cas_latency')"
@@ -106,6 +114,7 @@
               <v-text-field
                 dense
                 v-model="ram.voltage"
+                placeholder=" "
                 type="number"
                 :rules="validationRules.numberRules"
                 :label="$t('ram.voltage')"
@@ -117,6 +126,7 @@
               <v-text-field
                 dense
                 v-model="ram.stickNum"
+                placeholder=" "
                 type="number"
                 :rules="validationRules.numberRules"
                 :label="$t('ram.stick_num')"
@@ -129,6 +139,7 @@
               <v-text-field
                 dense
                 v-model="ram.price"
+                placeholder=" "
                 type="number"
                 :label="$t('ram.price')"
                 prefix="₫"

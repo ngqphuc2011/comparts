@@ -16,6 +16,7 @@
               <v-text-field
                 dense
                 v-model="cpu.name"
+                placeholder=" "
                 :label="$t('cpu.name')"
                 :rules="validationRules.textRequiredRules"
                 :counter="50"
@@ -28,6 +29,7 @@
               <v-text-field
                 dense
                 v-model="cpu.mfr"
+                placeholder=" "
                 :label="$t('cpu.mfr')"
                 :rules="validationRules.textRequiredRules"
                 :counter="50"
@@ -38,6 +40,7 @@
               <v-text-field
                 dense
                 v-model="cpu.graphics"
+                placeholder=" "
                 :label="$t('cpu.graphics')"
                 :rules="validationRules.textRules"
                 :counter="50"
@@ -50,6 +53,7 @@
               <v-text-field
                 dense
                 v-model="cpu.socket"
+                placeholder=" "
                 :label="$t('cpu.socket')"
                 :rules="validationRules.textRequiredRules"
                 :counter="50"
@@ -60,6 +64,7 @@
               <v-text-field
                 dense
                 v-model="cpu.process"
+                placeholder=" "
                 type="number"
                 suffix="nm"
                 :rules="validationRules.numberRules"
@@ -73,6 +78,7 @@
               <v-text-field
                 dense
                 v-model="cpu.coreNum"
+                placeholder=" "
                 type="number"
                 :rules="validationRules.numberRequiredRules"
                 :label="$t('cpu.core_num')"
@@ -83,6 +89,7 @@
               <v-text-field
                 dense
                 v-model="cpu.threadNum"
+                placeholder=" "
                 type="number"
                 :rules="validationRules.numberRequiredRules"
                 :label="$t('cpu.thread_num')"
@@ -93,6 +100,7 @@
               <v-text-field
                 dense
                 v-model="cpu.cache"
+                placeholder=" "
                 type="number"
                 :label="$t('cpu.cache')"
                 :rules="validationRules.numberRules"
@@ -106,6 +114,7 @@
               <v-text-field
                 dense
                 v-model="cpu.baseFreq"
+                placeholder=" "
                 type="number"
                 :label="$t('cpu.base_freq')"
                 :rules="validationRules.numberRequiredRules"
@@ -117,6 +126,7 @@
               <v-text-field
                 dense
                 v-model="cpu.turboFreq"
+                placeholder=" "
                 type="number"
                 :label="$t('cpu.turbo_freq')"
                 :rules="validationRules.numberRules"
@@ -128,6 +138,7 @@
               <v-text-field
                 dense
                 v-model="cpu.tdp"
+                placeholder=" "
                 type="number"
                 :label="$t('cpu.tdp')"
                 :rules="validationRules.numberRules"
@@ -141,6 +152,7 @@
               <v-select
                 dense
                 v-model="cpu.memoryType"
+                placeholder=" "
                 :items="cpuMemoryTypeList"
                 :label="$t('cpu.memory_type')"
                 :rules="validationRules.requiredRules"
@@ -151,6 +163,7 @@
               <v-text-field
                 dense
                 v-model="cpu.memoryFreq"
+                placeholder=" "
                 type="number"
                 :rules="validationRules.numberRules"
                 :label="$t('cpu.memory_freq')"
@@ -164,6 +177,7 @@
               <v-text-field
                 dense
                 v-model="cpu.price"
+                placeholder=" "
                 type="number"
                 :label="$t('cpu.price')"
                 prefix="₫"

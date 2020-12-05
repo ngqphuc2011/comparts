@@ -117,7 +117,7 @@
     "model": "Model",
     "mfr": "Manufacturer",
     "capacity": "Capacity",
-    "stick_num": "Number of Sticks",
+    "stick_num": "Sticks",
     "memory_type": "Memory Type",
     "memory_freq": "Memory Frequency",
     "cas_latency": "CAS Latency",

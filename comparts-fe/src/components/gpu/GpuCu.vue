@@ -16,6 +16,7 @@
               <v-text-field
                 dense
                 v-model="gpu.name"
+                placeholder=" "
                 :label="$t('gpu.name')"
                 :rules="validationRules.textRequiredRules"
                 :counter="50"
@@ -28,6 +29,7 @@
               <v-text-field
                 dense
                 v-model="gpu.mfr"
+                placeholder=" "
                 :label="$t('gpu.mfr')"
                 :rules="validationRules.textRequiredRules"
                 :counter="50"
@@ -38,6 +40,7 @@
               <v-text-field
                 dense
                 v-model="gpu.engineMfr"
+                placeholder=" "
                 :label="$t('gpu.engine_mfr')"
                 :rules="validationRules.textRequiredRules"
                 :counter="50"
@@ -48,6 +51,7 @@
               <v-text-field
                 dense
                 v-model="gpu.engineName"
+                placeholder=" "
                 :label="$t('gpu.engine_name')"
                 :rules="validationRules.textRequiredRules"
                 :counter="50"
@@ -60,6 +64,7 @@
               <v-text-field
                 dense
                 v-model="gpu.coreSpeed"
+                placeholder=" "
                 type="number"
                 suffix="MHz"
                 :rules="validationRules.numberRules"
@@ -71,6 +76,7 @@
               <v-text-field
                 dense
                 v-model="gpu.boostSpeed"
+                placeholder=" "
                 type="number"
                 suffix="MHz"
                 :rules="validationRules.numberRules"
@@ -82,6 +88,7 @@
               <v-text-field
                 dense
                 v-model="gpu.cudaCore"
+                placeholder=" "
                 type="number"
                 :label="$t('gpu.cuda_core')"
                 :rules="validationRules.numberRules"
@@ -94,6 +101,7 @@
               <v-select
                 dense
                 v-model="gpu.memoryType"
+                placeholder=" "
                 :items="gpuMemoryTypeList"
                 :label="$t('gpu.memory_type')"
                 :rules="validationRules.requiredRules"
@@ -104,6 +112,7 @@
               <v-text-field
                 dense
                 v-model="gpu.memorySize"
+                placeholder=" "
                 type="number"
                 suffix="GB"
                 :rules="validationRules.numberRequiredRules"
@@ -117,6 +126,7 @@
               <v-text-field
                 dense
                 v-model="gpu.memoryInterface"
+                placeholder=" "
                 type="number"
                 :label="$t('gpu.memory_interface')"
                 :rules="validationRules.numberRules"
@@ -128,6 +138,7 @@
               <v-text-field
                 dense
                 v-model="gpu.memoryFreq"
+                placeholder=" "
                 type="number"
                 :rules="validationRules.numberRules"
                 :label="$t('gpu.memory_freq')"
@@ -141,6 +152,7 @@
               <v-text-field
                 dense
                 v-model="gpu.dpPortNum"
+                placeholder=" "
                 type="number"
                 :label="$t('gpu.dp_port_num')"
                 :rules="validationRules.numberRules"
@@ -151,6 +163,7 @@
               <v-text-field
                 dense
                 v-model="gpu.hdmiPortNum"
+                placeholder=" "
                 type="number"
                 :label="$t('gpu.hdmi_port_num')"
                 :rules="validationRules.numberRules"
@@ -161,6 +174,7 @@
               <v-text-field
                 dense
                 v-model="gpu.dviPortNum"
+                placeholder=" "
                 type="number"
                 :label="$t('gpu.dvi_port_num')"
                 :rules="validationRules.numberRules"
@@ -171,6 +185,7 @@
               <v-text-field
                 dense
                 v-model="gpu.vgaPortNum"
+                placeholder=" "
                 type="number"
                 :label="$t('gpu.vga_port_num')"
                 :rules="validationRules.numberRules"
@@ -183,6 +198,7 @@
               <v-text-field
                 dense
                 v-model="gpu.tdp"
+                placeholder=" "
                 type="number"
                 :label="$t('gpu.tdp')"
                 :rules="validationRules.numberRules"
@@ -194,6 +210,7 @@
               <v-text-field
                 dense
                 v-model="gpu.psuWattage"
+                placeholder=" "
                 type="number"
                 :label="$t('gpu.psu_wattage')"
                 :rules="validationRules.numberRules"
@@ -208,6 +225,7 @@
               <v-text-field
                 dense
                 v-model="gpu.price"
+                placeholder=" "
                 type="number"
                 :label="$t('gpu.price')"
                 prefix="₫"
