@@ -143,6 +143,7 @@
                 v-model="cpu.memoryType"
                 :items="cpuMemoryTypeList"
                 :label="$t('cpu.memory_type')"
+                :rules="validationRules.requiredRules"
                 :disabled="!isEditable"
               ></v-select>
             </v-col>
@@ -271,10 +272,11 @@
 <script>
 import UrlPathMixins from "../mixins//UrlPathMixins";
 import ValidateMixins from "../mixins/ValidateMixins";
+import UtilsMixins from "../mixins/UtilsMixins";
 
 export default {
   name: "CpuCu",
-  mixins: [UrlPathMixins, ValidateMixins],
+  mixins: [UrlPathMixins, ValidateMixins, UtilsMixins],
   props: {
     visible: {
       type: Boolean,
@@ -298,7 +300,7 @@ export default {
           turboFreq: null,
           cache: null,
           tdp: null,
-          memoryType: "DDR4",
+          memoryType: "",
           memoryFreq: null,
           process: null,
           graphics: "",
@@ -319,11 +321,6 @@ export default {
       deleteConfirmDialog: false,
       discardConfirmDialog: false,
     };
-  },
-  computed: {
-    isEdited() {
-      return JSON.stringify(this.originalCpu) !== JSON.stringify(this.cpu);
-    },
   },
   created() {
     if (this.mode === "C") {
@@ -369,7 +366,7 @@ export default {
       }
     },
     onClickCancelButton() {
-      if (this.isEdited) {
+      if (!this.compareObjects(this.originalCpu, this.cpu)) {
         this.discardConfirmDialog = true;
       } else {
         this.onClickAcceptDiscardButton();

@@ -303,7 +303,7 @@ export default {
         turboFreq: null,
         cache: null,
         tdp: null,
-        memoryType: "DDR4",
+        memoryType: "",
         memoryFreq: null,
         process: null,
         graphics: "",

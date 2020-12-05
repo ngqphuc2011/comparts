@@ -158,6 +158,7 @@
                 v-model="mobo.memoryType"
                 :items="moboMemoryTypeList"
                 :label="$t('mobo.memory_type')"
+                :rules="validationRules.requiredRules"
                 :disabled="!isEditable"
               ></v-select>
             </v-col>
@@ -286,10 +287,11 @@
 <script>
 import UrlPathMixins from "../mixins//UrlPathMixins";
 import ValidateMixins from "../mixins/ValidateMixins";
+import UtilsMixins from "../mixins/UtilsMixins";
 
 export default {
   name: "MoboCu",
-  mixins: [UrlPathMixins, ValidateMixins],
+  mixins: [UrlPathMixins, ValidateMixins, UtilsMixins],
   props: {
     visible: {
       type: Boolean,
@@ -309,7 +311,7 @@ export default {
           chipset: "",
           socket: "",
           moboSize: "",
-          memoryType: "DDR4",
+          memoryType: "",
           memoryFreq: null,
           memorySlotNum: null,
           pcieX16SlotNum: null,
@@ -336,11 +338,6 @@ export default {
       deleteConfirmDialog: false,
       discardConfirmDialog: false,
     };
-  },
-  computed: {
-    isEdited() {
-      return JSON.stringify(this.originalMobo) !== JSON.stringify(this.mobo);
-    },
   },
   created() {
     if (this.mode === "C") {
@@ -386,7 +383,7 @@ export default {
       }
     },
     onClickCancelButton() {
-      if (this.isEdited) {
+      if (!this.compareObjects(this.originalMobo, this.mobo)) {
         this.discardConfirmDialog = true;
       } else {
         this.onClickAcceptDiscardButton();

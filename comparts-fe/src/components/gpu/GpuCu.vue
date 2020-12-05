@@ -316,10 +316,11 @@
 <script>
 import UrlPathMixins from "../mixins//UrlPathMixins";
 import ValidateMixins from "../mixins/ValidateMixins";
+import UtilsMixins from "../mixins/UtilsMixins";
 
 export default {
   name: "GpuCu",
-  mixins: [UrlPathMixins, ValidateMixins],
+  mixins: [UrlPathMixins, ValidateMixins, UtilsMixins],
   props: {
     visible: {
       type: Boolean,
@@ -378,11 +379,6 @@ export default {
       discardConfirmDialog: false,
     };
   },
-  computed: {
-    isEdited() {
-      return JSON.stringify(this.originalGpu) !== JSON.stringify(this.gpu);
-    },
-  },
   created() {
     if (this.mode === "C") {
       this.isEditable = true;
@@ -427,7 +423,7 @@ export default {
       }
     },
     onClickCancelButton() {
-      if (this.isEdited) {
+      if (!this.compareObjects(this.originalGpu, this.gpu)) {
         this.discardConfirmDialog = true;
       } else {
         this.onClickAcceptDiscardButton();
@@ -445,7 +441,7 @@ export default {
           engine_name: this.gpu.engineName || null,
           core_speed: this.gpu.coreSpeed || null,
           boost_speed: this.gpu.boostSpeed || null,
-          memory_size: this.gpu.memorySize || null, 
+          memory_size: this.gpu.memorySize || null,
           memory_type: this.gpu.memoryType || null,
           memory_freq: this.gpu.memoryFreq || null,
           memory_interface: this.gpu.memoryInterface || null,

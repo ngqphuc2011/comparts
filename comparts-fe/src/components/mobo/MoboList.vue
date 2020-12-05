@@ -298,7 +298,7 @@ export default {
         chipset: "",
         socket: "",
         moboSize: "",
-        memoryType: "DDR4",
+        memoryType: "",
         memoryFreq: null,
         memorySlotNum: null,
         pcieX16SlotNum: null,

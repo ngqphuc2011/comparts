@@ -2,7 +2,7 @@ export default {
     data() {
         return {
             validationRules: {
-                requireRules: [(v) => !!v || this.$t("message.required_rule_msg")],
+                requiredRules: [(v) => !!v || this.$t("message.required_rule_msg")],
                 textRequiredRules: [
                     (v) => !!v || this.$t("message.required_rule_msg"),
                     (v) => v.length <= 50 || this.$t("message.text_rule_msg"),
