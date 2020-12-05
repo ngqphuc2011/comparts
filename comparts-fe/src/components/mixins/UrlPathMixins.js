@@ -13,6 +13,10 @@ export default {
                 gpu: `${this.baseUrl}/gpus`,
                 gpuImg: `${this.baseUrl}/public/gpus`,
                 gpuUploadImg: `${this.baseUrl}/gpus/upload`,
+
+                ram: `${this.baseUrl}/rams`,
+                ramImg: `${this.baseUrl}/public/rams`,
+                ramUploadImg: `${this.baseUrl}/rams/upload`,
             },
         }
     }

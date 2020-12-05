@@ -26,6 +26,7 @@
           <cpu-list v-if="$router.currentRoute.path === '/cpu'" />
           <mobo-list v-if="$router.currentRoute.path === '/mobo'" />
           <gpu-list v-if="$router.currentRoute.path === '/gpu'" />
+          <ram-list v-if="$router.currentRoute.path === '/ram'" />
         </v-container>
         <v-navigation-drawer
           class="homepage__navdrawer"
@@ -94,9 +95,10 @@ import UtilsMixins from "./mixins/UtilsMixins";
 import CpuList from "./cpu/CpuList";
 import MoboList from "./mobo/MoboList";
 import GpuList from "./gpu/GpuList";
+import RamList from "./ram/RamList";
 
 export default {
-  components: { GettingStarted, CpuList, MoboList, GpuList },
+  components: { GettingStarted, CpuList, MoboList, GpuList, RamList },
   mixins: [UtilsMixins],
   name: "Homepage",
   data() {
@@ -125,6 +127,11 @@ export default {
           value: "ram",
         },
         {
+          title: this.$t("getting_started.gpu_label"),
+          icon: "video-card.svg",
+          value: "gpu",
+        },
+        {
           title: this.$t("getting_started.hdd_label"),
           icon: "hard-drive.svg",
           value: "hdd",
@@ -133,11 +140,6 @@ export default {
           title: this.$t("getting_started.ssd_label"),
           icon: "ssd.svg",
           value: "ssd",
-        },
-        {
-          title: this.$t("getting_started.gpu_label"),
-          icon: "video-card.svg",
-          value: "gpu",
         },
         {
           title: this.$t("getting_started.psu_label"),

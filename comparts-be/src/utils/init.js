@@ -457,5 +457,38 @@ module.exports = {
 				},
 			])
 		})
+	},
+	initRam: (ram) => {
+		sequelize.sync({ force: true }).then(() => {
+			ram.bulkCreate([
+				{
+					name: "Trident Z Neo",
+					mfr: "G.SKILL",
+					capacity: 16,
+					stick_num: 2,
+					ecc: false,
+					memory_type: "DDR4",
+					memory_freq: 3600,
+					cas_latency: 16,
+					voltage: 1.35,
+					price: 3099000,
+					img: "gskill-trident-z-neo-16gb-3600.jpg"
+				},
+				{
+					name: "Vengeance LPX",
+					mfr: "Corsair",
+					capacity: 16,
+					stick_num: 2,
+					ecc: false,
+					memory_type: "DDR4",
+					memory_freq: 2666,
+					cas_latency: 16,
+					voltage: 1.2,
+					price: 1799000,
+					img: "corsair-vengeance-lpx-16gb-2666.jpg"
+				}
+
+			])
+		})
 	}
 };

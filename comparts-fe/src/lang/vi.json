@@ -111,5 +111,19 @@
     "price": "Giá",
     "add_gpu": "Thêm Card đồ họa",
     "edit_gpu": "Sửa Card đồ họa"
+  },
+  "ram": {
+    "name": "Tên",
+    "mfr": "Nhà sản xuất",
+    "capacity": "Dung lượng",
+    "stick_num": "Số thanh RAM",
+    "type": "Loại",
+    "memory_type": "Memory Type",
+    "memory_freq": "Memory Frequency",
+    "cas_latency": "CAS Latency",
+    "voltage": "Voltage",
+    "price": "Price",
+    "add_ram": "Add Memory",
+    "edit_ram": "Edit Memory"
   }
 }
