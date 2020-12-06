@@ -137,6 +137,13 @@
           </v-expansion-panel-header>
           <v-expansion-panel-content>
             <div class="mt-3">
+              <v-combobox
+                dense
+                v-model="selectedName"
+                :label="$t('mobo.name')"
+                chips
+              >
+              </v-combobox>
               <v-select
                 dense
                 v-model="selectedManufacturer"
@@ -241,6 +248,7 @@ export default {
       moboChipsetList: [],
       moboFormFactorList: [],
 
+      selectedName: "",
       selectedManufacturer: [],
       selectedSocket: [],
       selectedChipset: [],
@@ -316,6 +324,7 @@ export default {
     },
     searchAndSort() {
       this.searchQuery = {
+        name: this.selectedName,
         mfr: this.selectedManufacturer,
         socket: this.selectedSocket,
         chipset: this.selectedChipset,

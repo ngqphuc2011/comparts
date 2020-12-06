@@ -136,6 +136,13 @@
           </v-expansion-panel-header>
           <v-expansion-panel-content>
             <div class="mt-3">
+              <v-combobox
+                dense
+                v-model="selectedName"
+                :label="$t('cpu.name')"
+                chips
+              >
+              </v-combobox>
               <v-select
                 dense
                 v-model="selectedManufacturer"
@@ -240,6 +247,7 @@ export default {
       cpuCoreNumList: [],
       cpuThreadNumList: [],
 
+      selectedName: "",
       selectedManufacturer: [],
       selectedSocket: [],
       selectedCoreNum: [],
@@ -315,6 +323,7 @@ export default {
     },
     searchAndSort() {
       this.searchQuery = {
+        name: this.selectedName,
         mfr: this.selectedManufacturer,
         socket: this.selectedSocket,
         core_num: this.selectedCoreNum,

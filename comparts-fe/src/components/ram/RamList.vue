@@ -130,6 +130,13 @@
           </v-expansion-panel-header>
           <v-expansion-panel-content>
             <div class="mt-3">
+              <v-combobox
+                dense
+                v-model="selectedName"
+                :label="$t('ram.name')"
+                chips
+              >
+              </v-combobox>
               <v-select
                 dense
                 v-model="selectedManufacturer"
@@ -235,6 +242,7 @@ export default {
       ramFrequencyList: [],
       ramCapacityList: [],
 
+      selectedName: "",
       selectedManufacturer: [],
       selectedType: [],
       selectedFrequency: [],
@@ -307,6 +315,7 @@ export default {
     },
     searchAndSort() {
       this.searchQuery = {
+        name: this.selectedName,
         mfr: this.selectedManufacturer,
         memory_type: this.selectedType,
         memory_freq: this.selectedFrequency,

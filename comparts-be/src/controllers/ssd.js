@@ -4,7 +4,7 @@ const { Sequelize } = require("sequelize");
 const Op = Sequelize.Op;
 const fs = require("fs");
 const publicFilePath = "./public/ssds";
-const { upload } = require("../utils/multer")
+const { upload } = require("../utils/multer");
 const ssd = require("../models/ssd")(sequelize, Sequelize);
 initSsd(ssd);
 
@@ -39,13 +39,16 @@ module.exports = {
 
 		let where = [];
 		for (q in req.query) {
-			if (!sParams.includes(q)) {
-				let obj = {};
+			let obj = {};
+			if (!sParams.includes(q) && q !== "name") {
 				if (req.query[q] instanceof Array) {
 					obj[q] = { [Op.in]: req.query[q] };
 				} else {
 					obj[q] = { [Op.in]: [req.query[q]] };
 				}
+				where.push(obj);
+			} else if (q === "name") {
+				obj[q] = { [Op.like]: `%${[req.query[q]]}%` };
 				where.push(obj);
 			}
 		}
@@ -56,37 +59,45 @@ module.exports = {
 				},
 				limit,
 				offset,
-				order: [
-					[sort, order],
-				],
+				order: [[sort, order]],
 			})
 			.then((ssd) => {
 				const response = getPagingData(ssd, page, limit);
 				res.send(response);
-			}).catch((err) => {
-				res.status(500).send(err)
+			})
+			.catch((err) => {
+				res.status(500).send(err);
 			});
 	},
 	detail: (req, res) => {
-		ssd.findAll({ where: { id: req.params.id } }).then((ssd) => {
-			res.json(ssd);
-		}).catch((err) => {
-			res.status(500).send(err)
-		});
+		ssd
+			.findAll({ where: { id: req.params.id } })
+			.then((ssd) => {
+				res.json(ssd);
+			})
+			.catch((err) => {
+				res.status(500).send(err);
+			});
 	},
 	delete: (req, res) => {
-		ssd.destroy({ where: { id: req.params.id } }).then(() => {
-			res.json("Deleted");
-		}).catch((err) => {
-			res.status(500).send(err)
-		});
+		ssd
+			.destroy({ where: { id: req.params.id } })
+			.then(() => {
+				res.json("Deleted");
+			})
+			.catch((err) => {
+				res.status(500).send(err);
+			});
 	},
 	create: (req, res) => {
-		ssd.create(req.body).then(() => {
-			res.json("Created");
-		}).catch((err) => {
-			res.status(500).send(err)
-		});
+		ssd
+			.create(req.body)
+			.then(() => {
+				res.json("Created");
+			})
+			.catch((err) => {
+				res.status(500).send(err);
+			});
 	},
 	update: (req, res) => {
 		ssd
@@ -97,8 +108,9 @@ module.exports = {
 			})
 			.then(() => {
 				res.json("Updated");
-			}).catch((err) => {
-				res.status(500).send(err)
+			})
+			.catch((err) => {
+				res.status(500).send(err);
 			});
 	},
 	saveImage: (req, res) => {
@@ -107,10 +119,10 @@ module.exports = {
 		});
 	},
 	deleteImage: (req, res) => {
-		req.body.forEach(img => {
+		req.body.forEach((img) => {
 			fs.unlink(`${publicFilePath}/${img}`, (err) => {
-				res.json("Deleted")
-			})
+				res.json("Deleted");
+			});
 		});
 	},
 	getNullImage: (req, res) => {

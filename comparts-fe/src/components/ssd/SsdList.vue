@@ -123,6 +123,13 @@
           </v-expansion-panel-header>
           <v-expansion-panel-content>
             <div class="mt-3">
+              <v-combobox
+                dense
+                v-model="selectedName"
+                :label="$t('ssd.name')"
+                chips
+              >
+              </v-combobox>
               <v-select
                 dense
                 v-model="selectedManufacturer"
@@ -228,6 +235,7 @@ export default {
       ssdFormFactorList: [],
       ssdCapacityList: [],
 
+      selectedName: "",
       selectedManufacturer: [],
       selectedInterface: [],
       selectedFormFactor: [],
@@ -297,6 +305,7 @@ export default {
     },
     searchAndSort() {
       this.searchQuery = {
+        name: this.selectedName,
         mfr: this.selectedManufacturer,
         interface: this.selectedInterface,
         form_factor: this.selectedFormFactor,

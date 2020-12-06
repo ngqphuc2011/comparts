@@ -141,6 +141,13 @@
           </v-expansion-panel-header>
           <v-expansion-panel-content>
             <div class="mt-3">
+              <v-combobox
+                dense
+                v-model="selectedName"
+                :label="$t('gpu.name')"
+                chips
+              >
+              </v-combobox>
               <v-select
                 dense
                 v-model="selectedManufacturer"
@@ -246,6 +253,7 @@ export default {
       gpuEngineNameList: [],
       gpuMemorySizeList: [],
 
+      selectedName: "",
       selectedManufacturer: [],
       selectedEngineManufacturerList: [],
       selectedEngineNameList: [],
@@ -323,6 +331,7 @@ export default {
     },
     searchAndSort() {
       this.searchQuery = {
+        name: this.selectedName,
         mfr: this.selectedManufacturer,
         engine_mfr: this.selectedEngineManufacturerList,
         engine_name: this.selectedEngineNameList,

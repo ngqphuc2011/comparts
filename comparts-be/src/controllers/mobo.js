@@ -39,13 +39,16 @@ module.exports = {
 
 		let where = [];
 		for (q in req.query) {
-			if (!sParams.includes(q)) {
-				let obj = {};
+			let obj = {};
+			if (!sParams.includes(q) && q !== "name") {
 				if (req.query[q] instanceof Array) {
 					obj[q] = { [Op.in]: req.query[q] };
 				} else {
 					obj[q] = { [Op.in]: [req.query[q]] };
 				}
+				where.push(obj);
+			} else if (q === "name") {
+				obj[q] = { [Op.like]: `%${[req.query[q]]}%` };
 				where.push(obj);
 			}
 		}
