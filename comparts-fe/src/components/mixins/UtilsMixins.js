@@ -27,6 +27,9 @@ export default {
         },
         compareObjects(a, b) {
             return JSON.stringify(a) === JSON.stringify(b);
+        },
+        formatNumber(num) {
+            return num ? num.toString().replace(/(\d)(?=(\d{3})+(?!\d))/g, "$1,") : '';
         }
     }
 }

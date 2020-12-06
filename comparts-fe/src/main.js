@@ -15,9 +15,6 @@ Vue.config.productionTip = false;
 Vue.use(vuetify);
 Vue.prototype.$http = axios;
 Vue.prototype.baseUrl = process.env.PATH;
-Vue.prototype.formatNumber = num => {
-  return num ? num.toString().replace(/(\d)(?=(\d{3})+(?!\d))/g, "$1,") : '';
-};
 
 /* eslint-disable no-new */
 new Vue({
