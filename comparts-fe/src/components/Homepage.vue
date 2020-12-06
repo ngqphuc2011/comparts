@@ -27,6 +27,8 @@
           <mobo-list v-if="$router.currentRoute.path === '/mobo'" />
           <gpu-list v-if="$router.currentRoute.path === '/gpu'" />
           <ram-list v-if="$router.currentRoute.path === '/ram'" />
+          <hdd-list v-if="$router.currentRoute.path === '/hdd'" />
+          <ssd-list v-if="$router.currentRoute.path === '/ssd'" />
         </v-container>
         <v-navigation-drawer
           class="homepage__navdrawer"
@@ -96,9 +98,19 @@ import CpuList from "./cpu/CpuList";
 import MoboList from "./mobo/MoboList";
 import GpuList from "./gpu/GpuList";
 import RamList from "./ram/RamList";
+import HddList from "./hdd/HddList";
+import SsdList from "./ssd/SsdList";
 
 export default {
-  components: { GettingStarted, CpuList, MoboList, GpuList, RamList },
+  components: {
+    GettingStarted,
+    CpuList,
+    MoboList,
+    GpuList,
+    RamList,
+    HddList,
+    SsdList,
+  },
   mixins: [UtilsMixins],
   name: "Homepage",
   data() {

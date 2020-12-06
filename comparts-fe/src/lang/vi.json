@@ -72,7 +72,7 @@
     "mfr": "Nhà sản xuất",
     "socket": "Socket",
     "chipset": "Chipset",
-    "mobo_size": "Kích thước",
+    "form_factor": "Dạng thức",
     "memory_type": "Loại bộ nhớ",
     "memory_freq": "Tần số bộ nhớ",
     "memory_slot_num": "Số khe RAM",
@@ -126,5 +126,31 @@
     "price": "Giá",
     "add_ram": "Thêm Bộ nhớ trong",
     "edit_ram": "Sửa Bộ nhớ trong"
+  },
+  "hdd": {
+    "name": "Tên",
+    "model": "Model",
+    "mfr": "Nhà sản xuất",
+    "capacity": "Dung lượng",
+    "interface": "Giao tiếp",
+    "form_factor": "Dạng thức",
+    "cache": "Bộ nhớ đệm",
+    "rpm": "Tốc độ vòng quay",
+    "price": "Giá",
+    "add_hdd": "Thêm Ổ cứng",
+    "edit_hdd": "Sửa Ổ cứng"
+  },
+  "ssd": {
+    "name": "Tên",
+    "model": "Model",
+    "mfr": "Nhà sản xuất",
+    "capacity": "Dung lượng",
+    "interface": "Giao tiếp",
+    "form_factor": "Dạng thức",
+    "read_speed": "Tốc độ ghi tối đa",
+    "write_speed": "Tốc độ đọc tối đa",
+    "price": "Giá",
+    "add_ssd": "Thêm Ổ cứng thể rắn",
+    "edit_ssd": "Sửa Ổ cứng thể rắn"
   }
 }

@@ -1,49 +1,49 @@
 <template>
-  <v-container fluid class="ram-list mb-8">
+  <v-container fluid class="hdd-list mb-8">
     <v-container fluid>
-      <v-row class="ram-list__row">
+      <v-row class="hdd-list__row">
         <v-col
-          class="ram-list__col"
-          v-for="(ram, index) in ramList"
+          class="hdd-list__col"
+          v-for="(hdd, index) in hddList"
           :key="index"
           md="2"
         >
           <v-card
-            class="ram-list__card"
-            @click="onClickCard(ram)"
-            @mouseover="onMouseOverCard(ram)"
-            @mouseleave="onMouseLeaveCard(ram)"
+            class="hdd-list__card"
+            @click="onClickCard(hdd)"
+            @mouseover="onMouseOverCard(hdd)"
+            @mouseleave="onMouseLeaveCard(hdd)"
           >
-            <v-img height="200" contain :src="getRamImg(ram.img)"></v-img>
+            <v-img height="200" contain :src="getHddImg(hdd.img)"></v-img>
             <v-card-title class="ellipsis">
-              {{ ram.mfr }} {{ ram.name }}
+              {{ hdd.mfr }} {{ hdd.name }}
             </v-card-title>
             <v-divider></v-divider>
-            <v-card-text class="ram-list__card__description">
+            <v-card-text class="hdd-list__card__description">
               <div class="subtitle-2 red--text ellipsis">
-                ₫ • {{ formatNumber(ram.price) }}
+                ₫ • {{ formatNumber(hdd.price) }}
               </div>
               <div class="subtitle-2 ellipsis">
-                • {{ $t("ram.model") }}: {{ ram.model }}
+                • {{ $t("hdd.model") }}: {{ hdd.model }}
               </div>
               <div class="subtitle-2 ellipsis">
-                • {{ $t("ram.capacity") }}: {{ ram.capacity }} GB
+                • {{ $t("hdd.capacity") }}: {{ hdd.capacity }} GB
               </div>
-              <div v-if="ram.ecc === 'ecc'" class="subtitle-2 ellipsis">
-                • {{ $t("ram.memory_type") }}: {{ ram.memory_type }} ECC
+              <div v-if="hdd.ecc === 'ecc'" class="subtitle-2 ellipsis">
+                • {{ $t("hdd.memory_type") }}: {{ hdd.memory_type }} ECC
               </div>
               <div v-else class="subtitle-2 ellipsis">
-                • {{ $t("ram.memory_type") }}: {{ ram.memory_type }}
+                • {{ $t("hdd.memory_type") }}: {{ hdd.memory_type }}
               </div>
               <div class="subtitle-2 ellipsis">
-                • {{ $t("ram.memory_freq") }}: {{ ram.memory_freq }} MHz
+                • {{ $t("hdd.memory_freq") }}: {{ hdd.memory_freq }} MHz
               </div>
             </v-card-text>
 
             <v-expand-transition>
               <v-card
-                v-if="ram.reveal"
-                class="transition-fast-in-fast-out ram-list__card--reveal"
+                v-if="hdd.reveal"
+                class="transition-fast-in-fast-out hdd-list__card--reveal"
               >
                 <v-card-text class="pb-0">
                   <div class="title text--primary">
@@ -51,34 +51,34 @@
                   </div>
                   <v-divider class="mb-4"></v-divider>
                   <div class="subtitle-2">
-                    • {{ $t("ram.name") }}: {{ ram.name }}
+                    • {{ $t("hdd.name") }}: {{ hdd.name }}
                   </div>
                   <div class="subtitle-2">
-                    • {{ $t("ram.model") }}: {{ ram.model }}
+                    • {{ $t("hdd.model") }}: {{ hdd.model }}
                   </div>
                   <div class="subtitle-2">
-                    • {{ $t("ram.mfr") }}: {{ ram.mfr }}
+                    • {{ $t("hdd.mfr") }}: {{ hdd.mfr }}
                   </div>
                   <div class="subtitle-2 ellipsis">
-                    • {{ $t("ram.capacity") }}: {{ ram.capacity }} GB
+                    • {{ $t("hdd.capacity") }}: {{ hdd.capacity }} GB
                   </div>
-                  <div v-if="ram.ecc === 'ecc'" class="subtitle-2">
-                    • {{ $t("ram.memory_type") }}: {{ ram.memory_type }} ECC
+                  <div v-if="hdd.ecc === 'ecc'" class="subtitle-2">
+                    • {{ $t("hdd.memory_type") }}: {{ hdd.memory_type }} ECC
                   </div>
                   <div v-else class="subtitle-2">
-                    • {{ $t("ram.memory_type") }}: {{ ram.memory_type }}
+                    • {{ $t("hdd.memory_type") }}: {{ hdd.memory_type }}
                   </div>
                   <div class="subtitle-2">
-                    • {{ $t("ram.memory_freq") }}: {{ ram.memory_freq }} MHz
+                    • {{ $t("hdd.memory_freq") }}: {{ hdd.memory_freq }} MHz
                   </div>
                   <div class="subtitle-2">
-                    • {{ $t("ram.stick_num") }}: {{ ram.stick_num }}
+                    • {{ $t("hdd.stick_num") }}: {{ hdd.stick_num }}
                   </div>
                   <div class="subtitle-2">
-                    • {{ $t("ram.cas_latency") }}: {{ ram.cas_latency }}
+                    • {{ $t("hdd.cas_latency") }}: {{ hdd.cas_latency }}
                   </div>
                   <div class="subtitle-2">
-                    • {{ $t("ram.voltage") }}: {{ ram.voltage }} V
+                    • {{ $t("hdd.voltage") }}: {{ hdd.voltage }} V
                   </div>
                 </v-card-text>
               </v-card>
@@ -94,7 +94,7 @@
     </v-container>
     <v-speed-dial
       v-model="fab"
-      class="ram__floating-button"
+      class="hdd__floating-button"
       transition="slide-y-reverse-transition"
     >
       <template v-slot:activator>
@@ -113,12 +113,12 @@
         <v-icon>mdi-database-search-outline</v-icon>
       </v-btn>
     </v-speed-dial>
-    <ram-cu
-      v-if="showRamCuForm"
-      :visible="showRamCuForm"
+    <hdd-cu
+      v-if="showHddCuForm"
+      :visible="showHddCuForm"
       :mode="this.mode"
-      :originalRam="selectedRam"
-      @close="showRamCuForm = false"
+      :originalHdd="selectedHdd"
+      @close="showHddCuForm = false"
       @search="buildPage"
     />
     <v-bottom-sheet v-model="showSearchForm" inset>
@@ -135,32 +135,32 @@
               <v-select
                 dense
                 v-model="selectedManufacturer"
-                :items="ramManufacturerList"
-                :label="$t('ram.mfr')"
+                :items="hddManufacturerList"
+                :label="$t('hdd.mfr')"
                 multiple
                 chips
               ></v-select>
               <v-select
                 dense
                 v-model="selectedType"
-                :items="ramTypeList"
-                :label="$t('ram.memory_type')"
+                :items="hddTypeList"
+                :label="$t('hdd.memory_type')"
                 multiple
                 chips
               ></v-select>
               <v-select
                 dense
                 v-model="selectedFrequency"
-                :items="ramFrequencyList"
-                :label="$t('ram.memory_freq')"
+                :items="hddFrequencyList"
+                :label="$t('hdd.memory_freq')"
                 multiple
                 chips
               ></v-select>
               <v-select
                 dense
                 v-model="selectedCapacity"
-                :items="ramCapacityList"
-                :label="$t('ram.capacity')"
+                :items="hddCapacityList"
+                :label="$t('hdd.capacity')"
                 multiple
                 chips
               ></v-select>
@@ -178,7 +178,7 @@
             <v-btn color="primary" block text @click="onClickSortButton">
               {{ $t("common.sort") }}
             </v-btn>
-            <v-radio-group :label="$t('common.sort_by')" v-model="sortParam">
+            <v-radio-group :label="$t('common.sort_by')" v-model="sortPahdd">
               <v-radio
                 v-for="(item, index) in sortByRadios"
                 :key="index"
@@ -186,7 +186,7 @@
                 :value="item.value"
               ></v-radio>
             </v-radio-group>
-            <v-radio-group :label="$t('common.sort_in')" v-model="orderParam">
+            <v-radio-group :label="$t('common.sort_in')" v-model="orderPahdd">
               <v-radio
                 v-for="(item, index) in sortInRadios"
                 :key="index"
@@ -205,14 +205,14 @@
 </template>
 
 <script>
-import RamCu from "./RamCu";
+import HddCu from "./HddCu";
 import UrlPathMixins from "../mixins//UrlPathMixins";
 import UtilsMixins from "../mixins/UtilsMixins";
 
 export default {
-  name: "RamList",
+  name: "HddList",
   mixins: [UrlPathMixins, UtilsMixins],
-  components: { RamCu },
+  components: { HddCu },
   data() {
     return {
       currentPage: 1,
@@ -223,37 +223,37 @@ export default {
       },
       searchQuery: {},
       sortOrder: {},
-      sortParam: "name",
-      orderParam: "ASC",
+      sortPahdd: "name",
+      orderPahdd: "ASC",
 
       mode: "",
       fab: false,
       expansionPanel: "",
 
-      showRamCuForm: false,
+      showHddCuForm: false,
       showSearchForm: false,
 
-      ramList: [],
-      ramManufacturerList: [],
-      ramTypeList: [],
-      ramFrequencyList: [],
-      ramCapacityList: [],
+      hddList: [],
+      hddManufacturerList: [],
+      hddTypeList: [],
+      hddFrequencyList: [],
+      hddCapacityList: [],
 
       selectedManufacturer: [],
       selectedType: [],
       selectedFrequency: [],
       selectedCapacity: [],
 
-      selectedRam: {},
+      selectedHdd: {},
     };
   },
   computed: {
     sortByRadios: function () {
       return [
-        { label: this.$t("ram.name"), value: "name" },
-        { label: this.$t("ram.price"), value: "price" },
-        { label: this.$t("ram.memory_freq"), value: "memory_freq" },
-        { label: this.$t("ram.capacity"), value: "capacity" },
+        { label: this.$t("hdd.name"), value: "name" },
+        { label: this.$t("hdd.price"), value: "price" },
+        { label: this.$t("hdd.memory_freq"), value: "memory_freq" },
+        { label: this.$t("hdd.capacity"), value: "capacity" },
       ];
     },
     sortInRadios: function () {
@@ -266,7 +266,7 @@ export default {
   watch: {
     currentPage(page) {
       this.pagination.page = page - 1;
-      this.buildRamList();
+      this.buildHddList();
       this.toTopPage();
     },
     showSearchForm() {
@@ -277,17 +277,17 @@ export default {
     this.buildPage();
   },
   methods: {
-    getRamImg(img) {
+    getHddImg(img) {
       if (img) {
-        return `${this.url.ramImg}/${img}`;
+        return `${this.url.hddImg}/${img}`;
       } else {
         return "";
       }
     },
     onClickAddButton() {
       this.mode = "C";
-      this.showRamCuForm = true;
-      this.selectedRam = {
+      this.showHddCuForm = true;
+      this.selectedHdd = {
         name: "",
         model: "",
         mfr: "",
@@ -303,16 +303,16 @@ export default {
       };
     },
     onClickResetSortButton() {
-      this.sortParam = "name";
-      this.orderParam = "ASC";
+      this.sortPahdd = "name";
+      this.orderPahdd = "ASC";
     },
     onClickSortButton() {
       this.sortOrder = {
-        sort: this.sortParam,
-        order: this.orderParam,
+        sort: this.sortPahdd,
+        order: this.orderPahdd,
       };
       this.currentPage = 1;
-      this.buildRamList();
+      this.buildHddList();
       this.showSearchForm = false;
       this.toTopPage();
     },
@@ -324,7 +324,7 @@ export default {
         capacity: this.selectedCapacity,
       };
       this.currentPage = 1;
-      this.buildRamList();
+      this.buildHddList();
       this.showSearchForm = false;
       this.toTopPage();
     },
@@ -334,76 +334,76 @@ export default {
       this.selectedFrequency = [];
       this.selectedCapacity = [];
     },
-    onMouseOverCard(ram) {
-      ram.reveal = true;
+    onMouseOverCard(hdd) {
+      hdd.reveal = true;
     },
-    onMouseLeaveCard(ram) {
-      ram.reveal = false;
+    onMouseLeaveCard(hdd) {
+      hdd.reveal = false;
     },
-    onClickCard(ram) {
+    onClickCard(hdd) {
       this.mode = "U";
-      this.showRamCuForm = true;
-      this.selectedRam = {
-        id: ram.id,
-        name: ram.name,
-        model: ram.model,
-        mfr: ram.mfr,
-        capacity: ram.capacity,
-        stickNum: ram.stick_num,
-        ecc: ram.ecc,
-        memoryType: ram.memory_type,
-        memoryFreq: ram.memory_freq,
-        casLatency: ram.cas_latency,
-        voltage: ram.voltage,
-        price: ram.price,
-        img: ram.img,
+      this.showHddCuForm = true;
+      this.selectedHdd = {
+        id: hdd.id,
+        name: hdd.name,
+        model: hdd.model,
+        mfr: hdd.mfr,
+        capacity: hdd.capacity,
+        stickNum: hdd.stick_num,
+        ecc: hdd.ecc,
+        memoryType: hdd.memory_type,
+        memoryFreq: hdd.memory_freq,
+        casLatency: hdd.cas_latency,
+        voltage: hdd.voltage,
+        price: hdd.price,
+        img: hdd.img,
       };
     },
 
-    searchRamList(url, pagination, query, sortOrder) {
+    searchHddList(url, pagination, query, sortOrder) {
       return this.$http
-        .get(url, { params: { ...pagination, ...query, ...sortOrder } })
+        .get(url, { pahdds: { ...pagination, ...query, ...sortOrder } })
         .then((res) => {
-          this.ramList = [];
+          this.hddList = [];
           this.totalPages = res.data.totalPages;
-          res.data.items.forEach((ram) => {
-            ram.reveal = false;
-            this.ramList.push(ram);
+          res.data.items.forEach((hdd) => {
+            hdd.reveal = false;
+            this.hddList.push(hdd);
           });
         });
     },
     buildSearchFilter() {
-      this.ramManufacturerList = [];
-      this.ramTypeList = [];
-      this.ramFrequencyList = [];
-      this.ramCapacityList = [];
+      this.hddManufacturerList = [];
+      this.hddTypeList = [];
+      this.hddFrequencyList = [];
+      this.hddCapacityList = [];
 
       return this.$http
-        .get(this.url.ram, { params: { size: 9999 } })
+        .get(this.url.hdd, { pahdds: { size: 9999 } })
         .then((res) => {
-          res.data.items.forEach((ram) => {
-            if (this.ramManufacturerList.indexOf(ram.mfr) === -1) {
-              this.ramManufacturerList.push(ram.mfr);
+          res.data.items.forEach((hdd) => {
+            if (this.hddManufacturerList.indexOf(hdd.mfr) === -1) {
+              this.hddManufacturerList.push(hdd.mfr);
             }
-            if (this.ramTypeList.indexOf(ram.memory_type) === -1) {
-              this.ramTypeList.push(ram.memory_type);
+            if (this.hddTypeList.indexOf(hdd.memory_type) === -1) {
+              this.hddTypeList.push(hdd.memory_type);
             }
-            if (this.ramFrequencyList.indexOf(ram.memory_freq) === -1) {
-              this.ramFrequencyList.push(ram.memory_freq);
+            if (this.hddFrequencyList.indexOf(hdd.memory_freq) === -1) {
+              this.hddFrequencyList.push(hdd.memory_freq);
             }
-            if (this.ramCapacityList.indexOf(ram.capacity) === -1) {
-              this.ramCapacityList.push(ram.capacity);
+            if (this.hddCapacityList.indexOf(hdd.capacity) === -1) {
+              this.hddCapacityList.push(hdd.capacity);
             }
           });
-          this.ramManufacturerList.sort();
-          this.ramTypeList.sort();
-          this.ramFrequencyList.sort((a, b) => a - b);
-          this.ramCapacityList.sort((a, b) => a - b);
+          this.hddManufacturerList.sort();
+          this.hddTypeList.sort();
+          this.hddFrequencyList.sort((a, b) => a - b);
+          this.hddCapacityList.sort((a, b) => a - b);
         });
     },
-    buildRamList() {
-      this.searchRamList(
-        this.url.ram,
+    buildHddList() {
+      this.searchHddList(
+        this.url.hdd,
         this.pagination,
         this.searchQuery,
         this.sortOrder
@@ -411,29 +411,29 @@ export default {
     },
     buildPage() {
       this.buildSearchFilter();
-      this.buildRamList();
+      this.buildHddList();
     },
   },
 };
 </script>
 
 <style scoped>
-.ram-list {
+.hdd-list {
   display: flex;
 }
-.ram-list__row {
+.hdd-list__row {
   min-height: 874px;
 }
-.ram-list__col {
+.hdd-list__col {
   display: flex;
   justify-content: center;
 }
-.ram-list__card {
+.hdd-list__card {
   height: 400px;
   width: 275px;
   cursor: pointer;
 }
-.ram-list__card--reveal {
+.hdd-list__card--reveal {
   bottom: 0;
   opacity: 1 !important;
   position: absolute;
@@ -447,12 +447,12 @@ export default {
   text-overflow: ellipsis;
   white-space: nowrap;
 }
-.ram-list__card__actions {
+.hdd-list__card__actions {
   position: absolute;
   width: 100%;
   bottom: 0;
 }
-.ram__floating-button {
+.hdd__floating-button {
   position: fixed;
   bottom: 64px;
   right: 16px;

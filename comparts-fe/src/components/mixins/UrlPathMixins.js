@@ -17,6 +17,14 @@ export default {
                 ram: `${this.baseUrl}/rams`,
                 ramImg: `${this.baseUrl}/public/rams`,
                 ramUploadImg: `${this.baseUrl}/rams/upload`,
+
+                hdd: `${this.baseUrl}/hdds`,
+                hddImg: `${this.baseUrl}/public/hdds`,
+                hddUploadImg: `${this.baseUrl}/hdds/upload`,
+
+                ssd: `${this.baseUrl}/ssds`,
+                ssdImg: `${this.baseUrl}/public/ssds`,
+                ssdUploadImg: `${this.baseUrl}/ssds/upload`,
             },
         }
     }

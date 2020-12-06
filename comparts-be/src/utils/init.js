@@ -354,7 +354,7 @@ module.exports = {
 					mfr: "ASRock",
 					chipset: "B365",
 					socket: "LGA1151",
-					mobo_size: "mATX",
+					form_factor: "mATX",
 					memory_type: "DDR4",
 					memory_freq: "2666",
 					memory_slot_num: 4,
@@ -373,7 +373,7 @@ module.exports = {
 					mfr: "ASRock",
 					chipset: "B365",
 					socket: "LGA1151",
-					mobo_size: "mATX",
+					form_factor: "mATX",
 					memory_type: "DDR4",
 					memory_freq: "2666",
 					memory_slot_num: 4,
@@ -392,7 +392,7 @@ module.exports = {
 					mfr: "ASUS",
 					chipset: "B450",
 					socket: "LGA1151",
-					mobo_size: "mATX",
+					form_factor: "mATX",
 					memory_type: "DDR4",
 					memory_freq: "3466",
 					memory_slot_num: 4,
@@ -462,7 +462,7 @@ module.exports = {
 		sequelize.sync({ force: true }).then(() => {
 			ram.bulkCreate([
 				{
-					name: "Trident Z Neo",
+					name: "Trident Z Neo 16GB",
 					model: "F4-3600C16D-16GTZNC",
 					mfr: "G.SKILL",
 					capacity: 16,
@@ -476,7 +476,7 @@ module.exports = {
 					img: "gskill-trident-z-neo-16gb-3600.jpg"
 				},
 				{
-					name: "Vengeance LPX",
+					name: "Vengeance LPX 16GB",
 					model: "CMK16GX4M2A2666C16",
 					mfr: "Corsair",
 					capacity: 16,
@@ -492,5 +492,66 @@ module.exports = {
 
 			])
 		})
-	}
+	},
+	initHdd: (hdd) => {
+		sequelize.sync({ force: true }).then(() => {
+			hdd.bulkCreate([
+				{
+					name: "Barracuda 4TB",
+					model: "ST4000DM004",
+					mfr: "Seagate",
+					capacity: 4000,
+					interface: "SATA III",
+					form_factor: "3.5 inch",
+					cache: 256,
+					rpm: 5400,
+					price: 2599000,
+					img: "seagate-4tb-3-5-inch-5400rpm.jpg",
+				},
+				{
+					name: "WD Blue 6TB",
+					model: "WD60EZAZ",
+					mfr: "Western Digital",
+					capacity: 6000,
+					interface: "SATA III",
+					form_factor: "3.5 inch",
+					cache: 256,
+					rpm: 5400,
+					price: 4999000,
+					img: "wd-blue-6tb.jpeg",
+				},
+			])
+		})
+	},
+	initSsd: (ssd) => {
+		sequelize.sync({ force: true }).then(() => {
+			ssd.bulkCreate([
+				{
+					name: "860 EVO 250GB",
+					model: "MZ-76E250",
+					mfr: "Samsung",
+					capacity: 250,
+					interface: "SATA III",
+					form_factor: "2.5 inch",
+					read_speed: 550,
+					write_speed: 520,
+					price: 1459000,
+					img: "samsung-860-evo-250gb.jpg",
+				},
+				{
+					name: "970 PRO 512GB",
+					model: "MZ-V7P512BW",
+					mfr: "Samsung",
+					capacity: 512,
+					interface: "NVMe",
+					form_factor: "M.2 2280",
+					read_speed: 3500,
+					write_speed: 2700,
+					price: 5799000,
+					img: "samsung-970-pro-512gb.jpg",
+				},
+			])
+		})
+	},
+
 };

@@ -2,6 +2,8 @@ const cpu = require("../controllers/cpu");
 const mobo = require("../controllers/mobo");
 const gpu = require("../controllers/gpu");
 const ram = require("../controllers/ram");
+const hdd = require("../controllers/hdd");
+const ssd = require("../controllers/ssd");
 
 module.exports = function (app) {
 	//CPU API
@@ -43,4 +45,24 @@ module.exports = function (app) {
 		.delete(ram.delete)
 		.put(ram.update);
 	app.route("/public/rams").get(ram.getNullImage);
+
+	//HDD API
+	app.route("/hdds").get(hdd.search).post(hdd.create);
+	app.route("/hdds/upload").post(hdd.saveImage).delete(hdd.deleteImage);
+	app
+		.route("/hdds/:id(\\d+)")
+		.get(hdd.detail)
+		.delete(hdd.delete)
+		.put(hdd.update);
+	app.route("/public/hdds").get(hdd.getNullImage);
+
+	//SSD API
+	app.route("/ssds").get(ssd.search).post(ssd.create);
+	app.route("/ssds/upload").post(ssd.saveImage).delete(ssd.deleteImage);
+	app
+		.route("/ssds/:id(\\d+)")
+		.get(ssd.detail)
+		.delete(ssd.delete)
+		.put(ssd.update);
+	app.route("/public/ssds").get(ssd.getNullImage);
 };

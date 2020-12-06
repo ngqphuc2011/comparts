@@ -153,7 +153,7 @@
                 dense
                 v-model="cpu.memoryType"
                 placeholder=" "
-                :items="cpuMemoryTypeList"
+                :items="ramMemoryTypeList"
                 :label="$t('cpu.memory_type')"
                 :rules="validationRules.requiredRules"
                 :disabled="!isEditable"
@@ -328,7 +328,6 @@ export default {
     return {
       isEditable: false,
       cpu: {},
-      cpuMemoryTypeList: ["DDR2", "DDR3", "DDR4"],
       urlImg: "",
       originalUrlImg: "",
       valid: false,

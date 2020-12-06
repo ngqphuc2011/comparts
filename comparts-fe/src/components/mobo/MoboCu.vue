@@ -37,15 +37,15 @@
               ></v-text-field>
             </v-col>
             <v-col md="6">
-              <v-text-field
+              <v-select
                 dense
-                v-model="mobo.moboSize"
+                v-model="mobo.formFactor"
                 placeholder=" "
-                :label="$t('mobo.mobo_size')"
-                :rules="validationRules.textRequiredRules"
-                :counter="50"
+                :items="moboFormFactorList"
+                :label="$t('mobo.form_factor')"
+                :rules="validationRules.requiredRules"
                 :disabled="!isEditable"
-              ></v-text-field>
+              ></v-select>
             </v-col>
           </v-row>
           <v-row>
@@ -170,7 +170,7 @@
                 dense
                 v-model="mobo.memoryType"
                 placeholder=" "
-                :items="moboMemoryTypeList"
+                :items="ramMemoryTypeList"
                 :label="$t('mobo.memory_type')"
                 :rules="validationRules.requiredRules"
                 :disabled="!isEditable"
@@ -326,7 +326,7 @@ export default {
           mfr: "",
           chipset: "",
           socket: "",
-          moboSize: "",
+          formFactor: "",
           memoryType: "",
           memoryFreq: null,
           memorySlotNum: null,
@@ -347,7 +347,6 @@ export default {
     return {
       isEditable: false,
       mobo: {},
-      moboMemoryTypeList: ["DDR2", "DDR3", "DDR4"],
       urlImg: "",
       originalUrlImg: "",
       valid: false,
@@ -415,7 +414,7 @@ export default {
           mfr: this.mobo.mfr || null,
           chipset: this.mobo.chipset || null,
           socket: this.mobo.socket || null,
-          mobo_size: this.mobo.moboSize || null,
+          form_factor: this.mobo.formFactor || null,
           memory_type: this.mobo.memoryType || null,
           memory_freq: this.mobo.memoryFreq || null,
           memory_slot_num: this.mobo.memorySlotNum || null,

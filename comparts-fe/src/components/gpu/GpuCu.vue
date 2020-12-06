@@ -380,16 +380,6 @@ export default {
     return {
       isEditable: false,
       gpu: {},
-      gpuMemoryTypeList: [
-        "DDR3",
-        "GDDR3",
-        "GDDR5",
-        "GDDR5X",
-        "GDDR6",
-        "GDDR6X",
-        "HBM",
-        "HBM2",
-      ],
       urlImg: "",
       originalUrlImg: "",
       valid: false,

@@ -59,7 +59,7 @@
     "base_freq": "Base Frequency",
     "turbo_freq": "Turbo Frequency",
     "cache": "Cache",
-    "tdp": "Thermal Design Power",
+    "tdp": "TDP",
     "memory_type": "Memory Type",
     "memory_freq": "Memory Frequency",
     "supported_memory": "Supported Memory",
@@ -72,7 +72,7 @@
     "mfr": "Manufacturer",
     "socket": "Socket",
     "chipset": "Chipset",
-    "mobo_size": "Size",
+    "form_factor": "Form Factor",
     "memory_type": "Memory Type",
     "memory_freq": "Memory Frequency",
     "memory_slot_num": "Memory Slots",
@@ -106,7 +106,7 @@
     "hdmi_port_num": "HDMI Ports",
     "dvi_port_num": "DVI Ports",
     "vga_port_num": "VGA Ports",
-    "tdp": "Thermal Design Power",
+    "tdp": "TDP",
     "psu_wattage": "Recommended PSU Wattage",
     "price": "Price",
     "add_gpu": "Add Video Card",
@@ -126,5 +126,31 @@
     "price": "Price",
     "add_ram": "Add Memory",
     "edit_ram": "Edit Memory"
+  },
+  "hdd": {
+    "name": "Name",
+    "model": "Model",
+    "mfr": "Manufacturer",
+    "capacity": "Capacity",
+    "interface": "Interface",
+    "form_factor": "Form Factor",
+    "cache": "Cache",
+    "rpm": "RPM",
+    "price": "Price",
+    "add_hdd": "Add Hard Disk Drive",
+    "edit_hdd": "Edit Hard Disk Drive"
+  },
+  "ssd": {
+    "name": "Name",
+    "model": "Model",
+    "mfr": "Manufacturer",
+    "capacity": "Capacity",
+    "interface": "Interface",
+    "form_factor": "Form Factor",
+    "read_speed": "Max Read Speed",
+    "write_speed": "Max Write Speed",
+    "price": "Price",
+    "add_ssd": "Add Solid State Drive",
+    "edit_ssd": "Edit Solid State Drive"
   }
 }

@@ -1,49 +1,49 @@
 <template>
-  <v-container fluid class="ram-list mb-8">
+  <v-container fluid class="ssd-list mb-8">
     <v-container fluid>
-      <v-row class="ram-list__row">
+      <v-row class="ssd-list__row">
         <v-col
-          class="ram-list__col"
-          v-for="(ram, index) in ramList"
+          class="ssd-list__col"
+          v-for="(ssd, index) in ssdList"
           :key="index"
           md="2"
         >
           <v-card
-            class="ram-list__card"
-            @click="onClickCard(ram)"
-            @mouseover="onMouseOverCard(ram)"
-            @mouseleave="onMouseLeaveCard(ram)"
+            class="ssd-list__card"
+            @click="onClickCard(ssd)"
+            @mouseover="onMouseOverCard(ssd)"
+            @mouseleave="onMouseLeaveCard(ssd)"
           >
-            <v-img height="200" contain :src="getRamImg(ram.img)"></v-img>
+            <v-img height="200" contain :src="getSsdImg(ssd.img)"></v-img>
             <v-card-title class="ellipsis">
-              {{ ram.mfr }} {{ ram.name }}
+              {{ ssd.mfr }} {{ ssd.name }}
             </v-card-title>
             <v-divider></v-divider>
-            <v-card-text class="ram-list__card__description">
+            <v-card-text class="ssd-list__card__description">
               <div class="subtitle-2 red--text ellipsis">
-                ₫ • {{ formatNumber(ram.price) }}
+                ₫ • {{ formatNumber(ssd.price) }}
               </div>
               <div class="subtitle-2 ellipsis">
-                • {{ $t("ram.model") }}: {{ ram.model }}
+                • {{ $t("ssd.model") }}: {{ ssd.model }}
               </div>
               <div class="subtitle-2 ellipsis">
-                • {{ $t("ram.capacity") }}: {{ ram.capacity }} GB
+                • {{ $t("ssd.capacity") }}: {{ ssd.capacity }} GB
               </div>
-              <div v-if="ram.ecc === 'ecc'" class="subtitle-2 ellipsis">
-                • {{ $t("ram.memory_type") }}: {{ ram.memory_type }} ECC
+              <div v-if="ssd.ecc === 'ecc'" class="subtitle-2 ellipsis">
+                • {{ $t("ssd.memory_type") }}: {{ ssd.memory_type }} ECC
               </div>
               <div v-else class="subtitle-2 ellipsis">
-                • {{ $t("ram.memory_type") }}: {{ ram.memory_type }}
+                • {{ $t("ssd.memory_type") }}: {{ ssd.memory_type }}
               </div>
               <div class="subtitle-2 ellipsis">
-                • {{ $t("ram.memory_freq") }}: {{ ram.memory_freq }} MHz
+                • {{ $t("ssd.memory_freq") }}: {{ ssd.memory_freq }} MHz
               </div>
             </v-card-text>
 
             <v-expand-transition>
               <v-card
-                v-if="ram.reveal"
-                class="transition-fast-in-fast-out ram-list__card--reveal"
+                v-if="ssd.reveal"
+                class="transition-fast-in-fast-out ssd-list__card--reveal"
               >
                 <v-card-text class="pb-0">
                   <div class="title text--primary">
@@ -51,34 +51,34 @@
                   </div>
                   <v-divider class="mb-4"></v-divider>
                   <div class="subtitle-2">
-                    • {{ $t("ram.name") }}: {{ ram.name }}
+                    • {{ $t("ssd.name") }}: {{ ssd.name }}
                   </div>
                   <div class="subtitle-2">
-                    • {{ $t("ram.model") }}: {{ ram.model }}
+                    • {{ $t("ssd.model") }}: {{ ssd.model }}
                   </div>
                   <div class="subtitle-2">
-                    • {{ $t("ram.mfr") }}: {{ ram.mfr }}
+                    • {{ $t("ssd.mfr") }}: {{ ssd.mfr }}
                   </div>
                   <div class="subtitle-2 ellipsis">
-                    • {{ $t("ram.capacity") }}: {{ ram.capacity }} GB
+                    • {{ $t("ssd.capacity") }}: {{ ssd.capacity }} GB
                   </div>
-                  <div v-if="ram.ecc === 'ecc'" class="subtitle-2">
-                    • {{ $t("ram.memory_type") }}: {{ ram.memory_type }} ECC
+                  <div v-if="ssd.ecc === 'ecc'" class="subtitle-2">
+                    • {{ $t("ssd.memory_type") }}: {{ ssd.memory_type }} ECC
                   </div>
                   <div v-else class="subtitle-2">
-                    • {{ $t("ram.memory_type") }}: {{ ram.memory_type }}
+                    • {{ $t("ssd.memory_type") }}: {{ ssd.memory_type }}
                   </div>
                   <div class="subtitle-2">
-                    • {{ $t("ram.memory_freq") }}: {{ ram.memory_freq }} MHz
+                    • {{ $t("ssd.memory_freq") }}: {{ ssd.memory_freq }} MHz
                   </div>
                   <div class="subtitle-2">
-                    • {{ $t("ram.stick_num") }}: {{ ram.stick_num }}
+                    • {{ $t("ssd.stick_num") }}: {{ ssd.stick_num }}
                   </div>
                   <div class="subtitle-2">
-                    • {{ $t("ram.cas_latency") }}: {{ ram.cas_latency }}
+                    • {{ $t("ssd.cas_latency") }}: {{ ssd.cas_latency }}
                   </div>
                   <div class="subtitle-2">
-                    • {{ $t("ram.voltage") }}: {{ ram.voltage }} V
+                    • {{ $t("ssd.voltage") }}: {{ ssd.voltage }} V
                   </div>
                 </v-card-text>
               </v-card>
@@ -94,7 +94,7 @@
     </v-container>
     <v-speed-dial
       v-model="fab"
-      class="ram__floating-button"
+      class="ssd__floating-button"
       transition="slide-y-reverse-transition"
     >
       <template v-slot:activator>
@@ -113,12 +113,12 @@
         <v-icon>mdi-database-search-outline</v-icon>
       </v-btn>
     </v-speed-dial>
-    <ram-cu
-      v-if="showRamCuForm"
-      :visible="showRamCuForm"
+    <ssd-cu
+      v-if="showSsdCuForm"
+      :visible="showSsdCuForm"
       :mode="this.mode"
-      :originalRam="selectedRam"
-      @close="showRamCuForm = false"
+      :originalSsd="selectedSsd"
+      @close="showSsdCuForm = false"
       @search="buildPage"
     />
     <v-bottom-sheet v-model="showSearchForm" inset>
@@ -135,32 +135,32 @@
               <v-select
                 dense
                 v-model="selectedManufacturer"
-                :items="ramManufacturerList"
-                :label="$t('ram.mfr')"
+                :items="ssdManufacturerList"
+                :label="$t('ssd.mfr')"
                 multiple
                 chips
               ></v-select>
               <v-select
                 dense
                 v-model="selectedType"
-                :items="ramTypeList"
-                :label="$t('ram.memory_type')"
+                :items="ssdTypeList"
+                :label="$t('ssd.memory_type')"
                 multiple
                 chips
               ></v-select>
               <v-select
                 dense
                 v-model="selectedFrequency"
-                :items="ramFrequencyList"
-                :label="$t('ram.memory_freq')"
+                :items="ssdFrequencyList"
+                :label="$t('ssd.memory_freq')"
                 multiple
                 chips
               ></v-select>
               <v-select
                 dense
                 v-model="selectedCapacity"
-                :items="ramCapacityList"
-                :label="$t('ram.capacity')"
+                :items="ssdCapacityList"
+                :label="$t('ssd.capacity')"
                 multiple
                 chips
               ></v-select>
@@ -178,7 +178,7 @@
             <v-btn color="primary" block text @click="onClickSortButton">
               {{ $t("common.sort") }}
             </v-btn>
-            <v-radio-group :label="$t('common.sort_by')" v-model="sortParam">
+            <v-radio-group :label="$t('common.sort_by')" v-model="sortPassd">
               <v-radio
                 v-for="(item, index) in sortByRadios"
                 :key="index"
@@ -186,7 +186,7 @@
                 :value="item.value"
               ></v-radio>
             </v-radio-group>
-            <v-radio-group :label="$t('common.sort_in')" v-model="orderParam">
+            <v-radio-group :label="$t('common.sort_in')" v-model="orderPassd">
               <v-radio
                 v-for="(item, index) in sortInRadios"
                 :key="index"
@@ -205,14 +205,14 @@
 </template>
 
 <script>
-import RamCu from "./RamCu";
+import SsdCu from "./SsdCu";
 import UrlPathMixins from "../mixins//UrlPathMixins";
 import UtilsMixins from "../mixins/UtilsMixins";
 
 export default {
-  name: "RamList",
+  name: "SsdList",
   mixins: [UrlPathMixins, UtilsMixins],
-  components: { RamCu },
+  components: { SsdCu },
   data() {
     return {
       currentPage: 1,
@@ -223,37 +223,37 @@ export default {
       },
       searchQuery: {},
       sortOrder: {},
-      sortParam: "name",
-      orderParam: "ASC",
+      sortPassd: "name",
+      orderPassd: "ASC",
 
       mode: "",
       fab: false,
       expansionPanel: "",
 
-      showRamCuForm: false,
+      showSsdCuForm: false,
       showSearchForm: false,
 
-      ramList: [],
-      ramManufacturerList: [],
-      ramTypeList: [],
-      ramFrequencyList: [],
-      ramCapacityList: [],
+      ssdList: [],
+      ssdManufacturerList: [],
+      ssdTypeList: [],
+      ssdFrequencyList: [],
+      ssdCapacityList: [],
 
       selectedManufacturer: [],
       selectedType: [],
       selectedFrequency: [],
       selectedCapacity: [],
 
-      selectedRam: {},
+      selectedSsd: {},
     };
   },
   computed: {
     sortByRadios: function () {
       return [
-        { label: this.$t("ram.name"), value: "name" },
-        { label: this.$t("ram.price"), value: "price" },
-        { label: this.$t("ram.memory_freq"), value: "memory_freq" },
-        { label: this.$t("ram.capacity"), value: "capacity" },
+        { label: this.$t("ssd.name"), value: "name" },
+        { label: this.$t("ssd.price"), value: "price" },
+        { label: this.$t("ssd.memory_freq"), value: "memory_freq" },
+        { label: this.$t("ssd.capacity"), value: "capacity" },
       ];
     },
     sortInRadios: function () {
@@ -266,7 +266,7 @@ export default {
   watch: {
     currentPage(page) {
       this.pagination.page = page - 1;
-      this.buildRamList();
+      this.buildSsdList();
       this.toTopPage();
     },
     showSearchForm() {
@@ -277,17 +277,17 @@ export default {
     this.buildPage();
   },
   methods: {
-    getRamImg(img) {
+    getSsdImg(img) {
       if (img) {
-        return `${this.url.ramImg}/${img}`;
+        return `${this.url.ssdImg}/${img}`;
       } else {
         return "";
       }
     },
     onClickAddButton() {
       this.mode = "C";
-      this.showRamCuForm = true;
-      this.selectedRam = {
+      this.showSsdCuForm = true;
+      this.selectedSsd = {
         name: "",
         model: "",
         mfr: "",
@@ -303,16 +303,16 @@ export default {
       };
     },
     onClickResetSortButton() {
-      this.sortParam = "name";
-      this.orderParam = "ASC";
+      this.sortPassd = "name";
+      this.orderPassd = "ASC";
     },
     onClickSortButton() {
       this.sortOrder = {
-        sort: this.sortParam,
-        order: this.orderParam,
+        sort: this.sortPassd,
+        order: this.orderPassd,
       };
       this.currentPage = 1;
-      this.buildRamList();
+      this.buildSsdList();
       this.showSearchForm = false;
       this.toTopPage();
     },
@@ -324,7 +324,7 @@ export default {
         capacity: this.selectedCapacity,
       };
       this.currentPage = 1;
-      this.buildRamList();
+      this.buildSsdList();
       this.showSearchForm = false;
       this.toTopPage();
     },
@@ -334,76 +334,76 @@ export default {
       this.selectedFrequency = [];
       this.selectedCapacity = [];
     },
-    onMouseOverCard(ram) {
-      ram.reveal = true;
+    onMouseOverCard(ssd) {
+      ssd.reveal = true;
     },
-    onMouseLeaveCard(ram) {
-      ram.reveal = false;
+    onMouseLeaveCard(ssd) {
+      ssd.reveal = false;
     },
-    onClickCard(ram) {
+    onClickCard(ssd) {
       this.mode = "U";
-      this.showRamCuForm = true;
-      this.selectedRam = {
-        id: ram.id,
-        name: ram.name,
-        model: ram.model,
-        mfr: ram.mfr,
-        capacity: ram.capacity,
-        stickNum: ram.stick_num,
-        ecc: ram.ecc,
-        memoryType: ram.memory_type,
-        memoryFreq: ram.memory_freq,
-        casLatency: ram.cas_latency,
-        voltage: ram.voltage,
-        price: ram.price,
-        img: ram.img,
+      this.showSsdCuForm = true;
+      this.selectedSsd = {
+        id: ssd.id,
+        name: ssd.name,
+        model: ssd.model,
+        mfr: ssd.mfr,
+        capacity: ssd.capacity,
+        stickNum: ssd.stick_num,
+        ecc: ssd.ecc,
+        memoryType: ssd.memory_type,
+        memoryFreq: ssd.memory_freq,
+        casLatency: ssd.cas_latency,
+        voltage: ssd.voltage,
+        price: ssd.price,
+        img: ssd.img,
       };
     },
 
-    searchRamList(url, pagination, query, sortOrder) {
+    searchSsdList(url, pagination, query, sortOrder) {
       return this.$http
-        .get(url, { params: { ...pagination, ...query, ...sortOrder } })
+        .get(url, { passds: { ...pagination, ...query, ...sortOrder } })
         .then((res) => {
-          this.ramList = [];
+          this.ssdList = [];
           this.totalPages = res.data.totalPages;
-          res.data.items.forEach((ram) => {
-            ram.reveal = false;
-            this.ramList.push(ram);
+          res.data.items.forEach((ssd) => {
+            ssd.reveal = false;
+            this.ssdList.push(ssd);
           });
         });
     },
     buildSearchFilter() {
-      this.ramManufacturerList = [];
-      this.ramTypeList = [];
-      this.ramFrequencyList = [];
-      this.ramCapacityList = [];
+      this.ssdManufacturerList = [];
+      this.ssdTypeList = [];
+      this.ssdFrequencyList = [];
+      this.ssdCapacityList = [];
 
       return this.$http
-        .get(this.url.ram, { params: { size: 9999 } })
+        .get(this.url.ssd, { passds: { size: 9999 } })
         .then((res) => {
-          res.data.items.forEach((ram) => {
-            if (this.ramManufacturerList.indexOf(ram.mfr) === -1) {
-              this.ramManufacturerList.push(ram.mfr);
+          res.data.items.forEach((ssd) => {
+            if (this.ssdManufacturerList.indexOf(ssd.mfr) === -1) {
+              this.ssdManufacturerList.push(ssd.mfr);
             }
-            if (this.ramTypeList.indexOf(ram.memory_type) === -1) {
-              this.ramTypeList.push(ram.memory_type);
+            if (this.ssdTypeList.indexOf(ssd.memory_type) === -1) {
+              this.ssdTypeList.push(ssd.memory_type);
             }
-            if (this.ramFrequencyList.indexOf(ram.memory_freq) === -1) {
-              this.ramFrequencyList.push(ram.memory_freq);
+            if (this.ssdFrequencyList.indexOf(ssd.memory_freq) === -1) {
+              this.ssdFrequencyList.push(ssd.memory_freq);
             }
-            if (this.ramCapacityList.indexOf(ram.capacity) === -1) {
-              this.ramCapacityList.push(ram.capacity);
+            if (this.ssdCapacityList.indexOf(ssd.capacity) === -1) {
+              this.ssdCapacityList.push(ssd.capacity);
             }
           });
-          this.ramManufacturerList.sort();
-          this.ramTypeList.sort();
-          this.ramFrequencyList.sort((a, b) => a - b);
-          this.ramCapacityList.sort((a, b) => a - b);
+          this.ssdManufacturerList.sort();
+          this.ssdTypeList.sort();
+          this.ssdFrequencyList.sort((a, b) => a - b);
+          this.ssdCapacityList.sort((a, b) => a - b);
         });
     },
-    buildRamList() {
-      this.searchRamList(
-        this.url.ram,
+    buildSsdList() {
+      this.searchSsdList(
+        this.url.ssd,
         this.pagination,
         this.searchQuery,
         this.sortOrder
@@ -411,29 +411,29 @@ export default {
     },
     buildPage() {
       this.buildSearchFilter();
-      this.buildRamList();
+      this.buildSsdList();
     },
   },
 };
 </script>
 
 <style scoped>
-.ram-list {
+.ssd-list {
   display: flex;
 }
-.ram-list__row {
+.ssd-list__row {
   min-height: 874px;
 }
-.ram-list__col {
+.ssd-list__col {
   display: flex;
   justify-content: center;
 }
-.ram-list__card {
+.ssd-list__card {
   height: 400px;
   width: 275px;
   cursor: pointer;
 }
-.ram-list__card--reveal {
+.ssd-list__card--reveal {
   bottom: 0;
   opacity: 1 !important;
   position: absolute;
@@ -447,12 +447,12 @@ export default {
   text-overflow: ellipsis;
   white-space: nowrap;
 }
-.ram-list__card__actions {
+.ssd-list__card__actions {
   position: absolute;
   width: 100%;
   bottom: 0;
 }
-.ram__floating-button {
+.ssd__floating-button {
   position: fixed;
   bottom: 64px;
   right: 16px;

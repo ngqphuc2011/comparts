@@ -30,7 +30,7 @@
                 • {{ $t("mobo.socket") }}: {{ mobo.socket }}
               </div>
               <div class="subtitle-2 ellipsis">
-                • {{ $t("mobo.mobo_size") }}: {{ mobo.mobo_size }}
+                • {{ $t("mobo.form_factor") }}: {{ mobo.form_factor }}
               </div>
               <div class="subtitle-2 ellipsis">
                 • {{ $t("mobo.memory_slot_num") }}: {{ mobo.memory_slot_num }}
@@ -60,7 +60,7 @@
                     • {{ $t("mobo.socket") }}: {{ mobo.socket }}
                   </div>
                   <div class="subtitle-2">
-                    • {{ $t("mobo.mobo_size") }}: {{ mobo.mobo_size }}
+                    • {{ $t("mobo.form_factor") }}: {{ mobo.form_factor }}
                   </div>
                   <div class="subtitle-2">
                     • {{ $t("mobo.supported_memory") }}:
@@ -166,8 +166,8 @@
               <v-select
                 dense
                 v-model="selectedSize"
-                :items="moboSizeList"
-                :label="$t('mobo.mobo_size')"
+                :items="moboFormFactorList"
+                :label="$t('mobo.form_factor')"
                 multiple
                 chips
               ></v-select>
@@ -244,7 +244,7 @@ export default {
       moboManufacturerList: [],
       moboSocketList: [],
       moboChipsetList: [],
-      moboSizeList: [],
+      moboFormFactorList: [],
 
       selectedManufacturer: [],
       selectedSocket: [],
@@ -297,7 +297,7 @@ export default {
         mfr: "",
         chipset: "",
         socket: "",
-        moboSize: "",
+        formFactor: "",
         memoryType: "",
         memoryFreq: null,
         memorySlotNum: null,
@@ -331,7 +331,7 @@ export default {
         mfr: this.selectedManufacturer,
         socket: this.selectedSocket,
         chipset: this.selectedChipset,
-        mobo_size: this.selectedSize,
+        form_factor: this.selectedSize,
       };
       this.currentPage = 1;
       this.buildMoboList();
@@ -359,7 +359,7 @@ export default {
         mfr: mobo.mfr,
         chipset: mobo.chipset,
         socket: mobo.socket,
-        moboSize: mobo.mobo_size,
+        formFactor: mobo.form_factor,
         memoryType: mobo.memory_type,
         memoryFreq: mobo.memory_freq,
         memorySlotNum: mobo.memory_slot_num,
@@ -391,7 +391,7 @@ export default {
       this.moboManufacturerList = [];
       this.moboSocketList = [];
       this.moboChipsetList = [];
-      this.moboSizeList = [];
+      this.moboFormFactorList = [];
 
       return this.$http
         .get(this.url.mobo, { params: { size: 9999 } })
@@ -406,14 +406,14 @@ export default {
             if (this.moboChipsetList.indexOf(mobo.chipset) === -1) {
               this.moboChipsetList.push(mobo.chipset);
             }
-            if (this.moboSizeList.indexOf(mobo.mobo_size) === -1) {
-              this.moboSizeList.push(mobo.mobo_size);
+            if (this.moboFormFactorList.indexOf(mobo.form_factor) === -1) {
+              this.moboFormFactorList.push(mobo.form_factor);
             }
           });
           this.moboManufacturerList.sort();
           this.moboSocketList.sort();
           this.moboChipsetList.sort((a, b) => a - b);
-          this.moboSizeList.sort((a, b) => a - b);
+          this.moboFormFactorList.sort((a, b) => a - b);
         });
     },
     buildMoboList() {

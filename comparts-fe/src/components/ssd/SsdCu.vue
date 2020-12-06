@@ -1,13 +1,13 @@
 <template>
-  <v-dialog v-model="visible" persistent class="ram-cu-dialog">
+  <v-dialog v-model="visible" persistent class="ssd-cu-dialog">
     <v-card>
       <v-card-title v-if="mode === 'C'">
         <v-icon>mdi-database-plus-outline</v-icon>&nbsp;
-        {{ $t("ram.add_ram") }}
+        {{ $t("ssd.add_ssd") }}
       </v-card-title>
       <v-card-title v-if="mode === 'U'">
         <v-icon>mdi-database-edit-outline</v-icon>&nbsp;
-        {{ $t("ram.edit_ram") }}
+        {{ $t("ssd.edit_ssd") }}
       </v-card-title>
       <v-form v-model="valid" ref="form">
         <v-container class="pl-8 pr-8">
@@ -15,9 +15,9 @@
             <v-col md="6">
               <v-text-field
                 dense
-                v-model="ram.name"
+                v-model="ssd.name"
                 placeholder=" "
-                :label="$t('ram.name')"
+                :label="$t('ssd.name')"
                 :rules="validationRules.textRequiredRules"
                 :counter="50"
                 :disabled="!isEditable"
@@ -26,9 +26,9 @@
             <v-col md="6">
               <v-text-field
                 dense
-                v-model="ram.model"
+                v-model="ssd.model"
                 placeholder=" "
-                :label="$t('ram.model')"
+                :label="$t('ssd.model')"
                 :rules="validationRules.textRules"
                 :counter="50"
                 :disabled="!isEditable"
@@ -39,9 +39,9 @@
             <v-col md="4">
               <v-text-field
                 dense
-                v-model="ram.mfr"
+                v-model="ssd.mfr"
                 placeholder=" "
-                :label="$t('ram.mfr')"
+                :label="$t('ssd.mfr')"
                 :rules="validationRules.textRequiredRules"
                 :counter="50"
                 :disabled="!isEditable"
@@ -50,10 +50,10 @@
             <v-col md="4">
               <v-text-field
                 dense
-                v-model="ram.capacity"
+                v-model="ssd.capacity"
                 placeholder=" "
                 type="number"
-                :label="$t('ram.capacity')"
+                :label="$t('ssd.capacity')"
                 :rules="validationRules.numberRequiredRules"
                 suffix="GB"
                 :disabled="!isEditable"
@@ -62,12 +62,12 @@
             <v-col md="4">
               <v-text-field
                 dense
-                v-model="ram.memoryFreq"
+                v-model="ssd.memoryFreq"
                 placeholder=" "
                 type="number"
                 :rules="validationRules.numberRequiredRules"
                 suffix="MHz"
-                :label="$t('ram.memory_freq')"
+                :label="$t('ssd.memory_freq')"
                 :disabled="!isEditable"
               ></v-text-field>
             </v-col>
@@ -76,10 +76,10 @@
             <v-col md="6">
               <v-select
                 dense
-                v-model="ram.memoryType"
+                v-model="ssd.memoryType"
                 placeholder=" "
-                :items="ramMemoryTypeList"
-                :label="$t('ram.memory_type')"
+                :items="ssdMemoryTypeList"
+                :label="$t('ssd.memory_type')"
                 :rules="validationRules.requiredRules"
                 :disabled="!isEditable"
               >
@@ -88,10 +88,10 @@
             <v-col md="6">
               <v-select
                 dense
-                v-model="ram.ecc"
+                v-model="ssd.ecc"
                 placeholder=" "
-                :items="ramEccList"
-                :label="$t('ram.ecc')"
+                :items="ssdEccList"
+                :label="$t('ssd.ecc')"
                 :rules="validationRules.requiredRules"
                 :disabled="!isEditable"
               >
@@ -102,22 +102,22 @@
             <v-col md="4">
               <v-text-field
                 dense
-                v-model="ram.casLatency"
+                v-model="ssd.casLatency"
                 placeholder=" "
                 type="number"
                 :rules="validationRules.numberRules"
-                :label="$t('ram.cas_latency')"
+                :label="$t('ssd.cas_latency')"
                 :disabled="!isEditable"
               ></v-text-field>
             </v-col>
             <v-col md="4">
               <v-text-field
                 dense
-                v-model="ram.voltage"
+                v-model="ssd.voltage"
                 placeholder=" "
                 type="number"
                 :rules="validationRules.numberRules"
-                :label="$t('ram.voltage')"
+                :label="$t('ssd.voltage')"
                 suffix="V"
                 :disabled="!isEditable"
               ></v-text-field>
@@ -125,11 +125,11 @@
             <v-col md="4">
               <v-text-field
                 dense
-                v-model="ram.stickNum"
+                v-model="ssd.stickNum"
                 placeholder=" "
                 type="number"
                 :rules="validationRules.numberRules"
-                :label="$t('ram.stick_num')"
+                :label="$t('ssd.stick_num')"
                 :disabled="!isEditable"
               ></v-text-field>
             </v-col>
@@ -138,10 +138,10 @@
             <v-col md="12">
               <v-text-field
                 dense
-                v-model="ram.price"
+                v-model="ssd.price"
                 placeholder=" "
                 type="number"
-                :label="$t('ram.price')"
+                :label="$t('ssd.price')"
                 prefix="₫"
                 :rules="validationRules.intRules"
                 :disabled="!isEditable"
@@ -154,7 +154,7 @@
                 <v-img
                   contain
                   height="150"
-                  class="ram-cu-dialog__image-preview"
+                  class="ssd-cu-dialog__image-preview"
                   :src="urlImg"
                 >
                   <v-file-input
@@ -234,7 +234,7 @@
             <v-btn
               color="error"
               text
-              @click="onClickAcceptDeleteButton(ram.id)"
+              @click="onClickAcceptDeleteButton(ssd.id)"
             >
               {{ $t("common.delete") }}
             </v-btn>
@@ -251,7 +251,7 @@ import ValidateMixins from "../mixins/ValidateMixins";
 import UtilsMixins from "../mixins/UtilsMixins";
 
 export default {
-  name: "RamCu",
+  name: "SsdCu",
   mixins: [UrlPathMixins, ValidateMixins, UtilsMixins],
   props: {
     visible: {
@@ -262,7 +262,7 @@ export default {
       type: String,
       default: "C",
     },
-    originalRam: {
+    originalSsd: {
       type: Object,
       default: () => {
         return {
@@ -286,7 +286,12 @@ export default {
   data() {
     return {
       isEditable: false,
-      ram: {},
+      ssd: {},
+      ssdMemoryTypeList: ["DDR2", "DDR3", "DDR4"],
+      ssdEccList: [
+        { text: "ECC", value: "ecc" },
+        { text: "Non-ECC", value: "non-ecc" },
+      ],
       urlImg: "",
       originalUrlImg: "",
       valid: false,
@@ -298,9 +303,9 @@ export default {
     if (this.mode === "C") {
       this.isEditable = true;
     }
-    this.ram = { ...this.originalRam };
-    this.originalUrlImg = this.ram.img
-      ? `${this.url.ramImg}/${this.ram.img}`
+    this.ssd = { ...this.originalSsd };
+    this.originalUrlImg = this.ssd.img
+      ? `${this.url.ssdImg}/${this.ssd.img}`
       : "";
     this.urlImg = this.originalUrlImg;
   },
@@ -312,9 +317,9 @@ export default {
       this.deleteConfirmDialog = false;
     },
     onClickAcceptDeleteButton(id) {
-      this.$http.delete(`${this.url.ram}/${id}`).then(() => {
-        this.$http.delete(this.url.ramUploadImg, {
-          data: [this.ram.img],
+      this.$http.delete(`${this.url.ssd}/${id}`).then(() => {
+        this.$http.delete(this.url.ssdUploadImg, {
+          data: [this.ssd.img],
         });
         this.deleteConfirmDialog = false;
         this.$emit("close");
@@ -331,14 +336,14 @@ export default {
       if (this.mode === "U") {
         this.isEditable = false;
         this.discardConfirmDialog = false;
-        this.ram = { ...this.originalRam };
+        this.ssd = { ...this.originalSsd };
         this.urlImg = this.originalUrlImg;
       } else {
         this.$emit("close");
       }
     },
     onClickCancelButton() {
-      if (!this.compareObjects(this.originalRam, this.ram)) {
+      if (!this.compareObjects(this.originalSsd, this.ssd)) {
         this.discardConfirmDialog = true;
       } else {
         this.onClickAcceptDiscardButton();
@@ -350,56 +355,56 @@ export default {
     async onClickSaveButton() {
       if (this.$refs.form.validate()) {
         let body = {
-          name: this.ram.name || null,
-          model: this.ram.model || null,
-          mfr: this.ram.mfr || null,
-          capacity: this.ram.capacity || null,
-          stick_num: this.ram.stickNum || null,
-          ecc: this.ram.ecc || null,
-          memory_type: this.ram.memoryType || null,
-          memory_freq: this.ram.memoryFreq || null,
-          cas_latency: this.ram.casLatency || null,
-          voltage: this.ram.voltage || null,
-          price: this.ram.price || null,
+          name: this.ssd.name || null,
+          model: this.ssd.model || null,
+          mfr: this.ssd.mfr || null,
+          capacity: this.ssd.capacity || null,
+          stick_num: this.ssd.stickNum || null,
+          ecc: this.ssd.ecc || null,
+          memory_type: this.ssd.memoryType || null,
+          memory_freq: this.ssd.memoryFreq || null,
+          cas_latency: this.ssd.casLatency || null,
+          voltage: this.ssd.voltage || null,
+          price: this.ssd.price || null,
         };
-        if (this.ram.imgFile) {
+        if (this.ssd.imgFile) {
           let formData = new FormData();
-          formData.append("img", this.ram.imgFile);
-          await this.$http.post(this.url.ramUploadImg, formData).then((res) => {
+          formData.append("img", this.ssd.imgFile);
+          await this.$http.post(this.url.ssdUploadImg, formData).then((res) => {
             body.img = res.data.filename;
           });
         }
         if (this.mode === "C") {
           this.$http
-            .post(this.url.ram, body)
+            .post(this.url.ssd, body)
             .then((res) => {
               this.$emit("close");
               this.$emit("search");
             })
             .catch((err) => {
-              this.$http.delete(this.url.ramUploadImg, { data: [body.img] });
+              this.$http.delete(this.url.ssdUploadImg, { data: [body.img] });
             });
         } else if (this.mode === "U") {
           this.$http
-            .put(`${this.url.ram}/${this.ram.id}`, body)
+            .put(`${this.url.ssd}/${this.ssd.id}`, body)
             .then((res) => {
-              if (this.ram.imgFile) {
-                this.$http.delete(this.url.ramUploadImg, {
-                  data: [this.ram.img],
+              if (this.ssd.imgFile) {
+                this.$http.delete(this.url.ssdUploadImg, {
+                  data: [this.ssd.img],
                 });
               }
               this.$emit("close");
               this.$emit("search");
             })
             .catch((err) => {
-              this.$http.delete(this.url.ramUploadImg, { data: [body.img] });
+              this.$http.delete(this.url.ssdUploadImg, { data: [body.img] });
             });
         }
       }
     },
     onImageChange(img) {
       if (img) {
-        this.ram.imgFile = img;
+        this.ssd.imgFile = img;
         this.setUrlImg(img);
       }
     },
@@ -407,14 +412,14 @@ export default {
       this.urlImg = URL.createObjectURL(img);
     },
     onImageClear() {
-      this.ram.imgFile = "";
+      this.ssd.imgFile = "";
       this.urlImg = "";
     },
   },
 };
 </script>
 <style scoped>
-.ram-cu-dialog__image-preview {
+.ssd-cu-dialog__image-preview {
   height: 250px;
 }
 </style>
