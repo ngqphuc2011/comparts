@@ -12,11 +12,12 @@ export default {
                 "HBM2",
             ],
             ramMemoryTypeList: ["DDR2", "DDR3", "DDR4"],
-            ramEccList: [
-                { text: "ECC", value: "ecc" },
-                { text: "Non-ECC", value: "non-ecc" },
-            ],
-            moboFormFactorList: ["E-ATX", "ATX", "mATX", "Mini-ITX"]
+            ramEccList: ["ECC", "Non-ECC"],
+            moboFormFactorList: ["E-ATX", "ATX", "mATX", "Mini-ITX"],
+            hddFormFactorList: ["3.5-inch", "2.5-inch"],
+            hddInterfaceList: ["SATA-II", "SATA-III"],
+            ssdFormFactorList: ["M.2 2280", "M.2 2260", "M.2 2242", "M.2 2230", "2.5-inch", "U.2"],
+            ssdInterfaceList: ["SATA-II", "SATA-III", "PCIe 3.0 x4", "PCIe 4.0 x4"]
         }
     },
     methods: {

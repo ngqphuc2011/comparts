@@ -36,7 +36,7 @@
             </v-col>
           </v-row>
           <v-row>
-            <v-col md="4">
+            <v-col md="6">
               <v-text-field
                 dense
                 v-model="hdd.mfr"
@@ -47,7 +47,7 @@
                 :disabled="!isEditable"
               ></v-text-field>
             </v-col>
-            <v-col md="4">
+            <v-col md="6">
               <v-text-field
                 dense
                 v-model="hdd.capacity"
@@ -59,27 +59,15 @@
                 :disabled="!isEditable"
               ></v-text-field>
             </v-col>
-            <v-col md="4">
-              <v-text-field
-                dense
-                v-model="hdd.memoryFreq"
-                placeholder=" "
-                type="number"
-                :rules="validationRules.numberRequiredRules"
-                suffix="MHz"
-                :label="$t('hdd.memory_freq')"
-                :disabled="!isEditable"
-              ></v-text-field>
-            </v-col>
           </v-row>
           <v-row>
             <v-col md="6">
               <v-select
                 dense
-                v-model="hdd.memoryType"
+                v-model="hdd.interface"
                 placeholder=" "
-                :items="hddMemoryTypeList"
-                :label="$t('hdd.memory_type')"
+                :items="hddInterfaceList"
+                :label="$t('hdd.interface')"
                 :rules="validationRules.requiredRules"
                 :disabled="!isEditable"
               >
@@ -88,10 +76,10 @@
             <v-col md="6">
               <v-select
                 dense
-                v-model="hdd.ecc"
+                v-model="hdd.formFactor"
                 placeholder=" "
-                :items="hddEccList"
-                :label="$t('hdd.ecc')"
+                :items="hddFormFactorList"
+                :label="$t('hdd.form_factor')"
                 :rules="validationRules.requiredRules"
                 :disabled="!isEditable"
               >
@@ -99,37 +87,26 @@
             </v-col>
           </v-row>
           <v-row>
-            <v-col md="4">
+            <v-col md="6">
               <v-text-field
                 dense
-                v-model="hdd.casLatency"
+                v-model="hdd.cache"
                 placeholder=" "
                 type="number"
                 :rules="validationRules.numberRules"
-                :label="$t('hdd.cas_latency')"
+                :label="$t('hdd.cache')"
+                suffix="MB"
                 :disabled="!isEditable"
               ></v-text-field>
             </v-col>
-            <v-col md="4">
+            <v-col md="6">
               <v-text-field
                 dense
-                v-model="hdd.voltage"
+                v-model="hdd.rpm"
                 placeholder=" "
                 type="number"
                 :rules="validationRules.numberRules"
-                :label="$t('hdd.voltage')"
-                suffix="V"
-                :disabled="!isEditable"
-              ></v-text-field>
-            </v-col>
-            <v-col md="4">
-              <v-text-field
-                dense
-                v-model="hdd.stickNum"
-                placeholder=" "
-                type="number"
-                :rules="validationRules.numberRules"
-                :label="$t('hdd.stick_num')"
+                :label="$t('hdd.rpm')"
                 :disabled="!isEditable"
               ></v-text-field>
             </v-col>
@@ -271,12 +248,10 @@ export default {
           model: "",
           mfr: "",
           capacity: null,
-          stickNum: null,
-          ecc: false,
-          memoryType: "",
-          memoryFreq: null,
-          casLatency: null,
-          voltage: null,
+          interface: "",
+          formFactor: "",
+          cache: null,
+          rpm: null,
           price: null,
           img: "",
         };
@@ -287,11 +262,6 @@ export default {
     return {
       isEditable: false,
       hdd: {},
-      hddMemoryTypeList: ["DDR2", "DDR3", "DDR4"],
-      hddEccList: [
-        { text: "ECC", value: "ecc" },
-        { text: "Non-ECC", value: "non-ecc" },
-      ],
       urlImg: "",
       originalUrlImg: "",
       valid: false,
@@ -359,12 +329,10 @@ export default {
           model: this.hdd.model || null,
           mfr: this.hdd.mfr || null,
           capacity: this.hdd.capacity || null,
-          stick_num: this.hdd.stickNum || null,
-          ecc: this.hdd.ecc || null,
-          memory_type: this.hdd.memoryType || null,
-          memory_freq: this.hdd.memoryFreq || null,
-          cas_latency: this.hdd.casLatency || null,
-          voltage: this.hdd.voltage || null,
+          interface: this.hdd.interface || null,
+          form_factor: this.hdd.formFactor || null,
+          cache: this.hdd.cache || null,
+          rpm: this.hdd.rpm || null,
           price: this.hdd.price || null,
         };
         if (this.hdd.imgFile) {

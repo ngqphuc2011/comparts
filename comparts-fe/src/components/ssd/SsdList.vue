@@ -24,19 +24,18 @@
                 ₫ • {{ formatNumber(ssd.price) }}
               </div>
               <div class="subtitle-2 ellipsis">
-                • {{ $t("ssd.model") }}: {{ ssd.model }}
-              </div>
-              <div class="subtitle-2 ellipsis">
                 • {{ $t("ssd.capacity") }}: {{ ssd.capacity }} GB
               </div>
-              <div v-if="ssd.ecc === 'ecc'" class="subtitle-2 ellipsis">
-                • {{ $t("ssd.memory_type") }}: {{ ssd.memory_type }} ECC
-              </div>
-              <div v-else class="subtitle-2 ellipsis">
-                • {{ $t("ssd.memory_type") }}: {{ ssd.memory_type }}
+              <div class="subtitle-2 ellipsis">
+                • {{ $t("ssd.interface") }}: {{ ssd.interface }} ({{
+                  ssd.form_factor
+                }})
               </div>
               <div class="subtitle-2 ellipsis">
-                • {{ $t("ssd.memory_freq") }}: {{ ssd.memory_freq }} MHz
+                • {{ $t("ssd.read_speed") }}: {{ ssd.read_speed }} MB/s
+              </div>
+              <div class="subtitle-2 ellipsis">
+                • {{ $t("ssd.write_speed") }}: {{ ssd.write_speed }} MB/s
               </div>
             </v-card-text>
 
@@ -62,23 +61,17 @@
                   <div class="subtitle-2 ellipsis">
                     • {{ $t("ssd.capacity") }}: {{ ssd.capacity }} GB
                   </div>
-                  <div v-if="ssd.ecc === 'ecc'" class="subtitle-2">
-                    • {{ $t("ssd.memory_type") }}: {{ ssd.memory_type }} ECC
-                  </div>
-                  <div v-else class="subtitle-2">
-                    • {{ $t("ssd.memory_type") }}: {{ ssd.memory_type }}
+                  <div class="subtitle-2">
+                    • {{ $t("ssd.interface") }}: {{ ssd.interface }}
                   </div>
                   <div class="subtitle-2">
-                    • {{ $t("ssd.memory_freq") }}: {{ ssd.memory_freq }} MHz
+                    • {{ $t("ssd.form_factor") }}: {{ ssd.form_factor }}
                   </div>
                   <div class="subtitle-2">
-                    • {{ $t("ssd.stick_num") }}: {{ ssd.stick_num }}
+                    • {{ $t("ssd.read_speed") }}: {{ ssd.read_speed }} MB/s
                   </div>
                   <div class="subtitle-2">
-                    • {{ $t("ssd.cas_latency") }}: {{ ssd.cas_latency }}
-                  </div>
-                  <div class="subtitle-2">
-                    • {{ $t("ssd.voltage") }}: {{ ssd.voltage }} V
+                    • {{ $t("ssd.write_speed") }}: {{ ssd.write_speed }} MB/s
                   </div>
                 </v-card-text>
               </v-card>
@@ -128,9 +121,6 @@
             {{ $t("common.search") }}
           </v-expansion-panel-header>
           <v-expansion-panel-content>
-            <v-btn color="primary" block text @click="onClickSearchButton">
-              {{ $t("common.search") }}
-            </v-btn>
             <div class="mt-3">
               <v-select
                 dense
@@ -142,17 +132,17 @@
               ></v-select>
               <v-select
                 dense
-                v-model="selectedType"
-                :items="ssdTypeList"
-                :label="$t('ssd.memory_type')"
+                v-model="selectedInterface"
+                :items="ssdInterfaceList"
+                :label="$t('ssd.interface')"
                 multiple
                 chips
               ></v-select>
               <v-select
                 dense
-                v-model="selectedFrequency"
-                :items="ssdFrequencyList"
-                :label="$t('ssd.memory_freq')"
+                v-model="selectedFormFactor"
+                :items="ssdFormFactorList"
+                :label="$t('ssd.form_factor')"
                 multiple
                 chips
               ></v-select>
@@ -161,6 +151,7 @@
                 v-model="selectedCapacity"
                 :items="ssdCapacityList"
                 :label="$t('ssd.capacity')"
+                suffix="GB"
                 multiple
                 chips
               ></v-select>
@@ -175,10 +166,7 @@
             {{ $t("common.sort") }}
           </v-expansion-panel-header>
           <v-expansion-panel-content>
-            <v-btn color="primary" block text @click="onClickSortButton">
-              {{ $t("common.sort") }}
-            </v-btn>
-            <v-radio-group :label="$t('common.sort_by')" v-model="sortPassd">
+            <v-radio-group :label="$t('common.sort_by')" v-model="sortParams">
               <v-radio
                 v-for="(item, index) in sortByRadios"
                 :key="index"
@@ -186,7 +174,7 @@
                 :value="item.value"
               ></v-radio>
             </v-radio-group>
-            <v-radio-group :label="$t('common.sort_in')" v-model="orderPassd">
+            <v-radio-group :label="$t('common.sort_in')" v-model="orderParams">
               <v-radio
                 v-for="(item, index) in sortInRadios"
                 :key="index"
@@ -223,8 +211,8 @@ export default {
       },
       searchQuery: {},
       sortOrder: {},
-      sortPassd: "name",
-      orderPassd: "ASC",
+      sortParams: "name",
+      orderParams: "ASC",
 
       mode: "",
       fab: false,
@@ -235,13 +223,13 @@ export default {
 
       ssdList: [],
       ssdManufacturerList: [],
-      ssdTypeList: [],
-      ssdFrequencyList: [],
+      ssdInterfaceList: [],
+      ssdFormFactorList: [],
       ssdCapacityList: [],
 
       selectedManufacturer: [],
-      selectedType: [],
-      selectedFrequency: [],
+      selectedInterface: [],
+      selectedFormFactor: [],
       selectedCapacity: [],
 
       selectedSsd: {},
@@ -252,7 +240,6 @@ export default {
       return [
         { label: this.$t("ssd.name"), value: "name" },
         { label: this.$t("ssd.price"), value: "price" },
-        { label: this.$t("ssd.memory_freq"), value: "memory_freq" },
         { label: this.$t("ssd.capacity"), value: "capacity" },
       ];
     },
@@ -270,6 +257,9 @@ export default {
       this.toTopPage();
     },
     showSearchForm() {
+      if (!this.showSearchForm) {
+        this.onSearchAndSort();
+      }
       this.expansionPanel = "";
     },
   },
@@ -292,36 +282,28 @@ export default {
         model: "",
         mfr: "",
         capacity: null,
-        stickNum: null,
-        ecc: false,
-        memoryType: "",
-        memoryFreq: null,
-        casLatency: null,
-        voltage: null,
+        interface: "",
+        formFactor: "",
+        readSpeed: null,
+        writeSpeed: null,
         price: null,
         img: "",
       };
     },
     onClickResetSortButton() {
-      this.sortPassd = "name";
-      this.orderPassd = "ASC";
+      this.sortParams = "name";
+      this.orderParams = "ASC";
     },
-    onClickSortButton() {
-      this.sortOrder = {
-        sort: this.sortPassd,
-        order: this.orderPassd,
-      };
-      this.currentPage = 1;
-      this.buildSsdList();
-      this.showSearchForm = false;
-      this.toTopPage();
-    },
-    onClickSearchButton() {
+    onSearchAndSort() {
       this.searchQuery = {
         mfr: this.selectedManufacturer,
-        memory_type: this.selectedType,
-        memory_freq: this.selectedFrequency,
+        interface: this.selectedInterface,
+        form_factor: this.selectedFormFactor,
         capacity: this.selectedCapacity,
+      };
+      this.sortOrder = {
+        sort: this.sortParams,
+        order: this.orderParams,
       };
       this.currentPage = 1;
       this.buildSsdList();
@@ -330,8 +312,8 @@ export default {
     },
     onClickResetSearchButton() {
       this.selectedManufacturer = [];
-      this.selectedType = [];
-      this.selectedFrequency = [];
+      this.selectedInterface = [];
+      this.selectedFormFactor = [];
       this.selectedCapacity = [];
     },
     onMouseOverCard(ssd) {
@@ -349,12 +331,10 @@ export default {
         model: ssd.model,
         mfr: ssd.mfr,
         capacity: ssd.capacity,
-        stickNum: ssd.stick_num,
-        ecc: ssd.ecc,
-        memoryType: ssd.memory_type,
-        memoryFreq: ssd.memory_freq,
-        casLatency: ssd.cas_latency,
-        voltage: ssd.voltage,
+        interface: ssd.interface,
+        formFactor: ssd.form_factor,
+        readSpeed: ssd.read_speed,
+        writeSpeed: ssd.write_speed,
         price: ssd.price,
         img: ssd.img,
       };
@@ -362,7 +342,7 @@ export default {
 
     searchSsdList(url, pagination, query, sortOrder) {
       return this.$http
-        .get(url, { passds: { ...pagination, ...query, ...sortOrder } })
+        .get(url, { params: { ...pagination, ...query, ...sortOrder } })
         .then((res) => {
           this.ssdList = [];
           this.totalPages = res.data.totalPages;
@@ -374,30 +354,30 @@ export default {
     },
     buildSearchFilter() {
       this.ssdManufacturerList = [];
-      this.ssdTypeList = [];
-      this.ssdFrequencyList = [];
+      this.ssdInterfaceList = [];
+      this.ssdFormFactorList = [];
       this.ssdCapacityList = [];
 
       return this.$http
-        .get(this.url.ssd, { passds: { size: 9999 } })
+        .get(this.url.ssd, { params: { size: 9999 } })
         .then((res) => {
           res.data.items.forEach((ssd) => {
             if (this.ssdManufacturerList.indexOf(ssd.mfr) === -1) {
               this.ssdManufacturerList.push(ssd.mfr);
             }
-            if (this.ssdTypeList.indexOf(ssd.memory_type) === -1) {
-              this.ssdTypeList.push(ssd.memory_type);
+            if (this.ssdInterfaceList.indexOf(ssd.interface) === -1) {
+              this.ssdInterfaceList.push(ssd.interface);
             }
-            if (this.ssdFrequencyList.indexOf(ssd.memory_freq) === -1) {
-              this.ssdFrequencyList.push(ssd.memory_freq);
+            if (this.ssdFormFactorList.indexOf(ssd.form_factor) === -1) {
+              this.ssdFormFactorList.push(ssd.form_factor);
             }
             if (this.ssdCapacityList.indexOf(ssd.capacity) === -1) {
               this.ssdCapacityList.push(ssd.capacity);
             }
           });
           this.ssdManufacturerList.sort();
-          this.ssdTypeList.sort();
-          this.ssdFrequencyList.sort((a, b) => a - b);
+          this.ssdInterfaceList.sort();
+          this.ssdFormFactorList.sort((a, b) => a - b);
           this.ssdCapacityList.sort((a, b) => a - b);
         });
     },

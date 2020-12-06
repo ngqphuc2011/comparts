@@ -24,19 +24,18 @@
                 ₫ • {{ formatNumber(hdd.price) }}
               </div>
               <div class="subtitle-2 ellipsis">
-                • {{ $t("hdd.model") }}: {{ hdd.model }}
-              </div>
-              <div class="subtitle-2 ellipsis">
                 • {{ $t("hdd.capacity") }}: {{ hdd.capacity }} GB
               </div>
-              <div v-if="hdd.ecc === 'ecc'" class="subtitle-2 ellipsis">
-                • {{ $t("hdd.memory_type") }}: {{ hdd.memory_type }} ECC
-              </div>
-              <div v-else class="subtitle-2 ellipsis">
-                • {{ $t("hdd.memory_type") }}: {{ hdd.memory_type }}
+              <div class="subtitle-2 ellipsis">
+                • {{ $t("hdd.interface") }}: {{ hdd.interface }} ({{
+                  hdd.form_factor
+                }})
               </div>
               <div class="subtitle-2 ellipsis">
-                • {{ $t("hdd.memory_freq") }}: {{ hdd.memory_freq }} MHz
+                • {{ $t("hdd.rpm") }}: {{ hdd.rpm }}
+              </div>
+              <div class="subtitle-2 ellipsis">
+                • {{ $t("hdd.cache") }}: {{ hdd.cache }} MB
               </div>
             </v-card-text>
 
@@ -62,23 +61,17 @@
                   <div class="subtitle-2 ellipsis">
                     • {{ $t("hdd.capacity") }}: {{ hdd.capacity }} GB
                   </div>
-                  <div v-if="hdd.ecc === 'ecc'" class="subtitle-2">
-                    • {{ $t("hdd.memory_type") }}: {{ hdd.memory_type }} ECC
-                  </div>
-                  <div v-else class="subtitle-2">
-                    • {{ $t("hdd.memory_type") }}: {{ hdd.memory_type }}
+                  <div class="subtitle-2">
+                    • {{ $t("hdd.interface") }}: {{ hdd.interface }}
                   </div>
                   <div class="subtitle-2">
-                    • {{ $t("hdd.memory_freq") }}: {{ hdd.memory_freq }} MHz
+                    • {{ $t("hdd.form_factor") }}: {{ hdd.form_factor }}
                   </div>
                   <div class="subtitle-2">
-                    • {{ $t("hdd.stick_num") }}: {{ hdd.stick_num }}
+                    • {{ $t("hdd.cache") }}: {{ hdd.cache }} MB
                   </div>
                   <div class="subtitle-2">
-                    • {{ $t("hdd.cas_latency") }}: {{ hdd.cas_latency }}
-                  </div>
-                  <div class="subtitle-2">
-                    • {{ $t("hdd.voltage") }}: {{ hdd.voltage }} V
+                    • {{ $t("hdd.rpm") }}: {{ hdd.rpm }}
                   </div>
                 </v-card-text>
               </v-card>
@@ -128,9 +121,6 @@
             {{ $t("common.search") }}
           </v-expansion-panel-header>
           <v-expansion-panel-content>
-            <v-btn color="primary" block text @click="onClickSearchButton">
-              {{ $t("common.search") }}
-            </v-btn>
             <div class="mt-3">
               <v-select
                 dense
@@ -142,17 +132,17 @@
               ></v-select>
               <v-select
                 dense
-                v-model="selectedType"
-                :items="hddTypeList"
-                :label="$t('hdd.memory_type')"
+                v-model="selectedInterface"
+                :items="hddInterfaceList"
+                :label="$t('hdd.interface')"
                 multiple
                 chips
               ></v-select>
               <v-select
                 dense
-                v-model="selectedFrequency"
-                :items="hddFrequencyList"
-                :label="$t('hdd.memory_freq')"
+                v-model="selectedFormFactor"
+                :items="hddFormFactorList"
+                :label="$t('hdd.form_factor')"
                 multiple
                 chips
               ></v-select>
@@ -161,6 +151,7 @@
                 v-model="selectedCapacity"
                 :items="hddCapacityList"
                 :label="$t('hdd.capacity')"
+                suffix="GB"
                 multiple
                 chips
               ></v-select>
@@ -175,10 +166,7 @@
             {{ $t("common.sort") }}
           </v-expansion-panel-header>
           <v-expansion-panel-content>
-            <v-btn color="primary" block text @click="onClickSortButton">
-              {{ $t("common.sort") }}
-            </v-btn>
-            <v-radio-group :label="$t('common.sort_by')" v-model="sortPahdd">
+            <v-radio-group :label="$t('common.sort_by')" v-model="sortParams">
               <v-radio
                 v-for="(item, index) in sortByRadios"
                 :key="index"
@@ -186,7 +174,7 @@
                 :value="item.value"
               ></v-radio>
             </v-radio-group>
-            <v-radio-group :label="$t('common.sort_in')" v-model="orderPahdd">
+            <v-radio-group :label="$t('common.sort_in')" v-model="orderParams">
               <v-radio
                 v-for="(item, index) in sortInRadios"
                 :key="index"
@@ -223,8 +211,8 @@ export default {
       },
       searchQuery: {},
       sortOrder: {},
-      sortPahdd: "name",
-      orderPahdd: "ASC",
+      sortParams: "name",
+      orderParams: "ASC",
 
       mode: "",
       fab: false,
@@ -235,13 +223,13 @@ export default {
 
       hddList: [],
       hddManufacturerList: [],
-      hddTypeList: [],
-      hddFrequencyList: [],
+      hddInterfaceList: [],
+      hddFormFactorList: [],
       hddCapacityList: [],
 
       selectedManufacturer: [],
-      selectedType: [],
-      selectedFrequency: [],
+      selectedInterface: [],
+      selectedFormFactor: [],
       selectedCapacity: [],
 
       selectedHdd: {},
@@ -252,7 +240,6 @@ export default {
       return [
         { label: this.$t("hdd.name"), value: "name" },
         { label: this.$t("hdd.price"), value: "price" },
-        { label: this.$t("hdd.memory_freq"), value: "memory_freq" },
         { label: this.$t("hdd.capacity"), value: "capacity" },
       ];
     },
@@ -270,6 +257,9 @@ export default {
       this.toTopPage();
     },
     showSearchForm() {
+      if (!this.showSearchForm) {
+        this.onSearchAndSort();
+      }
       this.expansionPanel = "";
     },
   },
@@ -292,36 +282,28 @@ export default {
         model: "",
         mfr: "",
         capacity: null,
-        stickNum: null,
-        ecc: false,
-        memoryType: "",
-        memoryFreq: null,
-        casLatency: null,
-        voltage: null,
+        interface: "",
+        formFactor: "",
+        cache: null,
+        rpm: null,
         price: null,
         img: "",
       };
     },
     onClickResetSortButton() {
-      this.sortPahdd = "name";
-      this.orderPahdd = "ASC";
+      this.sortParams = "name";
+      this.orderParams = "ASC";
     },
-    onClickSortButton() {
-      this.sortOrder = {
-        sort: this.sortPahdd,
-        order: this.orderPahdd,
-      };
-      this.currentPage = 1;
-      this.buildHddList();
-      this.showSearchForm = false;
-      this.toTopPage();
-    },
-    onClickSearchButton() {
+    onSearchAndSort() {
       this.searchQuery = {
         mfr: this.selectedManufacturer,
-        memory_type: this.selectedType,
-        memory_freq: this.selectedFrequency,
+        interface: this.selectedInterface,
+        form_factor: this.selectedFormFactor,
         capacity: this.selectedCapacity,
+      };
+      this.sortOrder = {
+        sort: this.sortParams,
+        order: this.orderParams,
       };
       this.currentPage = 1;
       this.buildHddList();
@@ -330,8 +312,8 @@ export default {
     },
     onClickResetSearchButton() {
       this.selectedManufacturer = [];
-      this.selectedType = [];
-      this.selectedFrequency = [];
+      this.selectedInterface = [];
+      this.selectedFormFactor = [];
       this.selectedCapacity = [];
     },
     onMouseOverCard(hdd) {
@@ -349,12 +331,10 @@ export default {
         model: hdd.model,
         mfr: hdd.mfr,
         capacity: hdd.capacity,
-        stickNum: hdd.stick_num,
-        ecc: hdd.ecc,
-        memoryType: hdd.memory_type,
-        memoryFreq: hdd.memory_freq,
-        casLatency: hdd.cas_latency,
-        voltage: hdd.voltage,
+        interface: hdd.interface,
+        formFactor: hdd.form_factor,
+        cache: hdd.cache,
+        rpm: hdd.rpm,
         price: hdd.price,
         img: hdd.img,
       };
@@ -362,7 +342,7 @@ export default {
 
     searchHddList(url, pagination, query, sortOrder) {
       return this.$http
-        .get(url, { pahdds: { ...pagination, ...query, ...sortOrder } })
+        .get(url, { params: { ...pagination, ...query, ...sortOrder } })
         .then((res) => {
           this.hddList = [];
           this.totalPages = res.data.totalPages;
@@ -374,30 +354,30 @@ export default {
     },
     buildSearchFilter() {
       this.hddManufacturerList = [];
-      this.hddTypeList = [];
-      this.hddFrequencyList = [];
+      this.hddInterfaceList = [];
+      this.hddFormFactorList = [];
       this.hddCapacityList = [];
 
       return this.$http
-        .get(this.url.hdd, { pahdds: { size: 9999 } })
+        .get(this.url.hdd, { params: { size: 9999 } })
         .then((res) => {
           res.data.items.forEach((hdd) => {
             if (this.hddManufacturerList.indexOf(hdd.mfr) === -1) {
               this.hddManufacturerList.push(hdd.mfr);
             }
-            if (this.hddTypeList.indexOf(hdd.memory_type) === -1) {
-              this.hddTypeList.push(hdd.memory_type);
+            if (this.hddInterfaceList.indexOf(hdd.interface) === -1) {
+              this.hddInterfaceList.push(hdd.interface);
             }
-            if (this.hddFrequencyList.indexOf(hdd.memory_freq) === -1) {
-              this.hddFrequencyList.push(hdd.memory_freq);
+            if (this.hddFormFactorList.indexOf(hdd.form_factor) === -1) {
+              this.hddFormFactorList.push(hdd.form_factor);
             }
             if (this.hddCapacityList.indexOf(hdd.capacity) === -1) {
               this.hddCapacityList.push(hdd.capacity);
             }
           });
           this.hddManufacturerList.sort();
-          this.hddTypeList.sort();
-          this.hddFrequencyList.sort((a, b) => a - b);
+          this.hddInterfaceList.sort();
+          this.hddFormFactorList.sort();
           this.hddCapacityList.sort((a, b) => a - b);
         });
     },

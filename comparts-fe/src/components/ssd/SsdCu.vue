@@ -36,7 +36,7 @@
             </v-col>
           </v-row>
           <v-row>
-            <v-col md="4">
+            <v-col md="6">
               <v-text-field
                 dense
                 v-model="ssd.mfr"
@@ -47,7 +47,7 @@
                 :disabled="!isEditable"
               ></v-text-field>
             </v-col>
-            <v-col md="4">
+            <v-col md="6">
               <v-text-field
                 dense
                 v-model="ssd.capacity"
@@ -59,27 +59,15 @@
                 :disabled="!isEditable"
               ></v-text-field>
             </v-col>
-            <v-col md="4">
-              <v-text-field
-                dense
-                v-model="ssd.memoryFreq"
-                placeholder=" "
-                type="number"
-                :rules="validationRules.numberRequiredRules"
-                suffix="MHz"
-                :label="$t('ssd.memory_freq')"
-                :disabled="!isEditable"
-              ></v-text-field>
-            </v-col>
           </v-row>
           <v-row>
             <v-col md="6">
               <v-select
                 dense
-                v-model="ssd.memoryType"
+                v-model="ssd.interface"
                 placeholder=" "
-                :items="ssdMemoryTypeList"
-                :label="$t('ssd.memory_type')"
+                :items="ssdInterfaceList"
+                :label="$t('ssd.interface')"
                 :rules="validationRules.requiredRules"
                 :disabled="!isEditable"
               >
@@ -88,10 +76,10 @@
             <v-col md="6">
               <v-select
                 dense
-                v-model="ssd.ecc"
+                v-model="ssd.formFactor"
                 placeholder=" "
-                :items="ssdEccList"
-                :label="$t('ssd.ecc')"
+                :items="ssdFormFactorList"
+                :label="$t('ssd.form_factor')"
                 :rules="validationRules.requiredRules"
                 :disabled="!isEditable"
               >
@@ -99,37 +87,27 @@
             </v-col>
           </v-row>
           <v-row>
-            <v-col md="4">
+            <v-col md="6">
               <v-text-field
                 dense
-                v-model="ssd.casLatency"
+                v-model="ssd.readSpeed"
                 placeholder=" "
                 type="number"
                 :rules="validationRules.numberRules"
-                :label="$t('ssd.cas_latency')"
+                :label="$t('ssd.read_speed')"
+                suffix="MB/s"
                 :disabled="!isEditable"
               ></v-text-field>
             </v-col>
-            <v-col md="4">
+            <v-col md="6">
               <v-text-field
                 dense
-                v-model="ssd.voltage"
+                v-model="ssd.writeSpeed"
                 placeholder=" "
                 type="number"
                 :rules="validationRules.numberRules"
-                :label="$t('ssd.voltage')"
-                suffix="V"
-                :disabled="!isEditable"
-              ></v-text-field>
-            </v-col>
-            <v-col md="4">
-              <v-text-field
-                dense
-                v-model="ssd.stickNum"
-                placeholder=" "
-                type="number"
-                :rules="validationRules.numberRules"
-                :label="$t('ssd.stick_num')"
+                :label="$t('ssd.write_speed')"
+                suffix="MB/s"
                 :disabled="!isEditable"
               ></v-text-field>
             </v-col>
@@ -271,12 +249,10 @@ export default {
           model: "",
           mfr: "",
           capacity: null,
-          stickNum: null,
-          ecc: false,
-          memoryType: "",
-          memoryFreq: null,
-          casLatency: null,
-          voltage: null,
+          interface: "",
+          formFactor: "",
+          readSpeed: null,
+          writeSpeed: null,
           price: null,
           img: "",
         };
@@ -287,11 +263,6 @@ export default {
     return {
       isEditable: false,
       ssd: {},
-      ssdMemoryTypeList: ["DDR2", "DDR3", "DDR4"],
-      ssdEccList: [
-        { text: "ECC", value: "ecc" },
-        { text: "Non-ECC", value: "non-ecc" },
-      ],
       urlImg: "",
       originalUrlImg: "",
       valid: false,
@@ -359,12 +330,10 @@ export default {
           model: this.ssd.model || null,
           mfr: this.ssd.mfr || null,
           capacity: this.ssd.capacity || null,
-          stick_num: this.ssd.stickNum || null,
-          ecc: this.ssd.ecc || null,
-          memory_type: this.ssd.memoryType || null,
-          memory_freq: this.ssd.memoryFreq || null,
-          cas_latency: this.ssd.casLatency || null,
-          voltage: this.ssd.voltage || null,
+          interface: this.ssd.interface || null,
+          form_factor: this.ssd.formFactor || null,
+          read_speed: this.ssd.readSpeed || null,
+          write_speed: this.ssd.writeSpeed || null,
           price: this.ssd.price || null,
         };
         if (this.ssd.imgFile) {

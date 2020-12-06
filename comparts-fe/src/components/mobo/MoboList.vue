@@ -135,9 +135,6 @@
             {{ $t("common.search") }}
           </v-expansion-panel-header>
           <v-expansion-panel-content>
-            <v-btn color="primary" block text @click="onClickSearchButton">
-              {{ $t("common.search") }}
-            </v-btn>
             <div class="mt-3">
               <v-select
                 dense
@@ -182,9 +179,6 @@
             {{ $t("common.sort") }}
           </v-expansion-panel-header>
           <v-expansion-panel-content>
-            <v-btn color="primary" block text @click="onClickSortButton">
-              {{ $t("common.sort") }}
-            </v-btn>
             <v-radio-group :label="$t('common.sort_by')" v-model="sortParam">
               <v-radio
                 v-for="(item, index) in sortByRadios"
@@ -275,6 +269,9 @@ export default {
       this.toTopPage();
     },
     showSearchForm() {
+      if (!this.showSearchForm) {
+        this.onSearchAndSort();
+      }
       this.expansionPanel = "";
     },
   },
@@ -316,22 +313,16 @@ export default {
       this.sortParam = "name";
       this.orderParam = "ASC";
     },
-    onClickSortButton() {
-      this.sortOrder = {
-        sort: this.sortParam,
-        order: this.orderParam,
-      };
-      this.currentPage = 1;
-      this.buildMoboList();
-      this.showSearchForm = false;
-      this.toTopPage();
-    },
-    onClickSearchButton() {
+    onSearchAndSort() {
       this.searchQuery = {
         mfr: this.selectedManufacturer,
         socket: this.selectedSocket,
         chipset: this.selectedChipset,
         form_factor: this.selectedSize,
+      };
+      this.sortOrder = {
+        sort: this.sortParam,
+        order: this.orderParam,
       };
       this.currentPage = 1;
       this.buildMoboList();

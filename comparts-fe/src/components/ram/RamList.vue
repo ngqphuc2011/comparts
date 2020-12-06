@@ -24,12 +24,9 @@
                 ₫ • {{ formatNumber(ram.price) }}
               </div>
               <div class="subtitle-2 ellipsis">
-                • {{ $t("ram.model") }}: {{ ram.model }}
-              </div>
-              <div class="subtitle-2 ellipsis">
                 • {{ $t("ram.capacity") }}: {{ ram.capacity }} GB
               </div>
-              <div v-if="ram.ecc === 'ecc'" class="subtitle-2 ellipsis">
+              <div v-if="ram.ecc === 'ECC'" class="subtitle-2 ellipsis">
                 • {{ $t("ram.memory_type") }}: {{ ram.memory_type }} ECC
               </div>
               <div v-else class="subtitle-2 ellipsis">
@@ -37,6 +34,9 @@
               </div>
               <div class="subtitle-2 ellipsis">
                 • {{ $t("ram.memory_freq") }}: {{ ram.memory_freq }} MHz
+              </div>
+              <div class="subtitle-2 ellipsis">
+                • {{ $t("ram.cas_latency") }}: {{ ram.cas_latency }}
               </div>
             </v-card-text>
 
@@ -62,7 +62,7 @@
                   <div class="subtitle-2 ellipsis">
                     • {{ $t("ram.capacity") }}: {{ ram.capacity }} GB
                   </div>
-                  <div v-if="ram.ecc === 'ecc'" class="subtitle-2">
+                  <div v-if="ram.ecc === 'ECC'" class="subtitle-2">
                     • {{ $t("ram.memory_type") }}: {{ ram.memory_type }} ECC
                   </div>
                   <div v-else class="subtitle-2">
@@ -128,9 +128,6 @@
             {{ $t("common.search") }}
           </v-expansion-panel-header>
           <v-expansion-panel-content>
-            <v-btn color="primary" block text @click="onClickSearchButton">
-              {{ $t("common.search") }}
-            </v-btn>
             <div class="mt-3">
               <v-select
                 dense
@@ -161,6 +158,7 @@
                 v-model="selectedCapacity"
                 :items="ramCapacityList"
                 :label="$t('ram.capacity')"
+                suffix="GB"
                 multiple
                 chips
               ></v-select>
@@ -175,9 +173,6 @@
             {{ $t("common.sort") }}
           </v-expansion-panel-header>
           <v-expansion-panel-content>
-            <v-btn color="primary" block text @click="onClickSortButton">
-              {{ $t("common.sort") }}
-            </v-btn>
             <v-radio-group :label="$t('common.sort_by')" v-model="sortParam">
               <v-radio
                 v-for="(item, index) in sortByRadios"
@@ -270,6 +265,9 @@ export default {
       this.toTopPage();
     },
     showSearchForm() {
+      if (!this.showSearchForm) {
+        this.onSearchAndSort();
+      }
       this.expansionPanel = "";
     },
   },
@@ -293,7 +291,7 @@ export default {
         mfr: "",
         capacity: null,
         stickNum: null,
-        ecc: false,
+        ecc: "",
         memoryType: "",
         memoryFreq: null,
         casLatency: null,
@@ -306,22 +304,16 @@ export default {
       this.sortParam = "name";
       this.orderParam = "ASC";
     },
-    onClickSortButton() {
-      this.sortOrder = {
-        sort: this.sortParam,
-        order: this.orderParam,
-      };
-      this.currentPage = 1;
-      this.buildRamList();
-      this.showSearchForm = false;
-      this.toTopPage();
-    },
-    onClickSearchButton() {
+    onSearchAndSort() {
       this.searchQuery = {
         mfr: this.selectedManufacturer,
         memory_type: this.selectedType,
         memory_freq: this.selectedFrequency,
         capacity: this.selectedCapacity,
+      };
+      this.sortOrder = {
+        sort: this.sortParam,
+        order: this.orderParam,
       };
       this.currentPage = 1;
       this.buildRamList();

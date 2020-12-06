@@ -7,7 +7,8 @@ export default {
                     (v) => !!v || this.$t("message.required_rule_msg"),
                     (v) => v.length <= 50 || this.$t("message.text_rule_msg"),
                 ],
-                textRules: [(v) => v.length <= 50 || this.$t("message.text_rule_msg")],
+                textRules: [(v) => v == "" ||
+                    v == null || v.length <= 50 || this.$t("message.text_rule_msg")],
                 numberRequiredRules: [
                     (v) => !!v || this.$t("message.required_rule_msg"),
                     (v) => (v <= 65536 && v > 0) || this.$t("message.number_rule_msg"),

@@ -2,7 +2,7 @@ module.exports = (sequelize, DataTypes) =>
     sequelize.define("hdd", {
         id: { type: DataTypes.INTEGER, primaryKey: true, autoIncrement: true },
         name: { type: DataTypes.STRING },
-        model: { type: DataTypes.STRING},
+        model: { type: DataTypes.STRING },
         mfr: { type: DataTypes.STRING },
         capacity: { type: DataTypes.INTEGER },
         interface: { type: DataTypes.STRING },

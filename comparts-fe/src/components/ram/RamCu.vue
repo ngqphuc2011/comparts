@@ -272,7 +272,7 @@ export default {
           mfr: "",
           capacity: null,
           stickNum: null,
-          ecc: false,
+          ecc: "",
           memoryType: "",
           memoryFreq: null,
           casLatency: null,
