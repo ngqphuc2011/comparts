@@ -7,6 +7,7 @@
           v-for="(mobo, index) in moboList"
           :key="index"
           md="2"
+          sm="4"
         >
           <v-card
             class="mobo-list__card"
@@ -270,7 +271,7 @@ export default {
     },
     showSearchForm() {
       if (!this.showSearchForm) {
-        this.onSearchAndSort();
+        this.searchAndSort();
       }
       this.expansionPanel = "";
     },
@@ -313,7 +314,7 @@ export default {
       this.sortParam = "name";
       this.orderParam = "ASC";
     },
-    onSearchAndSort() {
+    searchAndSort() {
       this.searchQuery = {
         mfr: this.selectedManufacturer,
         socket: this.selectedSocket,

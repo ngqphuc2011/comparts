@@ -7,6 +7,7 @@
           v-for="(ram, index) in ramList"
           :key="index"
           md="2"
+          sm="4"
         >
           <v-card
             class="ram-list__card"
@@ -266,7 +267,7 @@ export default {
     },
     showSearchForm() {
       if (!this.showSearchForm) {
-        this.onSearchAndSort();
+        this.searchAndSort();
       }
       this.expansionPanel = "";
     },
@@ -304,7 +305,7 @@ export default {
       this.sortParam = "name";
       this.orderParam = "ASC";
     },
-    onSearchAndSort() {
+    searchAndSort() {
       this.searchQuery = {
         mfr: this.selectedManufacturer,
         memory_type: this.selectedType,

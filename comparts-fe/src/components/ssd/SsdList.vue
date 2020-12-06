@@ -7,6 +7,7 @@
           v-for="(ssd, index) in ssdList"
           :key="index"
           md="2"
+          sm="4"
         >
           <v-card
             class="ssd-list__card"
@@ -258,7 +259,7 @@ export default {
     },
     showSearchForm() {
       if (!this.showSearchForm) {
-        this.onSearchAndSort();
+        this.searchAndSort();
       }
       this.expansionPanel = "";
     },
@@ -294,7 +295,7 @@ export default {
       this.sortParams = "name";
       this.orderParams = "ASC";
     },
-    onSearchAndSort() {
+    searchAndSort() {
       this.searchQuery = {
         mfr: this.selectedManufacturer,
         interface: this.selectedInterface,

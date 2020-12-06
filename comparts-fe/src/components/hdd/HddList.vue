@@ -7,6 +7,7 @@
           v-for="(hdd, index) in hddList"
           :key="index"
           md="2"
+          sm="4"
         >
           <v-card
             class="hdd-list__card"
@@ -32,7 +33,7 @@
                 }})
               </div>
               <div class="subtitle-2 ellipsis">
-                • {{ $t("hdd.rpm") }}: {{ hdd.rpm }}
+                • {{ $t("hdd.rpm") }}: {{ hdd.rpm }} rpm
               </div>
               <div class="subtitle-2 ellipsis">
                 • {{ $t("hdd.cache") }}: {{ hdd.cache }} MB
@@ -258,7 +259,7 @@ export default {
     },
     showSearchForm() {
       if (!this.showSearchForm) {
-        this.onSearchAndSort();
+        this.searchAndSort();
       }
       this.expansionPanel = "";
     },
@@ -294,7 +295,7 @@ export default {
       this.sortParams = "name";
       this.orderParams = "ASC";
     },
-    onSearchAndSort() {
+    searchAndSort() {
       this.searchQuery = {
         mfr: this.selectedManufacturer,
         interface: this.selectedInterface,

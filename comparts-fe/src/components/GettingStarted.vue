@@ -6,6 +6,7 @@
         v-for="(item, index) in gettingStartedItems"
         :key="index"
         md="3"
+        sm="4"
       >
         <v-card
           class="getting-started__card"

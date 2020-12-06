@@ -7,6 +7,7 @@
           v-for="(gpu, index) in gpuList"
           :key="index"
           md="2"
+          sm="4"
         >
           <v-card
             class="gpu-list__card"
@@ -275,7 +276,7 @@ export default {
     },
     showSearchForm() {
       if (!this.showSearchForm) {
-        this.onSearchAndSort();
+        this.searchAndSort();
       }
       this.expansionPanel = "";
     },
@@ -320,7 +321,7 @@ export default {
       this.sortParam = "name";
       this.orderParam = "ASC";
     },
-    onSearchAndSort() {
+    searchAndSort() {
       this.searchQuery = {
         mfr: this.selectedManufacturer,
         engine_mfr: this.selectedEngineManufacturerList,

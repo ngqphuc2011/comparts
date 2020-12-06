@@ -135,7 +135,7 @@
     "interface": "Interface",
     "form_factor": "Form Factor",
     "cache": "Cache",
-    "rpm": "RPM",
+    "rpm": "RPM Rate",
     "price": "Price",
     "add_hdd": "Add Hard Disk Drive",
     "edit_hdd": "Edit Hard Disk Drive"
