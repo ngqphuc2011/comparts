@@ -55,7 +55,7 @@
     "core_num": "Cores",
     "thread_num": "Threads",
     "graphics": "Integrated Graphics",
-    "process": "Process",
+    "lithography": "Lithography",
     "base_freq": "Base Frequency",
     "turbo_freq": "Turbo Frequency",
     "cache": "Cache",

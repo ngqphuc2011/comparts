@@ -63,12 +63,12 @@
             <v-col md="6">
               <v-text-field
                 dense
-                v-model="cpu.process"
+                v-model="cpu.lithography"
                 placeholder=" "
                 type="number"
                 suffix="nm"
                 :rules="validationRules.numberRules"
-                :label="$t('cpu.process')"
+                :label="$t('cpu.lithography')"
                 :disabled="!isEditable"
               ></v-text-field>
             </v-col>
@@ -316,7 +316,7 @@ export default {
           tdp: null,
           memoryType: "",
           memoryFreq: null,
-          process: null,
+          lithography: null,
           graphics: "",
           price: null,
           img: "",
@@ -402,7 +402,7 @@ export default {
           tdp: this.cpu.tdp || null,
           memory_type: this.cpu.memoryType,
           memory_freq: this.cpu.memoryFreq || null,
-          process: this.cpu.process || null,
+          lithography: this.cpu.lithography || null,
           graphics: this.cpu.graphics || null,
           price: this.cpu.price || null,
         };

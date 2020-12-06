@@ -81,8 +81,8 @@
                     }}
                     MHz
                   </div>
-                  <div v-if="cpu.process" class="subtitle-2">
-                    • {{ $t("cpu.process") }}: {{ cpu.process }} nm
+                  <div v-if="cpu.lithography" class="subtitle-2">
+                    • {{ $t("cpu.lithography") }}: {{ cpu.lithography }} nm
                   </div>
                   <div v-if="cpu.graphics" class="subtitle-2">
                     • {{ $t("cpu.graphics") }}: {{ cpu.graphics }}
@@ -311,7 +311,7 @@ export default {
         tdp: null,
         memoryType: "",
         memoryFreq: null,
-        process: null,
+        lithography: null,
         graphics: "",
         price: null,
         img: "",
@@ -366,7 +366,7 @@ export default {
         tdp: cpu.tdp,
         memoryType: cpu.memory_type,
         memoryFreq: cpu.memory_freq,
-        process: cpu.process,
+        lithography: cpu.lithography,
         graphics: cpu.graphics,
         price: cpu.price,
         img: cpu.img,

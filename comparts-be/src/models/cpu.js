@@ -12,7 +12,7 @@ module.exports = (sequelize, DataTypes) =>
 		tdp: { type: DataTypes.INTEGER },
 		memory_type: { type: DataTypes.STRING },
 		memory_freq: { type: DataTypes.INTEGER },
-		process: { type: DataTypes.INTEGER },
+		lithography: { type: DataTypes.INTEGER },
 		graphics: { type: DataTypes.STRING },
 		price: { type: DataTypes.INTEGER },
 		img: { type: DataTypes.TEXT },

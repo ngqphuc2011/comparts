@@ -5,7 +5,6 @@ const Op = Sequelize.Op;
 const fs = require("fs");
 const publicFilePath = "./public/gpus";
 const { upload } = require("../utils/multer");
-const { nextTick } = require("process");
 const gpu = require("../models/gpu")(sequelize, Sequelize);
 initGpu(gpu);
 
