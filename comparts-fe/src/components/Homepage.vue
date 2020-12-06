@@ -231,6 +231,7 @@ export default {
   display: flex;
   background-image: url("~/static/assets/background.png");
   background-repeat: repeat-y;
+  background-attachment: fixed;
   background-size: 100%;
   height: 100%;
 }
