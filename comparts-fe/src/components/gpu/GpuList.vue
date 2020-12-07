@@ -406,16 +406,25 @@ export default {
         .get(this.url.gpu, { params: { size: 9999 } })
         .then((res) => {
           res.data.items.forEach((gpu) => {
-            if (this.gpuManufacturerList.indexOf(gpu.mfr) === -1) {
+            if (gpu.mfr && this.gpuManufacturerList.indexOf(gpu.mfr) === -1) {
               this.gpuManufacturerList.push(gpu.mfr);
             }
-            if (this.gpuEngineManufacturerList.indexOf(gpu.engine_mfr) === -1) {
+            if (
+              gpu.engine_mfr &&
+              this.gpuEngineManufacturerList.indexOf(gpu.engine_mfr) === -1
+            ) {
               this.gpuEngineManufacturerList.push(gpu.engine_mfr);
             }
-            if (this.gpuEngineNameList.indexOf(gpu.engine_name) === -1) {
+            if (
+              gpu.engine_name &&
+              this.gpuEngineNameList.indexOf(gpu.engine_name) === -1
+            ) {
               this.gpuEngineNameList.push(gpu.engine_name);
             }
-            if (this.gpuMemorySizeList.indexOf(gpu.memory_size) === -1) {
+            if (
+              gpu.memory_size &&
+              this.gpuMemorySizeList.indexOf(gpu.memory_size) === -1
+            ) {
               this.gpuMemorySizeList.push(gpu.memory_size);
             }
           });

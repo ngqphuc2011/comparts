@@ -384,16 +384,25 @@ export default {
         .get(this.url.ram, { params: { size: 9999 } })
         .then((res) => {
           res.data.items.forEach((ram) => {
-            if (this.ramManufacturerList.indexOf(ram.mfr) === -1) {
+            if (ram.mfr && this.ramManufacturerList.indexOf(ram.mfr) === -1) {
               this.ramManufacturerList.push(ram.mfr);
             }
-            if (this.ramTypeList.indexOf(ram.memory_type) === -1) {
+            if (
+              ram.memory_type &&
+              this.ramTypeList.indexOf(ram.memory_type) === -1
+            ) {
               this.ramTypeList.push(ram.memory_type);
             }
-            if (this.ramFrequencyList.indexOf(ram.memory_freq) === -1) {
+            if (
+              ram.memory_freq &&
+              this.ramFrequencyList.indexOf(ram.memory_freq) === -1
+            ) {
               this.ramFrequencyList.push(ram.memory_freq);
             }
-            if (this.ramCapacityList.indexOf(ram.capacity) === -1) {
+            if (
+              ram.capacity &&
+              this.ramCapacityList.indexOf(ram.capacity) === -1
+            ) {
               this.ramCapacityList.push(ram.capacity);
             }
           });

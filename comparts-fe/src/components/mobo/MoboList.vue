@@ -407,16 +407,28 @@ export default {
         .get(this.url.mobo, { params: { size: 9999 } })
         .then((res) => {
           res.data.items.forEach((mobo) => {
-            if (this.moboManufacturerList.indexOf(mobo.mfr) === -1) {
+            if (
+              mobo.mfr &&
+              this.moboManufacturerList.indexOf(mobo.mfr) === -1
+            ) {
               this.moboManufacturerList.push(mobo.mfr);
             }
-            if (this.moboSocketList.indexOf(mobo.socket) === -1) {
+            if (
+              mobo.socket &&
+              this.moboSocketList.indexOf(mobo.socket) === -1
+            ) {
               this.moboSocketList.push(mobo.socket);
             }
-            if (this.moboChipsetList.indexOf(mobo.chipset) === -1) {
+            if (
+              mobo.chipset &&
+              this.moboChipsetList.indexOf(mobo.chipset) === -1
+            ) {
               this.moboChipsetList.push(mobo.chipset);
             }
-            if (this.moboFormFactorList.indexOf(mobo.form_factor) === -1) {
+            if (
+              mobo.form_factor &&
+              this.moboFormFactorList.indexOf(mobo.form_factor) === -1
+            ) {
               this.moboFormFactorList.push(mobo.form_factor);
             }
           });

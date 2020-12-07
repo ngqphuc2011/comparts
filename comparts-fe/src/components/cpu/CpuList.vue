@@ -404,10 +404,16 @@ export default {
             if (cpu.socket && this.cpuSocketList.indexOf(cpu.socket) === -1) {
               this.cpuSocketList.push(cpu.socket);
             }
-            if (cpu.core_num && this.cpuCoreNumList.indexOf(cpu.core_num) === -1) {
+            if (
+              cpu.core_num &&
+              this.cpuCoreNumList.indexOf(cpu.core_num) === -1
+            ) {
               this.cpuCoreNumList.push(cpu.core_num);
             }
-            if (cpu.thread_num && this.cpuThreadNumList.indexOf(cpu.thread_num) === -1) {
+            if (
+              cpu.thread_num &&
+              this.cpuThreadNumList.indexOf(cpu.thread_num) === -1
+            ) {
               this.cpuThreadNumList.push(cpu.thread_num);
             }
           });

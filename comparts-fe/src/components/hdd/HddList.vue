@@ -372,16 +372,25 @@ export default {
         .get(this.url.hdd, { params: { size: 9999 } })
         .then((res) => {
           res.data.items.forEach((hdd) => {
-            if (this.hddManufacturerList.indexOf(hdd.mfr) === -1) {
+            if (hdd.mfr && this.hddManufacturerList.indexOf(hdd.mfr) === -1) {
               this.hddManufacturerList.push(hdd.mfr);
             }
-            if (this.hddInterfaceList.indexOf(hdd.interface) === -1) {
+            if (
+              hdd.interface &&
+              this.hddInterfaceList.indexOf(hdd.interface) === -1
+            ) {
               this.hddInterfaceList.push(hdd.interface);
             }
-            if (this.hddFormFactorList.indexOf(hdd.form_factor) === -1) {
+            if (
+              hdd.form_factor &&
+              this.hddFormFactorList.indexOf(hdd.form_factor) === -1
+            ) {
               this.hddFormFactorList.push(hdd.form_factor);
             }
-            if (this.hddCapacityList.indexOf(hdd.capacity) === -1) {
+            if (
+              hdd.capacity &&
+              this.hddCapacityList.indexOf(hdd.capacity) === -1
+            ) {
               this.hddCapacityList.push(hdd.capacity);
             }
           });

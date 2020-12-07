@@ -372,16 +372,25 @@ export default {
         .get(this.url.ssd, { params: { size: 9999 } })
         .then((res) => {
           res.data.items.forEach((ssd) => {
-            if (this.ssdManufacturerList.indexOf(ssd.mfr) === -1) {
+            if (ssd.mfr && this.ssdManufacturerList.indexOf(ssd.mfr) === -1) {
               this.ssdManufacturerList.push(ssd.mfr);
             }
-            if (this.ssdInterfaceList.indexOf(ssd.interface) === -1) {
+            if (
+              ssd.interface &&
+              this.ssdInterfaceList.indexOf(ssd.interface) === -1
+            ) {
               this.ssdInterfaceList.push(ssd.interface);
             }
-            if (this.ssdFormFactorList.indexOf(ssd.form_factor) === -1) {
+            if (
+              ssd.form_factor &&
+              this.ssdFormFactorList.indexOf(ssd.form_factor) === -1
+            ) {
               this.ssdFormFactorList.push(ssd.form_factor);
             }
-            if (this.ssdCapacityList.indexOf(ssd.capacity) === -1) {
+            if (
+              ssd.capacity &&
+              this.ssdCapacityList.indexOf(ssd.capacity) === -1
+            ) {
               this.ssdCapacityList.push(ssd.capacity);
             }
           });
