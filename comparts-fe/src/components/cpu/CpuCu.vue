@@ -110,7 +110,7 @@
             </v-col>
           </v-row>
           <v-row>
-            <v-col md="4">
+            <v-col md="6">
               <v-text-field
                 dense
                 v-model="cpu.baseFreq"
@@ -122,7 +122,7 @@
                 :disabled="!isEditable"
               ></v-text-field>
             </v-col>
-            <v-col md="4">
+            <v-col md="6">
               <v-text-field
                 dense
                 v-model="cpu.turboFreq"
@@ -131,18 +131,6 @@
                 :label="$t('cpu.turbo_freq')"
                 :rules="validationRules.numberRules"
                 suffix="GHz"
-                :disabled="!isEditable"
-              ></v-text-field>
-            </v-col>
-            <v-col md="4">
-              <v-text-field
-                dense
-                v-model="cpu.tdp"
-                placeholder=" "
-                type="number"
-                :label="$t('cpu.tdp')"
-                :rules="validationRules.numberRules"
-                suffix="W"
                 :disabled="!isEditable"
               ></v-text-field>
             </v-col>
@@ -168,6 +156,32 @@
                 :rules="validationRules.numberRules"
                 :label="$t('cpu.memory_freq')"
                 suffix="MHz"
+                :disabled="!isEditable"
+              ></v-text-field>
+            </v-col>
+          </v-row>
+          <v-row>
+            <v-col md="6">
+               <v-select
+                dense
+                v-model="cpu.ecc"
+                placeholder=" "
+                :items="eccSupportedList"
+                :label="$t('cpu.ecc')"
+                :rules="validationRules.requiredRules"
+                :disabled="!isEditable"
+              >
+              </v-select>
+            </v-col>
+            <v-col md="6">
+              <v-text-field
+                dense
+                v-model="cpu.tdp"
+                placeholder=" "
+                type="number"
+                :label="$t('cpu.tdp')"
+                :rules="validationRules.numberRules"
+                suffix="W"
                 :disabled="!isEditable"
               ></v-text-field>
             </v-col>
@@ -316,6 +330,7 @@ export default {
           tdp: null,
           memoryType: "",
           memoryFreq: null,
+          ecc: false,
           lithography: null,
           graphics: "",
           price: null,
@@ -391,19 +406,20 @@ export default {
     async onClickSaveButton() {
       if (this.$refs.form.validate()) {
         let body = {
-          name: this.cpu.name || null,
-          mfr: this.cpu.mfr || null,
-          socket: this.cpu.socket || null,
+          name: this.cpu.name || "",
+          mfr: this.cpu.mfr || "",
+          socket: this.cpu.socket || "",
           core_num: this.cpu.coreNum || null,
           thread_num: this.cpu.threadNum || null,
           base_freq: this.cpu.baseFreq || null,
           turbo_freq: this.cpu.turboFreq || null,
           cache: this.cpu.cache || null,
           tdp: this.cpu.tdp || null,
-          memory_type: this.cpu.memoryType,
+          memory_type: this.cpu.memoryType || "",
           memory_freq: this.cpu.memoryFreq || null,
+          ecc: this.cpu.ecc,
           lithography: this.cpu.lithography || null,
-          graphics: this.cpu.graphics || null,
+          graphics: this.cpu.graphics || "",
           price: this.cpu.price || null,
         };
         if (this.cpu.imgFile) {

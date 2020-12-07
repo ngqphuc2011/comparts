@@ -63,10 +63,15 @@
                   <div class="subtitle-2">
                     • {{ $t("mobo.form_factor") }}: {{ mobo.form_factor }}
                   </div>
-                  <div class="subtitle-2">
+                  <div v-if="mobo.ecc" class="subtitle-2">
                     • {{ $t("mobo.supported_memory") }}:
-                    {{ mobo.memory_type }}-{{ mobo.memory_freq }}
-                    MHz
+                    {{ mobo.memory_capacity }} GB {{ mobo.memory_type }}
+                    {{ mobo.memory_freq }} MHz (ECC)
+                  </div>
+                  <div v-else class="subtitle-2">
+                    • {{ $t("mobo.supported_memory") }}:
+                    {{ mobo.memory_capacity }} GB {{ mobo.memory_type }}
+                    {{ mobo.memory_freq }} MHz (Non-ECC)
                   </div>
                   <div v-if="mobo.pcie_x16_slot_num" class="subtitle-2">
                     • {{ $t("mobo.pcie_x16_slot_num") }}:
@@ -304,8 +309,10 @@ export default {
         chipset: "",
         socket: "",
         formFactor: "",
+        memoryCapacity: null,
         memoryType: "",
         memoryFreq: null,
+        ecc: false,
         memorySlotNum: null,
         pcieX16SlotNum: null,
         pcieX8SlotNum: null,
@@ -361,8 +368,10 @@ export default {
         chipset: mobo.chipset,
         socket: mobo.socket,
         formFactor: mobo.form_factor,
+        memoryCapacity: mobo.memory_capacity,
         memoryType: mobo.memory_type,
         memoryFreq: mobo.memory_freq,
+        ecc: mobo.ecc,
         memorySlotNum: mobo.memory_slot_num,
         pcieX16SlotNum: mobo.pcie_x16_slot_num,
         pcieX8SlotNum: mobo.pcie_x8_slot_num,

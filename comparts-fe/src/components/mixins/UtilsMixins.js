@@ -12,7 +12,14 @@ export default {
                 "HBM2",
             ],
             ramMemoryTypeList: ["DDR2", "DDR3", "DDR4"],
-            ramEccList: ["ECC", "Non-ECC"],
+            eccSupportedList: [{
+                text: "ECC",
+                value: true
+            },
+            {
+                text: "Non-ECC",
+                value: false
+            }],
             moboFormFactorList: ["E-ATX", "ATX", "mATX", "Mini-ITX"],
             hddFormFactorList: ["3.5-inch", "2.5-inch"],
             hddInterfaceList: ["SATA-II", "SATA-III"],

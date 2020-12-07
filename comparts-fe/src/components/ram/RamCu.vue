@@ -90,7 +90,7 @@
                 dense
                 v-model="ram.ecc"
                 placeholder=" "
-                :items="ramEccList"
+                :items="eccSupportedList"
                 :label="$t('ram.ecc')"
                 :rules="validationRules.requiredRules"
                 :disabled="!isEditable"
@@ -125,11 +125,11 @@
             <v-col md="4">
               <v-text-field
                 dense
-                v-model="ram.stickNum"
+                v-model="ram.modules"
                 placeholder=" "
                 type="number"
                 :rules="validationRules.numberRules"
-                :label="$t('ram.stick_num')"
+                :label="$t('ram.modules')"
                 :disabled="!isEditable"
               ></v-text-field>
             </v-col>
@@ -271,7 +271,7 @@ export default {
           model: "",
           mfr: "",
           capacity: null,
-          stickNum: null,
+          modules: null,
           ecc: "",
           memoryType: "",
           memoryFreq: null,
@@ -350,13 +350,13 @@ export default {
     async onClickSaveButton() {
       if (this.$refs.form.validate()) {
         let body = {
-          name: this.ram.name || null,
-          model: this.ram.model || null,
-          mfr: this.ram.mfr || null,
+          name: this.ram.name || "",
+          model: this.ram.model || "",
+          mfr: this.ram.mfr || "",
           capacity: this.ram.capacity || null,
-          stick_num: this.ram.stickNum || null,
-          ecc: this.ram.ecc || null,
-          memory_type: this.ram.memoryType || null,
+          modules: this.ram.modules || null,
+          ecc: this.ram.ecc,
+          memory_type: this.ram.memoryType || "",
           memory_freq: this.ram.memoryFreq || null,
           cas_latency: this.ram.casLatency || null,
           voltage: this.ram.voltage || null,

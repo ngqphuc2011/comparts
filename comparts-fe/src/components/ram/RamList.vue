@@ -27,7 +27,7 @@
               <div class="subtitle-2 ellipsis">
                 • {{ $t("ram.capacity") }}: {{ ram.capacity }} GB
               </div>
-              <div v-if="ram.ecc === 'ECC'" class="subtitle-2 ellipsis">
+              <div v-if="ram.ecc" class="subtitle-2 ellipsis">
                 • {{ $t("ram.memory_type") }}: {{ ram.memory_type }} ECC
               </div>
               <div v-else class="subtitle-2 ellipsis">
@@ -63,7 +63,7 @@
                   <div class="subtitle-2 ellipsis">
                     • {{ $t("ram.capacity") }}: {{ ram.capacity }} GB
                   </div>
-                  <div v-if="ram.ecc === 'ECC'" class="subtitle-2">
+                  <div v-if="ram.ecc" class="subtitle-2">
                     • {{ $t("ram.memory_type") }}: {{ ram.memory_type }} ECC
                   </div>
                   <div v-else class="subtitle-2">
@@ -73,7 +73,7 @@
                     • {{ $t("ram.memory_freq") }}: {{ ram.memory_freq }} MHz
                   </div>
                   <div class="subtitle-2">
-                    • {{ $t("ram.stick_num") }}: {{ ram.stick_num }}
+                    • {{ $t("ram.modules") }}: {{ ram.modules }}
                   </div>
                   <div class="subtitle-2">
                     • {{ $t("ram.cas_latency") }}: {{ ram.cas_latency }}
@@ -299,8 +299,8 @@ export default {
         model: "",
         mfr: "",
         capacity: null,
-        stickNum: null,
-        ecc: "",
+        modules: null,
+        ecc: false,
         memoryType: "",
         memoryFreq: null,
         casLatency: null,
@@ -351,7 +351,7 @@ export default {
         model: ram.model,
         mfr: ram.mfr,
         capacity: ram.capacity,
-        stickNum: ram.stick_num,
+        modules: ram.modules,
         ecc: ram.ecc,
         memoryType: ram.memory_type,
         memoryFreq: ram.memory_freq,

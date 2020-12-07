@@ -25,10 +25,10 @@
                 ₫ • {{ formatNumber(cpu.price) }}
               </div>
               <div class="subtitle-2 ellipsis">
-                • {{ $t("cpu.base_freq") }}: {{ cpu.base_freq }} MHz
+                • {{ $t("cpu.base_freq") }}: {{ cpu.base_freq }} GHz
               </div>
               <div v-if="cpu.turbo_freq" class="subtitle-2 ellipsis">
-                • {{ $t("cpu.turbo_freq") }}: {{ cpu.turbo_freq }} MHz
+                • {{ $t("cpu.turbo_freq") }}: {{ cpu.turbo_freq }} GHz
               </div>
               <div class="subtitle-2 ellipsis">
                 • {{ $t("cpu.core_num") }}: {{ cpu.core_num }}
@@ -61,10 +61,10 @@
                     • {{ $t("cpu.thread_num") }}: {{ cpu.thread_num }}
                   </div>
                   <div class="subtitle-2">
-                    • {{ $t("cpu.base_freq") }}: {{ cpu.base_freq }} MHz
+                    • {{ $t("cpu.base_freq") }}: {{ cpu.base_freq }} GHz
                   </div>
                   <div v-if="cpu.turbo_freq" class="subtitle-2">
-                    • {{ $t("cpu.turbo_freq") }}: {{ cpu.turbo_freq }} MHz
+                    • {{ $t("cpu.turbo_freq") }}: {{ cpu.turbo_freq }} GHz
                   </div>
                   <div class="subtitle-2">
                     • {{ $t("cpu.cache") }}: {{ cpu.cache }} MB
@@ -75,11 +75,13 @@
                   <div class="subtitle-2">
                     • {{ $t("cpu.tdp") }}: {{ cpu.tdp }} W
                   </div>
-                  <div class="subtitle-2">
-                    • {{ $t("cpu.supported_memory") }}: {{ cpu.memory_type }}-{{
-                      cpu.memory_freq
-                    }}
-                    MHz
+                  <div v-if="cpu.ecc" class="subtitle-2">
+                    • {{ $t("cpu.supported_memory") }}: {{ cpu.memory_type }}
+                    {{ cpu.memory_freq }} MHz (ECC)
+                  </div>
+                  <div v-else class="subtitle-2">
+                    • {{ $t("cpu.supported_memory") }}: {{ cpu.memory_type }}
+                    {{ cpu.memory_freq }} MHz (Non-ECC)
                   </div>
                   <div v-if="cpu.lithography" class="subtitle-2">
                     • {{ $t("cpu.lithography") }}: {{ cpu.lithography }} nm
@@ -311,6 +313,7 @@ export default {
         tdp: null,
         memoryType: "",
         memoryFreq: null,
+        ecc: false,
         lithography: null,
         graphics: "",
         price: null,
@@ -366,6 +369,7 @@ export default {
         tdp: cpu.tdp,
         memoryType: cpu.memory_type,
         memoryFreq: cpu.memory_freq,
+        ecc: cpu.ecc,
         lithography: cpu.lithography,
         graphics: cpu.graphics,
         price: cpu.price,
@@ -394,16 +398,16 @@ export default {
         .get(this.url.cpu, { params: { size: 9999 } })
         .then((res) => {
           res.data.items.forEach((cpu) => {
-            if (this.cpuManufacturerList.indexOf(cpu.mfr) === -1) {
+            if (cpu.mfr && this.cpuManufacturerList.indexOf(cpu.mfr) === -1) {
               this.cpuManufacturerList.push(cpu.mfr);
             }
-            if (this.cpuSocketList.indexOf(cpu.socket) === -1) {
+            if (cpu.socket && this.cpuSocketList.indexOf(cpu.socket) === -1) {
               this.cpuSocketList.push(cpu.socket);
             }
-            if (this.cpuCoreNumList.indexOf(cpu.core_num) === -1) {
+            if (cpu.core_num && this.cpuCoreNumList.indexOf(cpu.core_num) === -1) {
               this.cpuCoreNumList.push(cpu.core_num);
             }
-            if (this.cpuThreadNumList.indexOf(cpu.thread_num) === -1) {
+            if (cpu.thread_num && this.cpuThreadNumList.indexOf(cpu.thread_num) === -1) {
               this.cpuThreadNumList.push(cpu.thread_num);
             }
           });

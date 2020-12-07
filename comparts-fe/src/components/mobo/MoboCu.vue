@@ -190,6 +190,31 @@
             </v-col>
           </v-row>
           <v-row>
+            <v-col md="6">
+              <v-select
+                dense
+                v-model="mobo.ecc"
+                placeholder=" "
+                :items="eccSupportedList"
+                :label="$t('mobo.ecc')"
+                :rules="validationRules.requiredRules"
+                :disabled="!isEditable"
+              ></v-select>
+            </v-col>
+            <v-col md="6">
+              <v-text-field
+                dense
+                v-model="mobo.memoryCapacity"
+                placeholder=" "
+                type="number"
+                :rules="validationRules.numberRules"
+                suffix="GB"
+                :label="$t('mobo.memory_capacity')"
+                :disabled="!isEditable"
+              ></v-text-field>
+            </v-col>
+          </v-row>
+          <v-row>
             <v-col md="12">
               <v-text-field
                 dense
@@ -327,9 +352,11 @@ export default {
           chipset: "",
           socket: "",
           formFactor: "",
+          memoryCapacity: null,
           memoryType: "",
           memoryFreq: null,
           memorySlotNum: null,
+          ecc: false,
           pcieX16SlotNum: null,
           pcieX8SlotNum: null,
           pcieX4SlotNum: null,
@@ -410,13 +437,15 @@ export default {
     async onClickSaveButton() {
       if (this.$refs.form.validate()) {
         let body = {
-          name: this.mobo.name || null,
-          mfr: this.mobo.mfr || null,
-          chipset: this.mobo.chipset || null,
-          socket: this.mobo.socket || null,
-          form_factor: this.mobo.formFactor || null,
-          memory_type: this.mobo.memoryType || null,
+          name: this.mobo.name || "",
+          mfr: this.mobo.mfr || "",
+          chipset: this.mobo.chipset || "",
+          socket: this.mobo.socket || "",
+          form_factor: this.mobo.formFactor || "",
+          memory_capacity: this.mobo.memoryCapacity || null,
+          memory_type: this.mobo.memoryType || "",
           memory_freq: this.mobo.memoryFreq || null,
+          ecc: this.mobo.ecc,
           memory_slot_num: this.mobo.memorySlotNum || null,
           pcie_x16_slot_num: this.mobo.pcieX16SlotNum || null,
           pcie_x8_slot_num: this.mobo.pcieX8SlotNum || null,
